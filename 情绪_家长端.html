@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>情绪连接模块 · 家庭版 | 四阶情绪智力培养系统</title>
+    <style>
+        :root {
+            --emotion-purple: #8B5EA7;
+            --emotion-purple-light: #F8F4FA;
+            --emotion-coral: #E07088;
+            --emotion-coral-light: #FFF5F7;
+            --emotion-teal: #3D8B7B;
+            --emotion-teal-light: #F2F9F7;
+            --emotion-blue: #4A80C0;
+            --emotion-blue-light: #F0F6FC;
+            --emotion-gold: #C48B3A;
+            --emotion-gold-light: #FFFDF7;
+            --text: #2E2620;
+            --text-light: #5C4F45;
+            --text-lighter: #8C7E6F;
+            --bg: #FDFBF8;
+            --card-bg: #FFFFFF;
+            --border: #E6DDD0;
+            --shadow-sm: 0 1px 4px rgba(50, 30, 10, 0.04);
+            --shadow: 0 4px 18px rgba(50, 30, 10, 0.06);
+            --shadow-lg: 0 10px 30px rgba(50, 30, 10, 0.10);
+            --radius-sm: 10px;
+            --radius: 16px;
+            --radius-lg: 22px;
+            --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Sans SC', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.75;
+            -webkit-font-smoothing: antialiased;
+            scroll-behavior: smooth;
+            font-size: 15px;
+            background-image: radial-gradient(circle, rgba(139, 94, 167, 0.02) 1px, transparent 1px), radial-gradient(circle, rgba(224, 112, 136, 0.02) 1px, transparent 1px);
+            background-size: 32px 32px, 44px 44px;
+            background-position: 0 0, 22px 22px;
+        }
+        .hero {
+            background: linear-gradient(165deg, #F8F4FA 0%, #FDFBF8 20%, #FFF5F7 40%, #FDFBF8 60%, #F2F9F7 80%, #FDFBF8 100%);
+            padding: 50px 20px 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 1px solid #E6DDD0;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -100px;
+            right: -70px;
+            width: 340px;
+            height: 340px;
+            background: radial-gradient(circle, rgba(139, 94, 167, 0.05) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -80px;
+            left: -60px;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(224, 112, 136, 0.04) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 760px;
+            margin: 0 auto;
+        }
+        .hero-badge {
+            display: inline-block;
+            background: #fff;
+            color: #8B5EA7;
+            font-size: 0.82rem;
+            font-weight: 700;
+            padding: 6px 20px;
+            border-radius: 22px;
+            letter-spacing: 0.04em;
+            margin-bottom: 16px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid #E0D4EC;
+        }
+        .hero h1 {
+            font-size: 2.3rem;
+            font-weight: 800;
+            letter-spacing: -0.015em;
+            color: #2E2620;
+            margin-bottom: 8px;
+            line-height: 1.3;
+        }
+        .hero h1 span {
+            background: linear-gradient(135deg, #8B5EA7, #E07088, #3D8B7B);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .hero-subtitle {
+            font-size: 0.95rem;
+            color: #5C4F45;
+            font-weight: 400;
+            margin-bottom: 8px;
+            line-height: 1.6;
+        }
+        .hero-tagline {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #fff;
+            padding: 9px 22px;
+            border-radius: 24px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #2E2620;
+            box-shadow: var(--shadow);
+            border: 1px solid #E6DDD0;
+        }
+        .sticky-nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(253, 251, 248, 0.9);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid #E6DDD0;
+            padding: 0 10px;
+            overflow-x: auto;
+            white-space: nowrap;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        .sticky-nav::-webkit-scrollbar {
+            display: none;
+        }
+        .sticky-nav-inner {
+            max-width: 1080px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 2px;
+            padding: 7px 0;
+        }
+        .sticky-nav a {
+            display: inline-block;
+            text-decoration: none;
+            font-size: 0.74rem;
+            font-weight: 500;
+            color: #5C4F45;
+            padding: 6px 11px;
+            border-radius: 16px;
+            transition: var(--transition);
+            flex-shrink: 0;
+            letter-spacing: 0.02em;
+        }
+        .sticky-nav a:hover,
+        .sticky-nav a.active {
+            background: #F0EAF5;
+            color: #8B5EA7;
+            font-weight: 600;
+        }
+        .sticky-nav a.nav-dot {
+            width: 28px;
+            height: 28px;
+            padding: 0;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.7rem;
+            color: #fff;
+            flex-shrink: 0;
+        }
+        .nd1 {
+            background: #8B5EA7;
+        }
+        .nd2 {
+            background: #E07088;
+        }
+        .nd3 {
+            background: #3D8B7B;
+        }
+        .nd4 {
+            background: #4A80C0;
+        }
+        .container {
+            max-width: 1080px;
+            margin: 0 auto;
+            padding: 14px 16px 50px;
+        }
+        .section-title {
+            text-align: center;
+            margin: 44px 0 18px;
+        }
+        .section-title h2 {
+            font-size: 1.45rem;
+            font-weight: 700;
+            letter-spacing: -0.006em;
+            margin-bottom: 4px;
+            color: #2E2620;
+        }
+        .section-title p {
+            color: #8C7E6F;
+            font-size: 0.84rem;
+        }
+        .section-divider {
+            width: 48px;
+            height: 3px;
+            border-radius: 2px;
+            margin: 8px auto 0;
+            background: linear-gradient(90deg, #8B5EA7, #E07088, #3D8B7B);
+        }
+        .stage-card {
+            background: #fff;
+            border-radius: var(--radius-lg);
+            margin-bottom: 18px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            border: 1px solid #E6DDD0;
+            transition: var(--transition);
+        }
+        .stage-card:hover {
+            box-shadow: var(--shadow-lg);
+        }
+        .stage-header {
+            padding: 18px 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            user-select: none;
+        }
+        .stage-num {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1.1rem;
+            color: #fff;
+            flex-shrink: 0;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+        }
+        .sn1 {
+            background: #8B5EA7;
+        }
+        .sn2 {
+            background: #E07088;
+        }
+        .sn3 {
+            background: #3D8B7B;
+        }
+        .sn4 {
+            background: #4A80C0;
+        }
+        .stage-header-text h3 {
+            font-size: 1rem;
+            font-weight: 700;
+            line-height: 1.3;
+            color: #2E2620;
+        }
+        .stage-header-text .stage-sub {
+            font-size: 0.74rem;
+            color: #8C7E6F;
+        }
+        .stage-meta {
+            margin-left: auto;
+            text-align: right;
+            flex-shrink: 0;
+            font-size: 0.72rem;
+            color: #8C7E6F;
+            line-height: 1.4;
+        }
+        .stage-arrow {
+            font-size: 1rem;
+            transition: var(--transition);
+            color: #8C7E6F;
+            flex-shrink: 0;
+            margin-left: 2px;
+        }
+        .stage-card.open .stage-arrow {
+            transform: rotate(180deg);
+        }
+        .stage-body {
+            display: none;
+            padding: 0 20px 20px;
+            border-top: 1px solid #E6DDD0;
+            padding-top: 16px;
+            animation: fadeSlideIn 0.3s ease;
+        }
+        .stage-card.open .stage-body {
+            display: block;
+        }
+        @keyframes fadeSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-5px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .stage-two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+        }
+        @media (max-width: 680px) {
+            .stage-two-col {
+                grid-template-columns: 1fr;
+            }
+        }
+        .stage-col {
+            border-radius: var(--radius-sm);
+            padding: 16px;
+            border: 1px solid #E6DDD0;
+            background: #FEFCFA;
+        }
+        .stage-col.parent-do {
+            border-left: 4px solid #6B8A6F;
+            background: #F9FBF7;
+        }
+        .stage-col.guide-need {
+            border-left: 4px solid #C48B3A;
+            background: #FFFDF8;
+        }
+        .stage-col h5 {
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #2E2620;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .stage-col ul {
+            list-style: none;
+            padding: 0;
+        }
+        .stage-col ul li {
+            font-size: 0.8rem;
+            color: #5C4F45;
+            padding: 3px 0 3px 16px;
+            position: relative;
+            line-height: 1.6;
+        }
+        .stage-col ul li::before {
+            content: '•';
+            position: absolute;
+            left: 1px;
+            color: #BFB8A8;
+            font-weight: 700;
+        }
+        .highlight-box {
+            border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+            padding: 10px 14px;
+            margin: 8px 0;
+            font-size: 0.78rem;
+            color: #5C4F45;
+            line-height: 1.6;
+        }
+        .highlight-purple {
+            background: #F8F4FA;
+            border-left: 3px solid #8B5EA7;
+        }
+        .highlight-coral {
+            background: #FFF5F7;
+            border-left: 3px solid #E07088;
+        }
+        .highlight-teal {
+            background: #F2F9F7;
+            border-left: 3px solid #3D8B7B;
+        }
+        .highlight-blue {
+            background: #F0F6FC;
+            border-left: 3px solid #4A80C0;
+        }
+        .highlight-gold {
+            background: #FFFDF8;
+            border-left: 3px solid #C48B3A;
+        }
+        .tag-xs {
+            display: inline-block;
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 3px 9px;
+            border-radius: 10px;
+            margin: 2px;
+            letter-spacing: 0.02em;
+            background: #F0EAF5;
+            color: #8B5EA7;
+        }
+        .tag-xs.coral {
+            background: #FFE8EC;
+            color: #E07088;
+        }
+        .tag-xs.teal {
+            background: #E0F0EF;
+            color: #3D8B7B;
+        }
+        .tag-xs.blue {
+            background: #E8F0F8;
+            color: #4A80C0;
+        }
+        .path-table-wrap {
+            overflow-x: auto;
+            margin: 14px 0;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-sm);
+            border: 1px solid #E6DDD0;
+            background: #fff;
+        }
+        .path-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.76rem;
+            min-width: 650px;
+        }
+        .path-table th {
+            background: #F8F4FA;
+            padding: 10px 8px;
+            text-align: center;
+            font-weight: 700;
+            font-size: 0.72rem;
+            color: #8B5EA7;
+            letter-spacing: 0.03em;
+            border-bottom: 2px solid #E0D4EC;
+        }
+        .path-table td {
+            padding: 8px;
+            text-align: center;
+            border-bottom: 1px solid #F0EBE2;
+            color: #3D3226;
+            font-size: 0.74rem;
+            vertical-align: middle;
+        }
+        .path-table tr:last-child td {
+            border-bottom: none;
+        }
+        .stage-dot-cell {
+            display: inline-block;
+            width: 28px;
+            height: 28px;
+            line-height: 28px;
+            border-radius: 50%;
+            color: #fff;
+            font-weight: 700;
+            font-size: 0.75rem;
+            text-align: center;
+        }
+        .scene-card {
+            background: #fff;
+            border: 1px solid #E6DDD0;
+            border-radius: var(--radius);
+            margin-bottom: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+        }
+        .scene-header {
+            padding: 14px 18px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.86rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            user-select: none;
+            background: #FDFBF8;
+            transition: var(--transition);
+        }
+        .scene-header:hover {
+            background: #F8F4FA;
+        }
+        .scene-arrow {
+            transition: var(--transition);
+            font-size: 0.85rem;
+            color: #8C7E6F;
+        }
+        .scene-card.open .scene-arrow {
+            transform: rotate(180deg);
+        }
+        .scene-body {
+            display: none;
+            padding: 0 18px 14px;
+            border-top: 1px solid #E6DDD0;
+            padding-top: 12px;
+            font-size: 0.8rem;
+            color: #5C4F45;
+            line-height: 1.65;
+            animation: fadeSlideIn 0.3s ease;
+        }
+        .scene-card.open .scene-body {
+            display: block;
+        }
+        .checklist-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 12px;
+        }
+        .checklist-card {
+            background: #fff;
+            border: 1px solid #E6DDD0;
+            border-radius: var(--radius);
+            padding: 16px;
+            box-shadow: var(--shadow-sm);
+        }
+        .checklist-card h5 {
+            font-weight: 700;
+            font-size: 0.85rem;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: #2E2620;
+        }
+        .checklist-card ul {
+            list-style: none;
+            padding: 0;
+        }
+        .checklist-card ul li {
+            font-size: 0.78rem;
+            color: #5C4F45;
+            padding: 2px 0 2px 16px;
+            position: relative;
+            line-height: 1.55;
+        }
+        .checklist-card ul li::before {
+            content: '☐';
+            position: absolute;
+            left: 0;
+            color: #BFB8A8;
+            font-size: 0.7rem;
+            top: 3px;
+        }
+        .tool-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 12px;
+        }
+        .tool-card {
+            background: #fff;
+            border: 1px solid #E6DDD0;
+            border-radius: var(--radius);
+            padding: 16px;
+            box-shadow: var(--shadow-sm);
+        }
+        .tool-card h5 {
+            font-weight: 700;
+            font-size: 0.85rem;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .tool-card ul {
+            list-style: none;
+            padding: 0;
+        }
+        .tool-card ul li {
+            font-size: 0.78rem;
+            color: #5C4F45;
+            padding: 2px 0 2px 16px;
+            position: relative;
+            line-height: 1.55;
+        }
+        .tool-card ul li::before {
+            content: '📎';
+            position: absolute;
+            left: 0;
+            font-size: 0.6rem;
+            top: 4px;
+        }
+        .cost-badge {
+            display: inline-block;
+            background: #E0F0EF;
+            color: #3D8B7B;
+            font-size: 0.65rem;
+            font-weight: 600;
+            padding: 2px 8px;
+            border-radius: 10px;
+            margin-left: 4px;
+        }
+        .footer-cta {
+            text-align: center;
+            padding: 36px 20px;
+            background: linear-gradient(160deg, #F8F4FA, #FDFBF8, #FFF5F7);
+            border-radius: var(--radius-lg);
+            margin-top: 28px;
+            border: 1px solid #E6DDD0;
+        }
+        .footer-cta h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+            color: #2E2620;
+        }
+        .footer-cta p {
+            color: #8C7E6F;
+            margin-bottom: 4px;
+            font-size: 0.82rem;
+            line-height: 1.6;
+        }
+        .scroll-top {
+            position: fixed;
+            bottom: 22px;
+            right: 22px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #fff;
+            border: 1px solid #E6DDD0;
+            box-shadow: var(--shadow);
+            cursor: pointer;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 99;
+            transition: var(--transition);
+            opacity: 0;
+            pointer-events: none;
+            text-decoration: none;
+            color: #8B5EA7;
+        }
+        .scroll-top.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .scroll-top:hover {
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-2px);
+        }
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 1.3rem;
+            }
+            .hero-subtitle {
+                font-size: 0.8rem;
+            }
+            .stage-header {
+                flex-wrap: wrap;
+                gap: 6px;
+                padding: 14px;
+            }
+            .stage-meta {
+                margin-left: 0;
+                text-align: left;
+                width: 100%;
+            }
+            .stage-body {
+                padding: 0 14px 16px;
+                padding-top: 12px;
+            }
+            .stage-two-col {
+                grid-template-columns: 1fr;
+            }
+            .container {
+                padding: 8px 8px 36px;
+            }
+            .sticky-nav a {
+                font-size: 0.65rem;
+                padding: 5px 6px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="hero">
+        <div class="hero-content">
+            <span class="hero-badge">❤️ 家庭版 · 四阶情绪智力</span>
+            <h1>情绪连接模块 <span>家庭培养系统</span></h1>
+            <p class="hero-subtitle">从“认识情绪”到“表达情绪”到“调节情绪”到“运用情绪”<br>您不需要成为心理专家，只需要按流程陪伴</p>
+            <div class="hero-tagline">
+                🌤️ 认识情绪 · 🗣️ 表达情绪 · 🧘 调节情绪 · 🚀 运用情绪
+            </div>
+        </div>
+    </header>
+
+    <nav class="sticky-nav" id="stickyNav">
+        <div class="sticky-nav-inner">
+            <a href="#stage1" class="nav-dot nd1">1</a>
+            <a href="#stage2" class="nav-dot nd2">2</a>
+            <a href="#stage3" class="nav-dot nd3">3</a>
+            <a href="#stage4" class="nav-dot nd4">4</a>
+            <a href="#path">进阶路径</a>
+            <a href="#scenes">常见问题</a>
+            <a href="#checklist">核对清单</a>
+            <a href="#toolkit">工具包</a>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div class="section-title">
+            <h2>📊 四阶家庭操作体系</h2>
+            <p>每阶清晰区分“家长能做的”与“需要我指导的”，边界明确</p>
+            <div class="section-divider"></div>
+        </div>
+
+        <!-- 第一阶 -->
+        <div class="stage-card open" id="stage1">
+            <div class="stage-header" onclick="toggleStage(this)">
+                <div class="stage-num sn1">1</div>
+                <div class="stage-header-text">
+                    <h3>情绪观察员 · 认识情绪的“天气预报”</h3>
+                    <span class="stage-sub">从“看不懂情绪”到“识别情绪信号”</span>
+                </div>
+                <div class="stage-meta">第1-2个月<br>每日8分钟</div>
+                <span class="stage-arrow">▼</span>
+            </div>
+            <div class="stage-body">
+                <div class="stage-two-col">
+                    <div class="stage-col parent-do">
+                        <h5>✅ 家长能做的（简单操作）</h5>
+                        <ul>
+                            <li><strong>准备工具（5分钟）：</strong>打印情绪天气图（A4纸大小）、4个表情贴纸（😊😠😢😨）、普通笔记本、彩色笔</li>
+                            <li><strong>情绪签到（3分钟）：</strong>晚饭后全家每人说“我今天的心情像____天气”。孩子在情绪天气图上贴对应表情</li>
+                            <li><strong>身体扫描（2分钟）：</strong>问孩子：“这个情绪在身体哪里？”“生气时胸口紧不紧？高兴时肚子暖不暖？”</li>
+                            <li><strong>简单记录（3分钟）：</strong>在笔记本上画——日期、天气图标、一句话“今天我____因为____”。规则：不说“不要生气”，只说“我看到你生气了”</li>
+                            <li><strong>每周特别活动：</strong>周一穿颜色日（高兴穿黄色，伤心穿蓝色）；周三表情模仿日；周五情绪故事日</li>
+                        </ul>
+                    </div>
+                    <div class="stage-col guide-need">
+                        <h5>🎓 需要我指导的（核心价值）</h5>
+                        <div class="highlight-box highlight-gold">
+                            <strong>✅ 情绪识别能力诊断：</strong>每周提交3次情绪记录照片，我分析情绪词汇量评估、情绪-情境匹配度、身体觉察准确度。提供下周重点：需要增加哪种情绪的学习？
+                        </div>
+                        <div class="highlight-box highlight-gold">
+                            <strong>✅ 情绪教育入门指导：</strong>基础情绪卡（4种基本情绪配表情图+身体感觉+常见原因）。家长易犯错误纠正：不说“不要哭”改说“我看到你很难过”。提供“家庭情绪安全承诺书”模板。
+                        </div>
+                        <div class="highlight-box highlight-gold">
+                            <strong>✅ 情绪发展基线建立：</strong>提供“情绪能力起点测试”——看图说情绪、情境情绪匹配、身体感觉识别。根据结果提供个性化起点方案。
+                        </div>
+                    </div>
+                </div>
+                <p style="font-size:0.76rem;color:#8C7E6F;margin-top:8px;">📦 <strong>工具包：</strong>情绪天气图（打印） · 表情贴纸（4种基本情绪） · 情绪日记本 · 彩色笔</p>
+            </div>
+        </div>
+
+        <!-- 第二阶 -->
+        <div class="stage-card" id="stage2">
+            <div class="stage-header" onclick="toggleStage(this)">
+                <div class="stage-num sn2">2</div>
+                <div class="stage-header-text">
+                    <h3>情绪表达家 · 学会“说情绪”</h3>
+                    <span class="stage-sub">从“憋在心里”到“安全表达”</span>
+                </div>
+                <div class="stage-meta">第3-5个月<br>每日10分钟</div>
+                <span class="stage-arrow">▼</span>
+            </div>
+            <div class="stage-body">
+                <div class="stage-two-col">
+                    <div class="stage-col parent-do">
+                        <h5>✅ 家长能做的（简单操作）</h5>
+                        <ul>
+                            <li><strong>表达工具升级：</strong>制作情绪温度计（纸板画温度计，指针用回形针）、打印情绪表达选择轮、准备表达材料（白纸、彩笔、黏土）</li>
+                            <li><strong>强度分级（3分钟）：</strong>用情绪温度计：“今天的生气在1-10的哪一级？”练习区分“3级生气是嘟嘴”和“8级生气是跺脚”</li>
+                            <li><strong>选择表达方式（4分钟）：</strong>看表达选择轮——说“我感到生气因为……”、画生气的画、用黏土捏形状、做安全动作。孩子选一种方式表达</li>
+                            <li><strong>表达后反馈（3分钟）：</strong>家长说“你用画画表达生气，妈妈看懂了”。孩子说“说出来/画出来之后，我感觉……”</li>
+                            <li><strong>情境练习（每周2次）：</strong>抽情境卡片角色扮演——玩具被抢了、作业写不出来、朋友不跟我玩等</li>
+                        </ul>
+                    </div>
+                    <div class="stage-col guide-need">
+                        <h5>🎓 需要我指导的（核心价值）</h5>
+                        <div class="highlight-box highlight-gold">
+                            <strong>✅ 表达困难诊断：</strong>通过表达练习视频分析——词汇缺乏型、恐惧表达型、行动代替型、混淆型。每种类型提供一周专项练习方案。
+                        </div>
+                        <div class="highlight-box highlight-gold">
+                            <strong>✅ 表达技能分层教学：</strong>基础表达包（情绪命名、简单句式）、进阶表达包（复杂情绪、情绪变化、因果关系）、高级表达包（创造性表达、隐喻表达、艺术表达）。
+                        </div>
+                        <div class="highlight-box highlight-gold">
+                            <strong>✅ 表达情境适应训练：</strong>在家里可以大声说和画画；在学校可以小声告诉老师、写纸条；在公共场合可以拉妈妈手、做暗号。每个场合提供3种操作方法。
+                        </div>
+                    </div>
+                </div>
+                <p style="font-size:0.76rem;color:#8C7E6F;margin-top:8px;">📦 <strong>工具包：</strong>情绪温度计材料（纸板+回形针） · 情绪表达选择轮（打印） · 表达材料（白纸、彩笔、黏土） · 情境卡片（打印）</p>
+            </div>
+        </div>
+
+        <!-- 第三阶 -->
+        <div class="stage-card" id="stage3">
+            <div class="stage-header" onclick="toggleStage(this)">
+                <div class="stage-num sn3">3</div>
+                <div class="stage-header-text">
+                    <h3>情绪调节师 · 管理情绪能量</h3>
+                    <span class="stage-sub">从“被情绪控制”到“调控情绪”</span>
+                </div>
+                <div class="stage-meta">第6-9个月<br>每周学一种方法</div>
+                <span class="stage-arrow">▼</span>
+            </div>
+            <div class="stage-body">
+                <div class="stage-two-col">
+                    <div class="stage-col parent-do">
+                        <h5>✅ 家长能做的（简单操作）</h5>
+                        <ul>
+                            <li><strong>调节工具准备：</strong>布置冷静角（垫子+抱枕+calming jar）、打印调节策略卡片（12张）、制作“我的调节工具箱”小盒子</li>
+                            <li><strong>第1-2周身体调节：</strong>深呼吸练习（4秒吸气-7秒屏气-8秒呼气）、肌肉放松（像机器人紧绷→像布娃娃放松）、感官安抚（闻香包、摸软布、听轻音乐）</li>
+                            <li><strong>第3-4周认知调节：</strong>想法检测（区分“事实”和“想法”）、换角度思考（“好朋友会怎么说？”）、积极再想（“教会我什么？”）</li>
+                            <li><strong>第5-6周行为调节：</strong>运动释放（生气时捶枕头）、转移注意（做喜欢的事）、延迟反应（数到10再说话）</li>
+                            <li><strong>第7-8周关系调节：</strong>寻求帮助、沟通解决（“我感到……因为……我希望……”）、修复关系（道歉或弥补）</li>
+                            <li><strong>日常实践：</strong>情绪波动时启动调节程序→从工具箱选策略卡→使用后记录效果→每周总结最有效方法</li>
+                        </ul>
+                    </div>
+                    <div class="stage-col guide-need">
+                        <h5>🎓 需要我指导的（核心价值）</h5>
+                        <div class="highlight-box highlight-gold">
+                            <strong>✅ 调节策略效能评估：</strong>每月提交调节记录，我分析策略掌握度、策略匹配度、策略效能、自主使用率。提供个性化调节方案优化。
+                        </div>
+                        <div class="highlight-box highlight-gold">
+                            <strong>✅ 大脑科学简单科普：</strong>提供儿童友好图解——“生气时情绪脑着火，冷静角帮理智脑灭火”。迷走神经安抚法（哼歌、漱口）、心率调节训练。情绪像水要疏导不要堵。
+                        </div>
+                        <div class="highlight-box highlight-gold">
+                            <strong>✅ 特殊情绪应对包：</strong>焦虑应对包（信号识别、安全基地、渐进暴露）；愤怒管理包（预警系统、安全发泄通道、背后需求）；挫折耐受包（成长型思维植入、失败重定义、弹性恢复训练）。
+                        </div>
+                    </div>
+                </div>
+                <p style="font-size:0.76rem;color:#8C7E6F;margin-top:8px;">📦 <strong>工具包：</strong>冷静角材料（垫子+抱枕） · calming jar材料（水瓶+亮片+胶水） · 调节策略卡片（打印） · “我的调节工具箱”小盒子</p>
+            </div>
+        </div>
+
+        <!-- 第四阶 -->
+        <div class="stage-card" id="stage4">
+            <div class="stage-header" onclick="toggleStage(this)">
+                <div class="stage-num sn4">4</div>
+                <div class="stage-header-text">
+                    <h3>情绪赋能者 · 让情绪成为力量</h3>
+                    <span class="stage-sub">从“管理情绪”到“运用情绪”</span>
+                </div>
+                <div class="stage-meta">第10-12个月<br>每月一个项目</div>
+                <span class="stage-arrow">▼</span>
+            </div>
+            <div class="stage-body">
+                <div class="stage-two-col">
+                    <div class="stage-col parent-do">
+                        <h5>✅ 家长能做的（简单操作）</h5>
+                        <ul>
+                            <li><strong>情绪赋能材料：</strong>情绪-学习记录表、情绪创意项目指南、家庭情绪智慧档案（文件夹或相册）</li>
+                            <li><strong>项目1情绪学习导航仪（第10个月）：</strong>记录学习时的情绪和效率。发现什么时候最专心？制作“最佳学习情绪表”。学习前情绪准备：深呼吸、听音乐、想象成功</li>
+                            <li><strong>项目2情绪创意工作坊（第11个月）：</strong>将情绪转化为创作——生气写诗、伤心画画、高兴编故事。举办家庭情绪艺术展。制作情绪作品集</li>
+                            <li><strong>项目3情绪小领袖（第12个月）：</strong>学习识别他人情绪（“爸爸现在好像累了”）。练习回应他人情绪。担任家庭情绪调解员。设计班级情绪支持卡</li>
+                            <li><strong>情绪赋能日常：</strong>挑战前调动“兴奋”能量、困难时调用“坚持”资源、成功时享受“自豪”奖励。记录情绪赋能成功案例</li>
+                        </ul>
+                    </div>
+                    <div class="stage-col guide-need">
+                        <h5>🎓 需要我指导的（核心价值）</h5>
+                        <div class="highlight-box highlight-gold">
+                            <strong>✅ 情绪智力综合评估：</strong>通过一年数据提供《情绪智力发展报告》——情绪觉察维度、情绪表达维度、情绪调节维度、情绪运用维度。发展建议：强项是什么？下一步学什么？
+                        </div>
+                        <div class="highlight-box highlight-gold">
+                            <strong>✅ 情绪智慧深度指导：</strong>情绪与学习科学（积极情绪对记忆的帮助、适度紧张对注意力的提升）、情绪创造力开发、社会情绪智力培养（同理心训练、友谊中的情绪、小组协作中的情绪协调）。
+                        </div>
+                        <div class="highlight-box highlight-gold">
+                            <strong>✅ 长期情绪能力规划：</strong>情绪特长方向建议、后续学习资源推荐（书籍、课程、社区）、家庭情绪文化延续（情绪对话的保持、庆祝仪式的建立、代际传递）。
+                        </div>
+                    </div>
+                </div>
+                <p style="font-size:0.76rem;color:#8C7E6F;margin-top:8px;">📦 <strong>工具包：</strong>情绪-学习记录表（打印） · 情绪创意项目指南（打印） · 家庭情绪智慧档案（文件夹） · 展示材料（画框、展示板）</p>
+            </div>
+        </div>
+
+        <!-- 进阶路径图 -->
+        <section id="path">
+            <div class="section-title">
+                <h2>📈 四阶进阶路径图</h2>
+                <p>升级标准清晰，家长可自行判断</p>
+                <div class="section-divider"></div>
+            </div>
+            <div class="path-table-wrap">
+                <table class="path-table">
+                    <thead><tr><th>阶段</th><th>核心目标</th><th>升级标准（家长可判断）</th><th>建议时间</th></tr></thead>
+                    <tbody>
+                        <tr><td><span class="stage-dot-cell" style="background:#8B5EA7;">1</span></td><td>认识情绪</td><td>能说出4种以上基本情绪；能描述情绪在身体的感觉；连续7天情绪记录</td><td>1-2个月</td></tr>
+                        <tr><td><span class="stage-dot-cell" style="background:#E07088;">2</span></td><td>表达情绪</td><td>能用3种以上方式表达情绪；能区分情绪强度；情境表达适当性提升</td><td>3-5个月</td></tr>
+                        <tr><td><span class="stage-dot-cell" style="background:#3D8B7B;">3</span></td><td>调节情绪</td><td>掌握5种以上调节策略；情绪恢复时间缩短50%；能主动使用策略</td><td>6-9个月</td></tr>
+                        <tr><td><span class="stage-dot-cell" style="background:#4A80C0;">4</span></td><td>运用情绪</td><td>完成情绪赋能项目；能用情绪支持学习；能识别并回应他人情绪</td><td>10-12个月</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- 常见问题 -->
+        <section id="scenes">
+            <div class="section-title">
+                <h2>🧩 家庭常见问题解决方案</h2>
+                <p>三个高频困境，家长能做的 + 需要我指导的</p>
+                <div class="section-divider"></div>
+            </div>
+            <div class="scene-card">
+                <div class="scene-header" onclick="toggleScene(this)">🤐 问题一：“孩子不愿意说情绪” <span class="scene-arrow">▼</span></div>
+                <div class="scene-body"><strong>✅ 家长能做的：</strong>从间接方式开始（玩偶对话、画画、写纸条）；家长先说（“妈妈今天有点紧张因为……”）；创造安全时刻（睡前黑暗中更容易开口）。<br><strong>🎓 需要我指导的：</strong>拒绝原因深度分析（过去创伤？害怕后果？）；间接沟通技巧训练；信任重建具体步骤。</div>
+            </div>
+            <div class="scene-card">
+                <div class="scene-header" onclick="toggleScene(this)">😤 问题二：“孩子情绪爆发时我也跟着失控” <span class="scene-arrow">▼</span></div>
+                <div class="scene-body"><strong>✅ 家长能做的：</strong>建立暂停暗号（“红绿灯！红灯停！”）；准备家长冷静包（自己的深呼吸方法、离开现场）；事后修复（“刚才我们都急了，现在重新说”）。<br><strong>🎓 需要我指导的：</strong>家长情绪触发点分析；亲子共调节技巧；冲突后关系修复话术。</div>
+            </div>
+            <div class="scene-card">
+                <div class="scene-header" onclick="toggleScene(this)">🔄 问题三：“学了很多但遇到事情还是老样子” <span class="scene-arrow">▼</span></div>
+                <div class="scene-body"><strong>✅ 家长能做的：</strong>降低期望（庆祝小进步，少发一次火也是进步）；找到成功时刻（记录哪怕一次的小成功）；调整方法（可能方法不对或练习不够）。<br><strong>🎓 需要我指导的：</strong>技能转化障碍诊断；个性化方法调整建议；强化练习方案设计。</div>
+            </div>
+        </section>
+
+        <!-- 月度核对清单 -->
+        <section id="checklist">
+            <div class="section-title">
+                <h2>📋 家长月度核对清单</h2>
+                <p>每月最后一天花15分钟</p>
+                <div class="section-divider"></div>
+            </div>
+            <div class="checklist-grid">
+                <div class="checklist-card"><h5>📊 成果整理</h5><ul><li>整理情绪天气图记录</li><li>回看情绪表达作品</li><li>对比调节策略使用情况</li><li>收集情绪赋能案例</li></ul></div>
+                <div class="checklist-card"><h5>📈 数据统计</h5><ul><li>情绪词汇增加数量</li><li>表达方式使用次数</li><li>调节策略掌握数量</li><li>情绪恢复时间变化</li></ul></div>
+                <div class="checklist-card"><h5>🔍 问题梳理</h5><ul><li>本月最大情绪挑战是什么？</li><li>哪种方法对您家最有效？</li><li>需要厉老师帮助的具体问题？</li></ul></div>
+                <div class="checklist-card"><h5>🎯 下月规划</h5><ul><li>是否进阶？</li><li>需要什么新工具？</li><li>设定一个情绪成长小目标</li></ul></div>
+            </div>
+        </section>
+
+        <!-- 工具包总览 -->
+        <section id="toolkit">
+            <div class="section-title">
+                <h2>🛠️ 家庭工具包总览</h2>
+                <p>物理工具成本低于100元，数字资源全部由我提供</p>
+                <div class="section-divider"></div>
+            </div>
+            <div class="tool-grid">
+                <div class="tool-card"><h5>📦 物理工具 <span class="cost-badge">&lt;100元</span></h5><ul><li>第一阶：情绪天气图（打印）+表情贴纸+情绪日记本+彩色笔（约20元）</li><li>第二阶：情绪温度计材料+表达选择轮（打印）+表达材料（白纸、彩笔、黏土）+情境卡片（约25元）</li><li>第三阶：冷静角材料（垫子+抱枕）+calming jar材料+调节策略卡片（打印）+小盒子（约30元）</li><li>第四阶：情绪-学习记录表（打印）+创意项目指南（打印）+家庭情绪智慧档案+展示材料（约25元）</li></ul></div>
+                <div class="tool-card"><h5>💻 数字资源（我提供）</h5><ul><li>打印材料库：情绪天气图模板、表达选择轮模板、调节策略卡片、记录表模板</li><li>音频视频资源：情绪教育微课（每阶3-5个）、呼吸练习引导音频、情绪故事音频、项目制作指导视频</li><li>评估与反馈工具：在线情绪能力测试、进步追踪图表生成、专业反馈报告模板</li></ul></div>
+            </div>
+        </section>
+
+        <!-- 价值承诺 -->
+        <div class="footer-cta">
+            <h3>💎 最终给家长的价值承诺</h3>
+            <p><strong>简单操作承诺：</strong>您只需要按照四阶路径使用简单易得的工具，完成明确的每日/每周任务。每一步都有清晰指引，每个活动都有具体方法。</p>
+            <p><strong>专业价值承诺：</strong>但想要真正培养孩子的情绪智慧——让孩子不仅管理情绪，更能让情绪成为学习和创造的力量——您需要我们的专业诊断、个性化方案、关键时刻支持和持续深度指导。</p>
+            <p><strong>成果可视承诺：</strong>每月您都会看到可测量的进步：情绪词汇增加、表达方式丰富、调节能力提升、情绪赋能案例。每季度都有里程碑认证和情绪作品展示。</p>
+            <p style="font-weight:600;color:#8B5EA7;margin-top:8px;">❤️ 从“情绪失控”到“情绪智慧”，这是送给孩子一生的心灵礼物。</p>
+        </div>
+    </main>
+
+    <a href="#" class="scroll-top" id="scrollTop" title="回到顶部">↑</a>
+
+    <script>
+        function toggleStage(header) { header.parentElement.classList.toggle('open'); }
+        function toggleScene(header) { header.parentElement.classList.toggle('open'); }
+        const scrollTopBtn = document.getElementById('scrollTop');
+        window.addEventListener('scroll', () => { if (window.scrollY > 500) { scrollTopBtn.classList.add('visible'); } else { scrollTopBtn.classList.remove('visible'); } const sections = document.querySelectorAll('section[id], .stage-card[id]'); const navLinks = document.querySelectorAll('.sticky-nav a'); let currentId = ''; sections.forEach(section => { const rect = section.getBoundingClientRect(); if (rect.top <= 140) { currentId = section.id; } }); navLinks.forEach(link => { link.classList.remove('active'); if (link.getAttribute('href') === '#' + currentId) { link.classList.add('active'); } }); });
+        document.querySelectorAll('.sticky-nav a[href^="#"]').forEach(link => { link.addEventListener('click', function(e) { e.preventDefault(); const target = document.querySelector(this.getAttribute('href')); if (target) { const navHeight = document.querySelector('.sticky-nav').offsetHeight; const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - navHeight - 8; window.scrollTo({ top: targetPosition, behavior: 'smooth' }); } }); });
+        scrollTopBtn.addEventListener('click', function(e) { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); });
+        document.addEventListener('DOMContentLoaded', () => { const firstCard = document.getElementById('stage1'); if (firstCard && !firstCard.classList.contains('open')) { firstCard.classList.add('open'); } });
+    </script>
+</body>
+</html>

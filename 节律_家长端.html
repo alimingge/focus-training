@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>生理节律模块 · 家庭版 | 四阶节律优化系统</title>
+    <style>
+        :root {
+            --rhythm-sunrise: #E8A840;
+            --rhythm-sunrise-light: #FFF9EB;
+            --rhythm-sky: #4A80C0;
+            --rhythm-sky-light: #F0F6FC;
+            --rhythm-teal: #3D8B7B;
+            --rhythm-teal-light: #F2F9F7;
+            --rhythm-lavender: #8B5EA7;
+            --rhythm-lavender-light: #F8F4FA;
+            --rhythm-coral: #E07088;
+            --rhythm-coral-light: #FFF5F7;
+            --text: #2E2620;
+            --text-light: #5C4F45;
+            --text-lighter: #8C7E6F;
+            --bg: #FDFBF8;
+            --card-bg: #FFFFFF;
+            --border: #E6DDD0;
+            --shadow-sm: 0 1px 4px rgba(50, 30, 10, 0.04);
+            --shadow: 0 4px 18px rgba(50, 30, 10, 0.06);
+            --shadow-lg: 0 10px 30px rgba(50, 30, 10, 0.10);
+            --radius-sm: 10px;
+            --radius: 16px;
+            --radius-lg: 22px;
+            --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Sans SC', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.75;
+            -webkit-font-smoothing: antialiased;
+            scroll-behavior: smooth;
+            font-size: 15px;
+            background-image: radial-gradient(circle, rgba(232, 168, 64, 0.02) 1px, transparent 1px), radial-gradient(circle, rgba(74, 128, 192, 0.02) 1px, transparent 1px);
+            background-size: 32px 32px, 44px 44px;
+            background-position: 0 0, 22px 22px;
+        }
+        .hero {
+            background: linear-gradient(165deg, #FFF9EB 0%, #FDFBF8 20%, #F0F6FC 40%, #FDFBF8 60%, #F2F9F7 80%, #FDFBF8 100%);
+            padding: 50px 20px 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 1px solid #E6DDD0;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -100px;
+            right: -70px;
+            width: 340px;
+            height: 340px;
+            background: radial-gradient(circle, rgba(232, 168, 64, 0.05) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -80px;
+            left: -60px;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(74, 128, 192, 0.04) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 760px;
+            margin: 0 auto;
+        }
+        .hero-badge {
+            display: inline-block;
+            background: #fff;
+            color: #E8A840;
+            font-size: 0.82rem;
+            font-weight: 700;
+            padding: 6px 20px;
+            border-radius: 22px;
+            letter-spacing: 0.04em;
+            margin-bottom: 16px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid #F0E0C0;
+        }
+        .hero h1 {
+            font-size: 2.3rem;
+            font-weight: 800;
+            letter-spacing: -0.015em;
+            color: #2E2620;
+            margin-bottom: 8px;
+            line-height: 1.3;
+        }
+        .hero h1 span {
+            background: linear-gradient(135deg, #E8A840, #4A80C0, #3D8B7B);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .hero-subtitle {
+            font-size: 0.95rem;
+            color: #5C4F45;
+            font-weight: 400;
+            margin-bottom: 8px;
+            line-height: 1.6;
+        }
+        .hero-tagline {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #fff;
+            padding: 9px 22px;
+            border-radius: 24px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #2E2620;
+            box-shadow: var(--shadow);
+            border: 1px solid #E6DDD0;
+        }
+        .sticky-nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(253, 251, 248, 0.9);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid #E6DDD0;
+            padding: 0 10px;
+            overflow-x: auto;
+            white-space: nowrap;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        .sticky-nav::-webkit-scrollbar {
+            display: none;
+        }
+        .sticky-nav-inner {
+            max-width: 1080px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 2px;
+            padding: 7px 0;
+        }
+        .sticky-nav a {
+            display: inline-block;
+            text-decoration: none;
+            font-size: 0.74rem;
+            font-weight: 500;
+            color: #5C4F45;
+            padding: 6px 11px;
+            border-radius: 16px;
+            transition: var(--transition);
+            flex-shrink: 0;
+            letter-spacing: 0.02em;
+        }
+        .sticky-nav a:hover,
+        .sticky-nav a.active {
+            background: #FFF9EB;
+            color: #E8A840;
+            font-weight: 600;
+        }
+        .sticky-nav a.nav-dot {
+            width: 28px;
+            height: 28px;
+            padding: 0;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.7rem;
+            color: #fff;
+            flex-shrink: 0;
+        }
+        .nd1 {
+            background: #E8A840;
+        }
+        .nd2 {
+            background: #4A80C0;
+        }
+        .nd3 {
+            background: #3D8B7B;
+        }
+        .nd4 {
+            background: #8B5EA7;
+        }
+        .container {
+            max-width: 1080px;
+            margin: 0 auto;
+            padding: 14px 16px 50px;
+        }
+        .section-title {
+            text-align: center;
+            margin: 44px 0 18px;
+        }
+        .section-title h2 {
+            font-size: 1.45rem;
+            font-weight: 700;
+            letter-spacing: -0.006em;
+            margin-bottom: 4px;
+            color: #2E2620;
+        }
+        .section-title p {
+            color: #8C7E6F;
+            font-size: 0.84rem;
+        }
+        .section-divider {
+            width: 48px;
+            height: 3px;
+            border-radius: 2px;
+            margin: 8px auto 0;
+            background: linear-gradient(90deg, #E8A840, #4A80C0, #3D8B7B);
+        }
+        .stage-card {
+            background: #fff;
+            border-radius: var(--radius-lg);
+            margin-bottom: 18px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            border: 1px solid #E6DDD0;
+            transition: var(--transition);
+        }
+        .stage-card:hover {
+            box-shadow: var(--shadow-lg);
+        }
+        .stage-header {
+            padding: 18px 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            user-select: none;
+        }
+        .stage-num {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1.1rem;
+            color: #fff;
+            flex-shrink: 0;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+        }
+        .sn1 {
+            background: #E8A840;
+        }
+        .sn2 {
+            background: #4A80C0;
+        }
+        .sn3 {
+            background: #3D8B7B;
+        }
+        .sn4 {
+            background: #8B5EA7;
+        }
+        .stage-header-text h3 {
+            font-size: 1rem;
+            font-weight: 700;
+            line-height: 1.3;
+            color: #2E2620;
+        }
+        .stage-header-text .stage-sub {
+            font-size: 0.74rem;
+            color: #8C7E6F;
+        }
+        .stage-meta {
+            margin-left: auto;
+            text-align: right;
+            flex-shrink: 0;
+            font-size: 0.72rem;
+            color: #8C7E6F;
+            line-height: 1.4;
+        }
+        .stage-arrow {
+            font-size: 1rem;
+            transition: var(--transition);
+            color: #8C7E6F;
+            flex-shrink: 0;
+            margin-left: 2px;
+        }
+        .stage-card.open .stage-arrow {
+            transform: rotate(180deg);
+        }
+        .stage-body {
+            display: none;
+            padding: 0 20px 20px;
+            border-top: 1px solid #E6DDD0;
+            padding-top: 16px;
+            animation: fadeSlideIn 0.3s ease;
+        }
+        .stage-card.open .stage-body {
+            display: block;
+        }
+        @keyframes fadeSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-5px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .stage-two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+        }
+        @media (max-width: 680px) {
+            .stage-two-col {
+                grid-template-columns: 1fr;
+            }
+        }
+        .stage-col {
+            border-radius: var(--radius-sm);
+            padding: 16px;
+            border: 1px solid #E6DDD0;
+            background: #FEFCFA;
+        }
+        .stage-col.parent-do {
+            border-left: 4px solid #6B8A6F;
+            background: #F9FBF7;
+        }
+        .stage-col.guide-need {
+            border-left: 4px solid #C48B3A;
+            background: #FFFDF8;
+        }
+        .stage-col h5 {
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #2E2620;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .stage-col ul {
+            list-style: none;
+            padding: 0;
+        }
+        .stage-col ul li {
+            font-size: 0.8rem;
+            color: #5C4F45;
+            padding: 3px 0 3px 16px;
+            position: relative;
+            line-height: 1.6;
+        }
+        .stage-col ul li::before {
+            content: '•';
+            position: absolute;
+            left: 1px;
+            color: #BFB8A8;
+            font-weight: 700;
+        }
+        .highlight-box {
+            border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+            padding: 10px 14px;
+            margin: 8px 0;
+            font-size: 0.78rem;
+            color: #5C4F45;
+            line-height: 1.6;
+        }
+        .highlight-amber {
+            background: #FFFDF8;
+            border-left: 3px solid #E8A840;
+        }
+        .highlight-blue {
+            background: #F5F8FB;
+            border-left: 3px solid #4A80C0;
+        }
+        .highlight-teal {
+            background: #F2F9F7;
+            border-left: 3px solid #3D8B7B;
+        }
+        .highlight-lavender {
+            background: #F8F4FA;
+            border-left: 3px solid #8B5EA7;
+        }
+        .highlight-gold {
+            background: #FFFDF8;
+            border-left: 3px solid #C48B3A;
+        }
+        .tag-xs {
+            display: inline-block;
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 3px 9px;
+            border-radius: 10px;
+            margin: 2px;
+            letter-spacing: 0.02em;
+            background: #FFF8EF;
+            color: #C8941E;
+        }
+        .tag-xs.blue {
+            background: #E8F0F5;
+            color: #4A80C0;
+        }
+        .tag-xs.teal {
+            background: #E0F0EF;
+            color: #3D8B7B;
+        }
+        .tag-xs.lavender {
+            background: #F0EAF5;
+            color: #8B5EA7;
+        }
+        .path-table-wrap {
+            overflow-x: auto;
+            margin: 14px 0;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-sm);
+            border: 1px solid #E6DDD0;
+            background: #fff;
+        }
+        .path-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.76rem;
+            min-width: 650px;
+        }
+        .path-table th {
+            background: #FFF9EB;
+            padding: 10px 8px;
+            text-align: center;
+            font-weight: 700;
+            font-size: 0.72rem;
+            color: #C8941E;
+            letter-spacing: 0.03em;
+            border-bottom: 2px solid #F0E0C0;
+        }
+        .path-table td {
+            padding: 8px;
+            text-align: center;
+            border-bottom: 1px solid #F0EBE2;
+            color: #3D3226;
+            font-size: 0.74rem;
+            vertical-align: middle;
+        }
+        .path-table tr:last-child td {
+            border-bottom: none;
+        }
+        .stage-dot-cell {
+            display: inline-block;
+            width: 28px;
+            height: 28px;
+            line-height: 28px;
+            border-radius: 50%;
+            color: #fff;
+            font-weight: 700;
+            font-size: 0.75rem;
+            text-align: center;
+        }
+        .scene-card {
+            background: #fff;
+            border: 1px solid #E6DDD0;
+            border-radius: var(--radius);
+            margin-bottom: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+        }
+        .scene-header {
+            padding: 14px 18px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.86rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            user-select: none;
+            background: #FDFBF8;
+            transition: var(--transition);
+        }
+        .scene-header:hover {
+            background: #FFF9EB;
+        }
+        .scene-arrow {
+            transition: var(--transition);
+            font-size: 0.85rem;
+            color: #8C7E6F;
+        }
+        .scene-card.open .scene-arrow {
+            transform: rotate(180deg);
+        }
+        .scene-body {
+            display: none;
+            padding: 0 18px 14px;
+            border-top: 1px solid #E6DDD0;
+            padding-top: 12px;
+            font-size: 0.8rem;
+            color: #5C4F45;
+            line-height: 1.65;
+            animation: fadeSlideIn 0.3s ease;
+        }
+        .scene-card.open .scene-body {
+            display: block;
+        }
+        .checklist-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 12px;
+        }
+        .checklist-card {
+            background: #fff;
+            border: 1px solid #E6DDD0;
+            border-radius: var(--radius);
+            padding: 16px;
+            box-shadow: var(--shadow-sm);
+        }
+        .checklist-card h5 {
+            font-weight: 700;
+            font-size: 0.85rem;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: #2E2620;
+        }
+        .checklist-card ul {
+            list-style: none;
+            padding: 0;
+        }
+        .checklist-card ul li {
+            font-size: 0.78rem;
+            color: #5C4F45;
+            padding: 2px 0 2px 16px;
+            position: relative;
+            line-height: 1.55;
+        }
+        .checklist-card ul li::before {
+            content: '☐';
+            position: absolute;
+            left: 0;
+            color: #BFB8A8;
+            font-size: 0.7rem;
+            top: 3px;
+        }
+        .tool-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 12px;
+        }
+        .tool-card {
+            background: #fff;
+            border: 1px solid #E6DDD0;
+            border-radius: var(--radius);
+            padding: 16px;
+            box-shadow: var(--shadow-sm);
+        }
+        .tool-card h5 {
+            font-weight: 700;
+            font-size: 0.85rem;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .tool-card ul {
+            list-style: none;
+            padding: 0;
+        }
+        .tool-card ul li {
+            font-size: 0.78rem;
+            color: #5C4F45;
+            padding: 2px 0 2px 16px;
+            position: relative;
+            line-height: 1.55;
+        }
+        .tool-card ul li::before {
+            content: '📎';
+            position: absolute;
+            left: 0;
+            font-size: 0.6rem;
+            top: 4px;
+        }
+        .cost-badge {
+            display: inline-block;
+            background: #E0F0EF;
+            color: #3D8B7B;
+            font-size: 0.65rem;
+            font-weight: 600;
+            padding: 2px 8px;
+            border-radius: 10px;
+            margin-left: 4px;
+        }
+        .footer-cta {
+            text-align: center;
+            padding: 36px 20px;
+            background: linear-gradient(160deg, #FFF9EB, #FDFBF8, #F0F6FC);
+            border-radius: var(--radius-lg);
+            margin-top: 28px;
+            border: 1px solid #E6DDD0;
+        }
+        .footer-cta h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+            color: #2E2620;
+        }
+        .footer-cta p {
+            color: #8C7E6F;
+            margin-bottom: 4px;
+            font-size: 0.82rem;
+            line-height: 1.6;
+        }
+        .scroll-top {
+            position: fixed;
+            bottom: 22px;
+            right: 22px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #fff;
+            border: 1px solid #E6DDD0;
+            box-shadow: var(--shadow);
+            cursor: pointer;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 99;
+            transition: var(--transition);
+            opacity: 0;
+            pointer-events: none;
+            text-decoration: none;
+            color: #E8A840;
+        }
+        .scroll-top.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .scroll-top:hover {
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-2px);
+        }
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 1.3rem;
+            }
+            .hero-subtitle {
+                font-size: 0.8rem;
+            }
+            .stage-header {
+                flex-wrap: wrap;
+                gap: 6px;
+                padding: 14px;
+            }
+            .stage-meta {
+                margin-left: 0;
+                text-align: left;
+                width: 100%;
+            }
+            .stage-body {
+                padding: 0 14px 16px;
+                padding-top: 12px;
+            }
+            .stage-two-col {
+                grid-template-columns: 1fr;
+            }
+            .container {
+                padding: 8px 8px 36px;
+            }
+            .sticky-nav a {
+                font-size: 0.65rem;
+                padding: 5px 6px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="hero">
+        <div class="hero-content">
+            <span class="hero-badge">⏰ 家庭版 · 四阶节律优化</span>
+            <h1>生理节律模块 <span>家庭培养系统</span></h1>
+            <p class="hero-subtitle">家长执行简单记录和仪式，我们提供专业诊断和个性化方案<br>从“观察记录”到“建立仪式”到“任务匹配”到“自主管理”</p>
+            <div class="hero-tagline">
+                🔍 发现能量地图 · 🌅 建立节律仪式 · 🎯 任务匹配 · 🚀 自主管理
+            </div>
+        </div>
+    </header>
+
+    <nav class="sticky-nav" id="stickyNav">
+        <div class="sticky-nav-inner">
+            <a href="#stage1" class="nav-dot nd1">1</a>
+            <a href="#stage2" class="nav-dot nd2">2</a>
+            <a href="#stage3" class="nav-dot nd3">3</a>
+            <a href="#stage4" class="nav-dot nd4">4</a>
+            <a href="#path">进阶路径</a>
+            <a href="#scenes">常见问题</a>
+            <a href="#checklist">核对清单</a>
+            <a href="#toolkit">工具包</a>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div class="section-title">
+            <h2>📊 四阶家庭操作体系</h2>
+            <p>每阶清晰区分“家长能做的”与“需要我指导的”，边界明确</p>
+            <div class="section-divider"></div>
+        </div>
+
+        <!-- 第一阶 -->
+        <div class="stage-card open" id="stage1">
+            <div class="stage-header" onclick="toggleStage(this)">
+                <div class="stage-num sn1">1</div>
+                <div class="stage-header-text">
+                    <h3>节律观察期 · 发现我的能量地图</h3>
+                    <span class="stage-sub">从“不知道规律”到“看见能量波动”</span>
+                </div>
+                <div class="stage-meta">第1个月<br>每日3次×1分钟</div>
+                <span class="stage-arrow">▼</span>
+            </div>
+            <div class="stage-body">
+                <div class="stage-two-col">
+                    <div class="stage-col parent-do">
+                        <h5>✅ 家长能做的（简单操作）</h5>
+                        <ul>
+                            <li><strong>准备工具（5分钟）：</strong>“一日能量地图”贴纸表（可贴冰箱上）、四种表情贴纸😊😐😢💤、手机拍照功能、厨房定时器</li>
+                            <li><strong>早晨记录（起床后30分钟）：</strong>问孩子“现在有几个闪电的能量？”（1-4个⚡），帮孩子贴上对应数量的闪电贴纸</li>
+                            <li><strong>午后记录（下午3点）：</strong>问孩子“现在是什么表情？”，贴上对应表情贴纸</li>
+                            <li><strong>晚间记录（睡前30分钟）：</strong>问孩子“今天什么时候最有精神？”，在能量地图上圈出那个时间段</li>
+                            <li><strong>周末家庭会议（15分钟）：</strong>一起看一周的能量地图，用彩色笔连接每天的相似时间点，找出“红色高能时段”和“蓝色低能时段”，颁发“节律小侦探”贴纸</li>
+                        </ul>
+                    </div>
+                    <div class="stage-col guide-need">
+                        <h5>🎓 需要我指导的（核心价值）</h5>
+                        <div class="highlight-box highlight-gold">
+                            <strong>✅ 节律类型初步判断：</strong>通过一周记录，我帮您分析孩子是“早鸟型”还是“夜猫型”？精力波动是“平稳型”还是“过山车型”？恢复能力如何？提供《初步节律分析报告》。
+                        </div>
+                        <div class="highlight-box highlight-gold">
+                            <strong>✅ 记录准确性指导：</strong>如何辨别真实状态（观察眼神、语调、动作速度）；区分“真累”和“不想做事”；记录关键行为表现。提供《最佳观察时机指南》。
+                        </div>
+                        <div class="highlight-box highlight-gold">
+                            <strong>✅ 常见记录问题解决：</strong>当孩子不愿意配合记录时的应对方案；当记录结果互相矛盾时的分析；当特殊事件打乱节律时的调整策略。
+                        </div>
+                    </div>
+                </div>
+                <p style="font-size:0.76rem;color:#8C7E6F;margin-top:8px;">📦 <strong>工具包：</strong>能量地图贴纸表（每月一张） · 表情贴纸和闪电贴纸 · 彩色记号笔 · 手机拍照功能</p>
+            </div>
+        </div>
+
+        <!-- 第二阶 -->
+        <div class="stage-card" id="stage2">
+            <div class="stage-header" onclick="toggleStage(this)">
+                <div class="stage-num sn2">2</div>
+                <div class="stage-header-text">
+                    <h3>仪式建立期 · 建立我的节律小仪式</h3>
+                    <span class="stage-sub">从“随意混乱”到“规律有序”</span>
+                </div>
+                <div class="stage-meta">第2-3个月<br>每个仪式3-5分钟</div>
+                <span class="stage-arrow">▼</span>
+            </div>
+            <div class="stage-body">
+                <div class="stage-two-col">
+                    <div class="stage-col parent-do">
+                        <h5>✅ 家长能做的（简单操作）</h5>
+                        <ul>
+                            <li><strong>仪式工具准备：</strong>晨间仪式卡片（可涂色）、晚间仪式卡片、家庭节律板（磁性白板或硬纸板）、沙漏（3分钟5分钟各一个）</li>
+                            <li><strong>晨光启动仪式（起床后）：</strong>拉开窗帘让阳光进来→亲子拥抱+能量确认→喝半杯温水→贴“晨光完成”磁贴</li>
+                            <li><strong>午后重启仪式（午休后）：</strong>冷水轻轻拍脸→3分钟安静拉伸→吃一小份水果→贴“午后重启”磁贴</li>
+                            <li><strong>星光舒缓仪式（睡前一小时）：</strong>调暗灯光用台灯代替顶灯→15分钟无屏幕时间→亲子感恩分享→贴“星光完成”磁贴</li>
+                            <li><strong>节律板记录：</strong>每天完成仪式贴磁贴，周末统计完成率，达成目标（如连续7天）有小奖励</li>
+                        </ul>
+                    </div>
+                    <div class="stage-col guide-need">
+                        <h5>🎓 需要我指导的（核心价值）</h5>
+                        <div class="highlight-box highlight-gold">
+                            <strong>✅ 个性化仪式设计：</strong>根据孩子的节律类型设计——高敏感型需要更舒缓的过渡仪式增加轻柔音乐减少突然变化；低唤醒型需要更有活力的启动增加身体活动和明亮光线；焦虑型需要更多安全感固定顺序熟悉的物品。提供《个性化仪式元素库》。
+                        </div>
+                        <div class="highlight-box highlight-gold">
+                            <strong>✅ 环境微调指导：</strong>光线管理傻瓜方案（早晨最佳自然光位置、学习时台灯放左前方、晚上几点调暗灯光）；声音环境简易优化（推荐3款免费白噪音APP、家庭噪音控制三原则）；温度舒适度调整。
+                        </div>
+                        <div class="highlight-box highlight-gold">
+                            <strong>✅ 仪式效果评估：</strong>教您简单测量——启动速度（从起床到完全清醒的时间变化）、状态稳定性（上午情绪波动记录）、睡眠质量（入睡时间和夜醒次数记录表）。提供《仪式效果追踪表》。
+                        </div>
+                    </div>
+                </div>
+                <p style="font-size:0.76rem;color:#8C7E6F;margin-top:8px;">📦 <strong>工具包：</strong>仪式卡片套装（晨/午/晚可涂色） · 磁性白板（30×40cm） · 仪式完成磁贴 · 3分钟和5分钟沙漏（约30元）</p>
+            </div>
+        </div>
+
+        <!-- 第三阶 -->
+        <div class="stage-card" id="stage3">
+            <div class="stage-header" onclick="toggleStage(this)">
+                <div class="stage-num sn3">3</div>
+                <div class="stage-header-text">
+                    <h3>任务匹配期 · 在最佳时间做最适合的事</h3>
+                    <span class="stage-sub">从“随机安排”到“科学匹配”</span>
+                </div>
+                <div class="stage-meta">第4-6个月<br>每周一计划15分钟</div>
+                <span class="stage-arrow">▼</span>
+            </div>
+            <div class="stage-body">
+                <div class="stage-two-col">
+                    <div class="stage-col parent-do">
+                        <h5>✅ 家长能做的（简单操作）</h5>
+                        <ul>
+                            <li><strong>匹配工具准备：</strong>任务类型卡片——红色（需高度专注如数学背诵）、黄色（需创造力如作文画画）、绿色（机械性任务如抄写整理）；能量时段标签（高/中/低）；周计划磁贴板</li>
+                            <li><strong>周计划制定会（周一早晨15分钟）：</strong>回顾上周能量地图→标注本周高能量时段（用荧光笔）→匹配任务：高能量时段放红色任务卡、中能量时段放黄色任务卡、低能量时段放绿色任务卡→孩子自己调整允许微调</li>
+                            <li><strong>每日执行与记录：</strong>早晨确认当天能量状态必要时微调→完成任务后在任务卡上贴笑脸😊→睡前简单复盘“今天什么时间做什么最顺利？”</li>
+                        </ul>
+                    </div>
+                    <div class="stage-col guide-need">
+                        <h5>🎓 需要我指导的（核心价值）</h5>
+                        <div class="highlight-box highlight-gold">
+                            <strong>✅ 任务科学分类系统：</strong>认知负荷分类法（高负荷需持续思考记忆量大、中负荷需创意灵活性、低负荷重复性自动化）；情绪需求分类法（需高信心先做擅长的、需高耐心放情绪稳定时、需高兴趣可作为奖励）。提供《任务分类指南和案例库》。
+                        </div>
+                        <div class="highlight-box highlight-gold">
+                            <strong>✅ 个性化匹配算法：</strong>根据您孩子3个月的数据我帮您计算——最佳学习时段几点到几点效率最高、任务类型匹配度每种任务的最佳时段、休息间隔建议学多久该休息休息多久。提供《个性化匹配建议表》。
+                        </div>
+                        <div class="highlight-box highlight-gold">
+                            <strong>✅ 匹配效果评估方法：</strong>效率对比法（同样任务在不同时段完成时间和正确率对比）、质量评估法（创造性任务作品质量、复杂任务完成完整性）。提供《匹配效果记录表》。
+                        </div>
+                    </div>
+                </div>
+                <p style="font-size:0.76rem;color:#8C7E6F;margin-top:8px;">📦 <strong>工具包：</strong>任务类型卡片（红黄绿各10张） · 周计划磁贴板 · 匹配效果记录本 · 荧光笔（约25元）</p>
+            </div>
+        </div>
+
+        <!-- 第四阶 -->
+        <div class="stage-card" id="stage4">
+            <div class="stage-header" onclick="toggleStage(this)">
+                <div class="stage-num sn4">4</div>
+                <div class="stage-header-text">
+                    <h3>自主管理期 · 我是节律小主人</h3>
+                    <span class="stage-sub">从“被动跟随”到“主动掌控”</span>
+                </div>
+                <div class="stage-meta">第7-12个月<br>每季度一个项目</div>
+                <span class="stage-arrow">▼</span>
+            </div>
+            <div class="stage-body">
+                <div class="stage-two-col">
+                    <div class="stage-col parent-do">
+                        <h5>✅ 家长能做的（简单操作）</h5>
+                        <ul>
+                            <li><strong>项目1：设计“我的完美学习日”——</strong>孩子自己设计一天安排，试行3天并记录感受，调整优化形成个人日程表</li>
+                            <li><strong>项目2：节律影响因素实验——</strong>测试“晚睡1小时的影响”“不同早餐的影响”，记录实验结果得出个人结论</li>
+                            <li><strong>项目3：家庭节律优化师——</strong>帮爸爸妈妈分析节律提出改善建议，制作家庭节律海报</li>
+                            <li><strong>项目4：节律知识小讲师——</strong>学习节律相关知识，准备向家人讲解，制作讲解材料</li>
+                            <li><strong>担任“支持者”角色：</strong>提供孩子需要的材料、在孩子求助时给予帮助、为孩子搭建展示平台、记录孩子的成长时刻</li>
+                        </ul>
+                    </div>
+                    <div class="stage-col guide-need">
+                        <h5>🎓 需要我指导的（核心价值）</h5>
+                        <div class="highlight-box highlight-gold">
+                            <strong>✅ 高级节律调节技术：</strong>光线疗法家庭版（如何用灯光调节节律、季节性节律调整、旅行时差调整）；饮食节律优化（三餐时间对精力的影响、零食选择原则、水分补充时机）；运动节律匹配（什么时间运动最提神、什么时间运动助眠）。
+                        </div>
+                        <div class="highlight-box highlight-gold">
+                            <strong>✅ 节律心理指导：</strong>节律与情绪连接（如何预防下午情绪低落、节律紊乱的情绪预警信号）；节律与决策质量（重要决定放什么时间做、不同时段决策特点）；压力期节律维持（考试期间节律保持、比赛前节律调整）。
+                        </div>
+                        <div class="highlight-box highlight-gold">
+                            <strong>✅ 终身节律能力培养：</strong>自我觉察自动化（无需记录也能感知状态、快速识别不在状态、及时自我调整）；环境适应策略（适应学校作息、适应假期模式、适应旅行变化）；持续优化习惯（定期回顾调整节律、学习新节律知识、分享帮助他人）。
+                        </div>
+                    </div>
+                </div>
+                <p style="font-size:0.76rem;color:#8C7E6F;margin-top:8px;">📦 <strong>工具包：</strong>项目制作材料包 · 成长档案册 · 展示用海报板 · “节律小专家”徽章（约25元）</p>
+            </div>
+        </div>
+
+        <!-- 进阶路径图 -->
+        <section id="path">
+            <div class="section-title">
+                <h2>📈 四阶进阶路径图</h2>
+                <p>升级标准清晰，家长可自行判断</p>
+                <div class="section-divider"></div>
+            </div>
+            <div class="path-table-wrap">
+                <table class="path-table">
+                    <thead><tr><th>阶段</th><th>核心目标</th><th>升级标准（家长可判断）</th><th>建议时间</th></tr></thead>
+                    <tbody>
+                        <tr><td><span class="stage-dot-cell" style="background:#E8A840;">1</span></td><td>发现节律规律</td><td>连续7天完成记录；能指出自己的高/低能量时段</td><td>第1个月</td></tr>
+                        <tr><td><span class="stage-dot-cell" style="background:#4A80C0;">2</span></td><td>建立稳定仪式</td><td>仪式执行率80%以上；作息时间稳定在±30分钟内</td><td>第2-3个月</td></tr>
+                        <tr><td><span class="stage-dot-cell" style="background:#3D8B7B;">3</span></td><td>实现任务匹配</td><td>能主动将任务分类；匹配后学习效率提升20%以上</td><td>第4-6个月</td></tr>
+                        <tr><td><span class="stage-dot-cell" style="background:#8B5EA7;">4</span></td><td>自主管理节律</td><td>完成节律项目；能教别人；能适应环境变化</td><td>第7-12个月</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- 常见问题 -->
+        <section id="scenes">
+            <div class="section-title">
+                <h2>🧩 家庭常见问题解决方案</h2>
+                <p>三个高频困境，家长能做的 + 需要我指导的</p>
+                <div class="section-divider"></div>
+            </div>
+            <div class="scene-card">
+                <div class="scene-header" onclick="toggleScene(this)">😴 问题一：“孩子不愿意记录/做仪式” <span class="scene-arrow">▼</span></div>
+                <div class="scene-body"><strong>✅ 家长能做的：</strong>从最简单开始（只记录最明显的时段）；家长先做示范（家长先记录自己的状态）；游戏化包装（变成“能量侦探游戏”）。<br><strong>🎓 需要我指导的：</strong>动机诊断和激发方案；抗拒心理的应对策略；个性化入门调整。</div>
+            </div>
+            <div class="scene-card">
+                <div class="scene-header" onclick="toggleScene(this)">🔄 问题二：“仪式执行质量不稳定” <span class="scene-arrow">▼</span></div>
+                <div class="scene-body"><strong>✅ 家长能做的：</strong>降低标准（先完成再完美）；找出障碍（是什么影响了执行？）；灵活调整（仪式元素可以替换）。<br><strong>🎓 需要我指导的：</strong>仪式障碍分析工具；仪式个性化调整方案；质量提升的渐进方法。</div>
+            </div>
+            <div class="scene-card">
+                <div class="scene-header" onclick="toggleScene(this)">🤔 问题三：“匹配了但效果不明显” <span class="scene-arrow">▼</span></div>
+                <div class="scene-body"><strong>✅ 家长能做的：</strong>微调匹配（换一种任务类型试试）；检查干扰（是否有其他因素影响？）；给予时间（可能需要适应期）。<br><strong>🎓 需要我指导的：</strong>效果不明显的原因诊断；匹配精度提升方法；环境因素排查指导。</div>
+            </div>
+        </section>
+
+        <!-- 月度核对清单 -->
+        <section id="checklist">
+            <div class="section-title">
+                <h2>📋 家长月度核对清单</h2>
+                <p>每月最后一天花15分钟</p>
+                <div class="section-divider"></div>
+            </div>
+            <div class="checklist-grid">
+                <div class="checklist-card"><h5>📊 成果整理</h5><ul><li>整理本月能量地图</li><li>统计仪式执行率</li><li>回看任务匹配效果</li><li>收集节律项目成果</li></ul></div>
+                <div class="checklist-card"><h5>📈 数据统计</h5><ul><li>连续记录天数</li><li>仪式完成率变化</li><li>任务匹配准确率</li><li>作息稳定度</li></ul></div>
+                <div class="checklist-card"><h5>🔍 问题梳理</h5><ul><li>本月最大节律挑战是什么？</li><li>哪种仪式最有效？</li><li>需要厉老师帮助的具体问题？</li></ul></div>
+                <div class="checklist-card"><h5>🎯 下月规划</h5><ul><li>是否进阶？</li><li>需要什么新工具？</li><li>设定一个节律优化小目标</li></ul></div>
+            </div>
+        </section>
+
+        <!-- 工具包总览 -->
+        <section id="toolkit">
+            <div class="section-title">
+                <h2>🛠️ 家庭工具包总览</h2>
+                <p>物理工具成本低于100元，数字资源全部由我提供</p>
+                <div class="section-divider"></div>
+            </div>
+            <div class="tool-grid">
+                <div class="tool-card"><h5>📦 物理工具 <span class="cost-badge">&lt;100元</span></h5><ul><li>第一阶：能量地图贴纸表（12张）+表情贴纸套装+彩色记号笔（约20元）</li><li>第二阶：仪式卡片套装+磁性白板+磁贴+沙漏（约30元）</li><li>第三阶：任务类型卡片+周计划磁贴板+匹配记录本+荧光笔（约25元）</li><li>第四阶：项目材料包+成长档案册+海报板+徽章（约25元）</li></ul></div>
+                <div class="tool-card"><h5>💻 数字资源（我提供）</h5><ul><li>记录分析工具：能量地图模板、记录质量自评表、节律图谱生成器</li><li>仪式资源库：仪式元素选择指南、仪式音乐推荐列表、仪式示范视频</li><li>匹配优化工具：任务分类指南PDF、匹配案例库、效果评估表</li><li>项目指导包：各项目分步指南、实验记录模板、成果展示模板</li></ul></div>
+            </div>
+        </section>
+
+        <!-- 价值承诺 -->
+        <div class="footer-cta">
+            <h3>💎 最终给家长的价值承诺</h3>
+            <p><strong>简单操作承诺：</strong>您只需要每天花几分钟，使用我们提供的简单工具，按照清晰的四步流程帮助孩子建立节律意识。所有工具容易获得，所有步骤明确易懂。</p>
+            <p><strong>专业价值承诺：</strong>但想要真正优化孩子的生理节律，让孩子在最合适的时间以最佳状态学习，培养终身受益的自我调节能力——您需要我们的科学诊断、个性化方案和专业深度指导。</p>
+            <p><strong>成果可视承诺：</strong>每月您都会看到可测量的进步：从混乱作息到规律生活，从被动记录到主动管理。每季度都有能力认证和项目成果。</p>
+            <p style="font-weight:600;color:#E8A840;margin-top:8px;">⏰ 从“不知道规律”到“自主管理”，这是送给孩子一生的节律智慧礼物。</p>
+        </div>
+    </main>
+
+    <a href="#" class="scroll-top" id="scrollTop" title="回到顶部">↑</a>
+
+    <script>
+        function toggleStage(header) { header.parentElement.classList.toggle('open'); }
+        function toggleScene(header) { header.parentElement.classList.toggle('open'); }
+        const scrollTopBtn = document.getElementById('scrollTop');
+        window.addEventListener('scroll', () => { if (window.scrollY > 500) { scrollTopBtn.classList.add('visible'); } else { scrollTopBtn.classList.remove('visible'); } const sections = document.querySelectorAll('section[id], .stage-card[id]'); const navLinks = document.querySelectorAll('.sticky-nav a'); let currentId = ''; sections.forEach(section => { const rect = section.getBoundingClientRect(); if (rect.top <= 140) { currentId = section.id; } }); navLinks.forEach(link => { link.classList.remove('active'); if (link.getAttribute('href') === '#' + currentId) { link.classList.add('active'); } }); });
+        document.querySelectorAll('.sticky-nav a[href^="#"]').forEach(link => { link.addEventListener('click', function(e) { e.preventDefault(); const target = document.querySelector(this.getAttribute('href')); if (target) { const navHeight = document.querySelector('.sticky-nav').offsetHeight; const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - navHeight - 8; window.scrollTo({ top: targetPosition, behavior: 'smooth' }); } }); });
+        scrollTopBtn.addEventListener('click', function(e) { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); });
+        document.addEventListener('DOMContentLoaded', () => { const firstCard = document.getElementById('stage1'); if (firstCard && !firstCard.classList.contains('open')) { firstCard.classList.add('open'); } });
+    </script>
+</body>
+</html>

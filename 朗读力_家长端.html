@@ -1,0 +1,1434 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>朗读力成长系统 - 从"读字"到"读心"的成长轨迹</title>
+    <style>
+        :root {
+            --stage1: #FF9A56;
+            --stage1-light: #FFF3EB;
+            --stage1-bg: #FFF8F3;
+            --stage2: #4E9AF1;
+            --stage2-light: #EBF4FF;
+            --stage2-bg: #F5F9FF;
+            --stage3: #6C5CE7;
+            --stage3-light: #F0EDFF;
+            --stage3-bg: #F8F6FF;
+            --stage4: #E8458B;
+            --stage4-light: #FFEDF4;
+            --stage4-bg: #FFF5F8;
+            --stage5: #00B894;
+            --stage5-light: #E6F9F4;
+            --stage5-bg: #F2FCF9;
+            --gold: #F9A825;
+            --gold-light: #FFF8E1;
+            --text: #2D3436;
+            --text-light: #636E72;
+            --text-lighter: #8899A6;
+            --bg: #FAFBFD;
+            --card-bg: #FFFFFF;
+            --border: #EDF1F5;
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.04);
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.10);
+            --radius-sm: 10px;
+            --radius: 16px;
+            --radius-lg: 20px;
+            --radius-xl: 24px;
+            --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Sans SC', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+            scroll-behavior: smooth;
+        }
+
+        /* ========== HEADER / HERO ========== */
+        .hero {
+            background: linear-gradient(160deg, #FFF8F3 0%, #FFF3E8 25%, #FFF5F8 50%, #F8F6FF 75%, #F2FCF9 100%);
+            padding: 60px 20px 50px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -120px;
+            right: -80px;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(255, 154, 86, 0.10) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -100px;
+            left: -60px;
+            width: 350px;
+            height: 350px;
+            background: radial-gradient(circle, rgba(108, 92, 231, 0.08) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .hero-badge {
+            display: inline-block;
+            background: #fff;
+            color: var(--stage4);
+            font-size: 0.85rem;
+            font-weight: 600;
+            padding: 6px 18px;
+            border-radius: 24px;
+            letter-spacing: 0.04em;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid #FFE0EB;
+        }
+        .hero h1 {
+            font-size: 2.8rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, #E8458B, #6C5CE7, #4E9AF1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 14px;
+            line-height: 1.25;
+        }
+        .hero-subtitle {
+            font-size: 1.15rem;
+            color: var(--text-light);
+            font-weight: 400;
+            margin-bottom: 10px;
+        }
+        .hero-tagline {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #fff;
+            padding: 10px 22px;
+            border-radius: 30px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--text);
+            box-shadow: var(--shadow);
+            margin-top: 6px;
+        }
+        .hero-tagline .icon-eye {
+            font-size: 1.3rem;
+        }
+
+        /* ========== NAVIGATION ========== */
+        .sticky-nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(255, 255, 255, 0.88);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border-bottom: 1px solid var(--border);
+            padding: 0 16px;
+            overflow-x: auto;
+            white-space: nowrap;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        .sticky-nav::-webkit-scrollbar {
+            display: none;
+        }
+        .sticky-nav-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            padding: 8px 0;
+        }
+        .sticky-nav a {
+            display: inline-block;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--text-light);
+            padding: 8px 16px;
+            border-radius: 24px;
+            transition: var(--transition);
+            flex-shrink: 0;
+            letter-spacing: 0.02em;
+        }
+        .sticky-nav a:hover,
+        .sticky-nav a.active {
+            background: #f0f0f5;
+            color: #6C5CE7;
+        }
+        .sticky-nav a.stage-dot {
+            width: 32px;
+            height: 32px;
+            padding: 0;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.8rem;
+            color: #fff;
+            flex-shrink: 0;
+        }
+        .sticky-nav a.stage-dot.s1 {
+            background: var(--stage1);
+        }
+        .sticky-nav a.stage-dot.s2 {
+            background: var(--stage2);
+        }
+        .sticky-nav a.stage-dot.s3 {
+            background: var(--stage3);
+        }
+        .sticky-nav a.stage-dot.s4 {
+            background: var(--stage4);
+        }
+        .sticky-nav a.stage-dot.s5 {
+            background: var(--stage5);
+        }
+
+        /* ========== MAIN CONTAINER ========== */
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 20px 20px 60px;
+        }
+
+        /* ========== SECTION HEADINGS ========== */
+        .section-title {
+            text-align: center;
+            margin: 50px 0 28px;
+        }
+        .section-title h2 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            margin-bottom: 6px;
+            color: var(--text);
+        }
+        .section-title p {
+            color: var(--text-lighter);
+            font-size: 0.95rem;
+        }
+        .section-divider {
+            width: 50px;
+            height: 3px;
+            border-radius: 2px;
+            margin: 8px auto 0;
+            background: linear-gradient(90deg, var(--stage4), var(--stage3));
+        }
+
+        /* ========== CORE VALUE CARDS ========== */
+        .value-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+        .value-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 22px 20px;
+            text-align: center;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+        }
+        .value-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
+        }
+        .value-icon {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            display: block;
+        }
+        .value-card h4 {
+            font-size: 0.95rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+            color: var(--text);
+        }
+        .value-card p {
+            font-size: 0.82rem;
+            color: var(--text-lighter);
+            line-height: 1.5;
+        }
+
+        /* ========== STAGE CARDS ========== */
+        .stage-card {
+            background: var(--card-bg);
+            border-radius: var(--radius-lg);
+            margin-bottom: 28px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            transition: var(--transition);
+        }
+        .stage-card:hover {
+            box-shadow: var(--shadow-lg);
+        }
+        .stage-header {
+            padding: 20px 24px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            cursor: pointer;
+            user-select: none;
+            transition: var(--transition);
+        }
+        .stage-number {
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1.3rem;
+            color: #fff;
+            flex-shrink: 0;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.13);
+        }
+        .s1-bg {
+            background: var(--stage1);
+        }
+        .s2-bg {
+            background: var(--stage2);
+        }
+        .s3-bg {
+            background: var(--stage3);
+        }
+        .s4-bg {
+            background: var(--stage4);
+        }
+        .s5-bg {
+            background: var(--stage5);
+        }
+        .stage-header-text h3 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+        }
+        .stage-header-text .stage-subtitle {
+            font-size: 0.82rem;
+            color: var(--text-lighter);
+        }
+        .stage-meta {
+            font-size: 0.78rem;
+            color: var(--text-lighter);
+            margin-left: auto;
+            text-align: right;
+            flex-shrink: 0;
+        }
+        .stage-arrow {
+            font-size: 1.2rem;
+            transition: var(--transition);
+            color: var(--text-lighter);
+            flex-shrink: 0;
+        }
+        .stage-card.open .stage-arrow {
+            transform: rotate(180deg);
+        }
+        .stage-body {
+            display: none;
+            padding: 0 24px 24px;
+            border-top: 1px solid var(--border);
+            padding-top: 20px;
+            animation: fadeSlideIn 0.3s ease;
+        }
+        .stage-card.open .stage-body {
+            display: block;
+        }
+        @keyframes fadeSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-8px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .stage-body .info-block {
+            margin-bottom: 16px;
+        }
+        .stage-body .info-block h5 {
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--text);
+        }
+        .stage-body .info-block h5 .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+            flex-shrink: 0;
+        }
+        .stage-body ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        .stage-body ul li {
+            font-size: 0.88rem;
+            color: var(--text-light);
+            padding: 4px 0 4px 18px;
+            position: relative;
+            line-height: 1.6;
+        }
+        .stage-body ul li::before {
+            content: '•';
+            position: absolute;
+            left: 2px;
+            color: #B2BEC3;
+            font-weight: 700;
+        }
+        .highlight-box {
+            background: #FFFBEB;
+            border-left: 3px solid var(--gold);
+            border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+            padding: 12px 16px;
+            font-size: 0.85rem;
+            color: #5D4E37;
+            margin: 12px 0;
+        }
+        .highlight-box.pink {
+            background: #FFF5F8;
+            border-left-color: var(--stage4);
+        }
+        .highlight-box.blue {
+            background: #F5F9FF;
+            border-left-color: var(--stage2);
+        }
+        .highlight-box.green {
+            background: #F2FCF9;
+            border-left-color: var(--stage5);
+        }
+        .highlight-box.purple {
+            background: #F8F6FF;
+            border-left-color: var(--stage3);
+        }
+        .tag {
+            display: inline-block;
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 3px 10px;
+            border-radius: 14px;
+            margin: 2px 4px 2px 0;
+            letter-spacing: 0.02em;
+        }
+        .tag-orange {
+            background: #FFF3EB;
+            color: #D4742B;
+        }
+        .tag-blue {
+            background: #EBF4FF;
+            color: #3578C4;
+        }
+        .tag-purple {
+            background: #F0EDFF;
+            color: #4A3DB8;
+        }
+        .tag-pink {
+            background: #FFEDF4;
+            color: #C72E6A;
+        }
+        .tag-green {
+            background: #E6F9F4;
+            color: #0D8A6B;
+        }
+
+        /* ========== TOOLKIT SECTION ========== */
+        .toolkit-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 18px;
+        }
+        .toolkit-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 20px;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+        }
+        .toolkit-card:hover {
+            box-shadow: var(--shadow);
+            transform: translateY(-2px);
+        }
+        .toolkit-card h4 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .toolkit-card ul {
+            list-style: none;
+            padding: 0;
+        }
+        .toolkit-card ul li {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            padding: 3px 0;
+        }
+
+        /* ========== VALUE VISUALIZATION ========== */
+        .viz-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 16px;
+        }
+        .viz-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 20px;
+            text-align: center;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+        }
+        .viz-card:hover {
+            box-shadow: var(--shadow);
+        }
+        .viz-icon {
+            font-size: 2.5rem;
+            margin-bottom: 8px;
+        }
+        .viz-card h5 {
+            font-weight: 700;
+            font-size: 0.9rem;
+            margin-bottom: 4px;
+        }
+        .viz-card p {
+            font-size: 0.8rem;
+            color: var(--text-lighter);
+            line-height: 1.5;
+        }
+
+        /* ========== QUARTERLY MILESTONES ========== */
+        .milestone-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+            justify-content: center;
+        }
+        .milestone-item {
+            background: var(--card-bg);
+            border: 2px solid var(--border);
+            border-radius: var(--radius);
+            padding: 18px 20px;
+            text-align: center;
+            flex: 1 1 200px;
+            max-width: 240px;
+            transition: var(--transition);
+            position: relative;
+        }
+        .milestone-item:hover {
+            border-color: #F9A825;
+            box-shadow: var(--shadow);
+        }
+        .milestone-medal {
+            font-size: 2.8rem;
+            display: block;
+            margin-bottom: 6px;
+        }
+        .milestone-item h5 {
+            font-weight: 700;
+            font-size: 0.9rem;
+            margin-bottom: 2px;
+        }
+        .milestone-item p {
+            font-size: 0.78rem;
+            color: var(--text-lighter);
+        }
+
+        /* ========== FAQ ========== */
+        .faq-item {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            margin-bottom: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+        }
+        .faq-item:hover {
+            box-shadow: var(--shadow);
+        }
+        .faq-question {
+            padding: 16px 20px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            user-select: none;
+            transition: var(--transition);
+        }
+        .faq-question .faq-arrow {
+            transition: var(--transition);
+            font-size: 1rem;
+            color: var(--text-lighter);
+        }
+        .faq-item.open .faq-arrow {
+            transform: rotate(180deg);
+        }
+        .faq-answer {
+            display: none;
+            padding: 0 20px 18px;
+            font-size: 0.88rem;
+            color: var(--text-light);
+            line-height: 1.7;
+            animation: fadeSlideIn 0.3s ease;
+        }
+        .faq-item.open .faq-answer {
+            display: block;
+        }
+        .faq-answer .level-tag {
+            display: inline-block;
+            background: #f0f0f5;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-right: 6px;
+        }
+
+        /* ========== VALUE SUMMARY ========== */
+        .summary-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        @media (max-width: 700px) {
+            .summary-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        .summary-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            box-shadow: var(--shadow-sm);
+        }
+        .summary-card h4 {
+            font-weight: 700;
+            font-size: 1.05rem;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .summary-card ul {
+            list-style: none;
+            padding: 0;
+        }
+        .summary-card ul li {
+            font-size: 0.88rem;
+            color: var(--text-light);
+            padding: 5px 0 5px 16px;
+            position: relative;
+            line-height: 1.5;
+        }
+        .summary-card ul li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #00B894;
+            font-weight: 700;
+            font-size: 0.8rem;
+        }
+
+        /* ========== FOOTER ========== */
+        .footer-cta {
+            text-align: center;
+            padding: 40px 20px;
+            background: linear-gradient(160deg, #F8F6FF, #FFF5F8, #FFF8F3);
+            border-radius: var(--radius-xl);
+            margin-top: 30px;
+        }
+        .footer-cta h3 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        .footer-cta p {
+            color: var(--text-lighter);
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+        }
+        .btn-pill {
+            display: inline-block;
+            background: linear-gradient(135deg, #6C5CE7, #E8458B);
+            color: #fff;
+            font-weight: 600;
+            font-size: 0.95rem;
+            padding: 12px 32px;
+            border-radius: 30px;
+            text-decoration: none;
+            letter-spacing: 0.02em;
+            transition: var(--transition);
+            box-shadow: 0 6px 20px rgba(108, 92, 231, 0.25);
+            border: none;
+            cursor: pointer;
+        }
+        .btn-pill:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 28px rgba(108, 92, 231, 0.35);
+        }
+
+        /* ========== RESPONSIVE ========== */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+            .stage-header {
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+            .stage-meta {
+                margin-left: 0;
+                text-align: left;
+                width: 100%;
+            }
+            .value-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .toolkit-grid {
+                grid-template-columns: 1fr;
+            }
+            .viz-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .milestone-row {
+                flex-direction: column;
+                align-items: center;
+            }
+            .milestone-item {
+                max-width: 100%;
+                width: 100%;
+            }
+        }
+        @media (max-width: 480px) {
+            .value-grid {
+                grid-template-columns: 1fr;
+            }
+            .viz-grid {
+                grid-template-columns: 1fr;
+            }
+            .stage-header {
+                padding: 14px 16px;
+            }
+            .stage-body {
+                padding: 0 14px 18px;
+                padding-top: 14px;
+            }
+            .hero {
+                padding: 36px 14px 32px;
+            }
+            .hero h1 {
+                font-size: 1.6rem;
+            }
+        }
+
+        /* Scroll to top */
+        .scroll-top {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: #fff;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 99;
+            transition: var(--transition);
+            opacity: 0;
+            pointer-events: none;
+            text-decoration: none;
+            color: var(--text);
+        }
+        .scroll-top.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .scroll-top:hover {
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-3px);
+        }
+
+        /* Print styles */
+        @media print {
+            .sticky-nav,
+            .scroll-top,
+            .footer-cta .btn-pill {
+                display: none;
+            }
+            .stage-body {
+                display: block !important;
+            }
+            .faq-answer {
+                display: block !important;
+            }
+            body {
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ==================== HERO ==================== -->
+    <header class="hero">
+        <div class="hero-content">
+            <span class="hero-badge">📖 朗读力成长系统</span>
+            <h1>从"读字"到"读心"</h1>
+            <p class="hero-subtitle">五阶段渐进式朗读能力培养体系 · 每日15分钟，见证成长轨迹</p>
+            <div class="hero-tagline">
+                <span class="icon-eye">👁️</span> 家长视角：让成长清晰可见 &nbsp;|&nbsp; 孩子视角：让朗读成为享受
+            </div>
+        </div>
+    </header>
+
+    <!-- ==================== STICKY NAV ==================== -->
+    <nav class="sticky-nav" id="stickyNav">
+        <div class="sticky-nav-inner">
+            <a href="#core-values">核心价值</a>
+            <a href="#stage1" class="stage-dot s1">1</a>
+            <a href="#stage2" class="stage-dot s2">2</a>
+            <a href="#stage3" class="stage-dot s3">3</a>
+            <a href="#stage4" class="stage-dot s4">4</a>
+            <a href="#stage5" class="stage-dot s5">5</a>
+            <a href="#toolkit">工具包</a>
+            <a href="#visualization">价值可视</a>
+            <a href="#faq">常见问题</a>
+            <a href="#summary">价值升华</a>
+        </div>
+    </nav>
+
+    <!-- ==================== MAIN CONTENT ==================== -->
+    <main class="container">
+
+        <!-- CORE VALUES -->
+        <section id="core-values">
+            <div class="section-title">
+                <h2>🎯 模块核心价值定位</h2>
+                <p>专为家长设计，让每一步成长都看得见</p>
+                <div class="section-divider"></div>
+            </div>
+            <div class="value-grid">
+                <div class="value-card">
+                    <span class="value-icon">👨‍👩‍👧</span>
+                    <h4>家长视角</h4>
+                    <p>让孩子从"读字"到"读心"的成长轨迹清晰可见</p>
+                </div>
+                <div class="value-card">
+                    <span class="value-icon">⏱️</span>
+                    <h4>操作简便</h4>
+                    <p>每日15分钟，流程清晰，步骤明确</p>
+                </div>
+                <div class="value-card">
+                    <span class="value-icon">📊</span>
+                    <h4>价值可视</h4>
+                    <p>每月都有可展示的进步成果</p>
+                </div>
+                <div class="value-card">
+                    <span class="value-icon">🪜</span>
+                    <h4>阶梯难度</h4>
+                    <p>五阶段渐进，每个阶段都有挑战和突破点</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== FIVE STAGES ==================== -->
+        <div class="section-title">
+            <h2>📊 五阶段成长体系</h2>
+            <p>点击每个阶段卡片展开详情</p>
+            <div class="section-divider"></div>
+        </div>
+
+        <!-- STAGE 1 -->
+        <div class="stage-card open" id="stage1">
+            <div class="stage-header" onclick="toggleStage(this)">
+                <div class="stage-number s1-bg">1</div>
+                <div class="stage-header-text">
+                    <h3>建立习惯期</h3>
+                    <span class="stage-subtitle">从抗拒到接受，建立每日朗读习惯</span>
+                </div>
+                <div class="stage-meta">第1-2周<br>每日15分钟</div>
+                <span class="stage-arrow">▼</span>
+            </div>
+            <div class="stage-body">
+                <div class="info-block">
+                    <h5><span class="dot" style="background:var(--stage1);"></span>目标</h5>
+                    <p style="font-size:0.88rem;color:var(--text-light);">让孩子不抗拒，家长不焦虑，建立每日朗读习惯</p>
+                </div>
+                <div class="info-block">
+                    <h5><span class="dot" style="background:var(--stage1);"></span>家长操作指南</h5>
+                    <ul>
+                        <li><strong>时间固定：</strong>每天固定时间（如作业前15分钟）</li>
+                        <li><strong>环境准备：</strong>安静角落，舒适座椅，良好光线</li>
+                        <li><strong>材料选择：</strong>孩子自选课文（课内课外均可，甚至绘本）</li>
+                        <li><strong>家长角色：</strong>安静听众，不打断，不纠正，只鼓励</li>
+                    </ul>
+                </div>
+                <div class="info-block">
+                    <h5><span class="dot" style="background:var(--stage1);"></span>每日执行流程（15分钟）</h5>
+                    <ul>
+                        <li><strong>启动仪式（1分钟）：</strong>亲子击掌，"朗读时间到！"</li>
+                        <li><strong>自由朗读（12分钟）：</strong>孩子读，家长听（可做自己的事，但要同在空间）</li>
+                        <li><strong>结束仪式（2分钟）：</strong>家长说"今天你坚持了15分钟，真棒！" + 贴纸奖励</li>
+                    </ul>
+                </div>
+                <div class="highlight-box">
+                    <strong>👀 家长看到的价值：</strong> 孩子从抗拒到接受的过程 · 每天15分钟的专注时间 · 《朗读习惯养成打卡表》上的连续贴纸
+                </div>
+                <div class="info-block">
+                    <h5><span class="dot" style="background:var(--stage1);"></span>需要指导的点</h5>
+                    <span class="tag tag-orange">家长如何忍住不纠正？</span>
+                    <span class="tag tag-orange">孩子读不下去怎么办？</span>
+                    <span class="tag tag-orange">如何选择适合的阅读材料？</span>
+                    <p style="font-size:0.82rem;color:var(--text-lighter);margin-top:8px;">📋 指导方式：提供《家长忍住不纠正的10个理由》卡片 + 紧急情况应对话术</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- STAGE 2 -->
+        <div class="stage-card" id="stage2">
+            <div class="stage-header" onclick="toggleStage(this)">
+                <div class="stage-number s2-bg">2</div>
+                <div class="stage-header-text">
+                    <h3>精准朗读期</h3>
+                    <span class="stage-subtitle">从"读下来"到"读准确"，建立自我监控意识</span>
+                </div>
+                <div class="stage-meta">第3-6周<br>每日15分钟</div>
+                <span class="stage-arrow">▼</span>
+            </div>
+            <div class="stage-body">
+                <div class="info-block">
+                    <h5><span class="dot" style="background:var(--stage2);"></span>目标</h5>
+                    <p style="font-size:0.88rem;color:var(--text-light);">从"读下来"到"读准确"，建立自我监控意识</p>
+                </div>
+                <div class="info-block">
+                    <h5><span class="dot" style="background:var(--stage2);"></span>工具升级</h5>
+                    <ul>
+                        <li>📱 引入录音设备（手机即可）</li>
+                    </ul>
+                </div>
+                <div class="info-block">
+                    <h5><span class="dot" style="background:var(--stage2);"></span>家长角色</h5>
+                    <ul>
+                        <li>技术协助者（帮忙录音）</li>
+                        <li>错误记录员（只记录不批评）</li>
+                    </ul>
+                </div>
+                <div class="info-block">
+                    <h5><span class="dot" style="background:var(--stage2);"></span>每日执行流程（15分钟）</h5>
+                    <ul>
+                        <li><strong>录音朗读（5分钟）：</strong>完整读一段（200-300字），录音</li>
+                        <li><strong>回听自查（5分钟）：</strong>边听边用荧光笔在纸上标记错误（读错、加字、漏字）</li>
+                        <li><strong>二次朗读（5分钟）：</strong>看着标记处，再读一遍</li>
+                    </ul>
+                </div>
+                <div class="highlight-box blue">
+                    <strong>👀 家长看到的价值：</strong> 孩子自我纠正能力的提升 · 错误率每周下降的数据图表 · 《错误类型分析表》显示进步
+                </div>
+                <div class="info-block">
+                    <h5><span class="dot" style="background:var(--stage2);"></span>需要指导的点</h5>
+                    <span class="tag tag-blue">如何教孩子使用录音工具？</span>
+                    <span class="tag tag-blue">如何区分错误类型？</span>
+                    <span class="tag tag-blue">孩子因错误多而沮丧怎么办？</span>
+                    <p style="font-size:0.82rem;color:var(--text-lighter);margin-top:8px;">📋 指导方式：提供《手机录音设置指南》视频 + 《错误分类说明图》 + 鼓励话术库</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- STAGE 3 -->
+        <div class="stage-card" id="stage3">
+            <div class="stage-header" onclick="toggleStage(this)">
+                <div class="stage-number s3-bg">3</div>
+                <div class="stage-header-text">
+                    <h3>节奏掌控期</h3>
+                    <span class="stage-subtitle">从"读准确"到"读流畅"，掌握语言节奏</span>
+                </div>
+                <div class="stage-meta">第7-10周<br>每日15分钟</div>
+                <span class="stage-arrow">▼</span>
+            </div>
+            <div class="stage-body">
+                <div class="info-block">
+                    <h5><span class="dot" style="background:var(--stage3);"></span>目标</h5>
+                    <p style="font-size:0.88rem;color:var(--text-light);">从"读准确"到"读流畅"，掌握语言节奏</p>
+                </div>
+                <div class="info-block">
+                    <h5><span class="dot" style="background:var(--stage3);"></span>工具升级</h5>
+                    <ul>
+                        <li>🎵 节拍器（手机APP即可）</li>
+                    </ul>
+                </div>
+                <div class="info-block">
+                    <h5><span class="dot" style="background:var(--stage3);"></span>家长角色</h5>
+                    <ul>
+                        <li>节奏教练（帮助设置节拍器）</li>
+                        <li>欣赏者（欣赏节奏变化）</li>
+                    </ul>
+                </div>
+                <div class="info-block">
+                    <h5><span class="dot" style="background:var(--stage3);"></span>每日执行流程（15分钟）</h5>
+                    <ul>
+                        <li><strong>节奏练习（5分钟）：</strong>用节拍器（80-100BPM）跟读短句</li>
+                        <li><strong>段落应用（5分钟）：</strong>用同样节奏朗读一段</li>
+                        <li><strong>自由发挥（5分钟）：</strong>关掉节拍器，尝试保持节奏朗读</li>
+                    </ul>
+                </div>
+                <div class="highlight-box purple">
+                    <strong>👀 家长看到的价值：</strong> 孩子朗读的流畅度明显提升 · 从机械跟读到内化节奏的过程 · 《节奏稳定性评分表》每周进步
+                </div>
+                <div class="info-block">
+                    <h5><span class="dot" style="background:var(--stage3);"></span>需要指导的点</h5>
+                    <span class="tag tag-purple">如何设置合适的节奏速度？</span>
+                    <span class="tag tag-purple">孩子跟不上节奏怎么办？</span>
+                    <span class="tag tag-purple">如何从跟节奏到自主控制节奏？</span>
+                    <p style="font-size:0.82rem;color:var(--text-lighter);margin-top:8px;">📋 指导方式：提供《节拍器使用教程》 + 《节奏训练渐进计划》 + 各阶段示范音频</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- STAGE 4 -->
+        <div class="stage-card" id="stage4">
+            <div class="stage-header" onclick="toggleStage(this)">
+                <div class="stage-number s4-bg">4</div>
+                <div class="stage-header-text">
+                    <h3>情感表达期</h3>
+                    <span class="stage-subtitle">从"读流畅"到"有感情"，理解并表达文本情感</span>
+                </div>
+                <div class="stage-meta">第11-16周<br>每日15分钟</div>
+                <span class="stage-arrow">▼</span>
+            </div>
+            <div class="stage-body">
+                <div class="info-block">
+                    <h5><span class="dot" style="background:var(--stage4);"></span>目标</h5>
+                    <p style="font-size:0.88rem;color:var(--text-light);">从"读流畅"到"有感情"，理解并表达文本情感</p>
+                </div>
+                <div class="info-block">
+                    <h5><span class="dot" style="background:var(--stage4);"></span>工具升级</h5>
+                    <ul>
+                        <li>🖍️ 情感标记笔（红黄蓝三色）</li>
+                    </ul>
+                </div>
+                <div class="info-block">
+                    <h5><span class="dot" style="background:var(--stage4);"></span>家长角色</h5>
+                    <ul>
+                        <li>情感教练（帮助理解情感）</li>
+                        <li>最佳听众（给予情感反馈）</li>
+                    </ul>
+                </div>
+                <div class="info-block">
+                    <h5><span class="dot" style="background:var(--stage4);"></span>每日执行流程（15分钟）</h5>
+                    <ul>
+                        <li><strong>情感分析（3分钟）：</strong>用颜色标记文本（🔴红=激动，🔵蓝=平静，🟡黄=疑问）</li>
+                        <li><strong>技巧练习（5分钟）：</strong>练习不同情感的读法（如激动时语速加快，疑问时语调上扬）</li>
+                        <li><strong>完整演绎（7分钟）：</strong>带着情感朗读全文</li>
+                    </ul>
+                </div>
+                <div class="highlight-box pink">
+                    <strong>👀 家长看到的价值：</strong> 孩子开始理解文本背后的情感 · 朗读从"念字"变成"表达" · 《情感表达评分表》每月提升 · 可录制"情感朗读作品集"
+                </div>
+                <div class="info-block">
+                    <h5><span class="dot" style="background:var(--stage4);"></span>需要指导的点</h5>
+                    <span class="tag tag-pink">如何帮助孩子理解抽象情感？</span>
+                    <span class="tag tag-pink">如何将情感转化为声音技巧？</span>
+                    <span class="tag tag-pink">孩子害羞不敢夸张表达怎么办？</span>
+                    <p style="font-size:0.82rem;color:var(--text-lighter);margin-top:8px;">📋 指导方式：提供《情感标记使用指南》 + 《20种常见情感朗读技巧》卡片 + 示范视频</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- STAGE 5 -->
+        <div class="stage-card" id="stage5">
+            <div class="stage-header" onclick="toggleStage(this)">
+                <div class="stage-number s5-bg">5</div>
+                <div class="stage-header-text">
+                    <h3>综合展示期</h3>
+                    <span class="stage-subtitle">从"有感情朗读"到"自信表达者"，建立公开表达能力</span>
+                </div>
+                <div class="stage-meta">第17周+<br>每日15分钟</div>
+                <span class="stage-arrow">▼</span>
+            </div>
+            <div class="stage-body">
+                <div class="info-block">
+                    <h5><span class="dot" style="background:var(--stage5);"></span>目标</h5>
+                    <p style="font-size:0.88rem;color:var(--text-light);">从"有感情朗读"到"自信表达者"，建立公开表达能力</p>
+                </div>
+                <div class="info-block">
+                    <h5><span class="dot" style="background:var(--stage5);"></span>工具升级</h5>
+                    <ul>
+                        <li>🎤 简易录音棚环境（麦克风+安静空间）</li>
+                    </ul>
+                </div>
+                <div class="info-block">
+                    <h5><span class="dot" style="background:var(--stage5);"></span>家长角色</h5>
+                    <ul>
+                        <li>制作人（协助录音）</li>
+                        <li>观众（正式聆听）</li>
+                    </ul>
+                </div>
+                <div class="info-block">
+                    <h5><span class="dot" style="background:var(--stage5);"></span>每日执行流程（15分钟）</h5>
+                    <ul>
+                        <li><strong>作品选择（2分钟）：</strong>每周选择一篇最满意的课文</li>
+                        <li><strong>排练打磨（8分钟）：</strong>反复练习，追求完美</li>
+                        <li><strong>正式录制（5分钟）：</strong>用最好状态录制音频</li>
+                    </ul>
+                </div>
+                <div class="highlight-box green">
+                    <strong>🎉 每月特别活动：</strong> 家庭朗读会（每月最后一个周末，全家参与）· 作品发布（每月精选一段录音分享）· 收听反馈（收集亲友的正面反馈，增强自信）
+                </div>
+                <div class="highlight-box green">
+                    <strong>👀 家长看到的价值：</strong> 孩子自信心的显著提升 · 可积累的"朗读作品集" · 公开表达能力的质变 · 语文学科成绩的相关提升
+                </div>
+                <div class="info-block">
+                    <h5><span class="dot" style="background:var(--stage5);"></span>需要指导的点</h5>
+                    <span class="tag tag-green">如何组织家庭朗读会？</span>
+                    <span class="tag tag-green">如何给予建设性反馈？</span>
+                    <span class="tag tag-green">如何平衡追求完美和享受过程？</span>
+                    <p style="font-size:0.82rem;color:var(--text-lighter);margin-top:8px;">📋 指导方式：提供《家庭朗读会组织指南》 + 《有效反馈话术》 + 《作品集制作教程》</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== TOOLKIT ==================== -->
+        <section id="toolkit">
+            <div class="section-title">
+                <h2>🛠️ 家长工具包升级</h2>
+                <p>实体工具 + 数字工具，全方位支持</p>
+                <div class="section-divider"></div>
+            </div>
+            <div class="toolkit-grid">
+                <div class="toolkit-card">
+                    <h4>📦 实体工具</h4>
+                    <ul>
+                        <li>📒 《朗读成长手账》：五阶段专用记录册</li>
+                        <li>🖍️ 情感标记笔三色套装：红黄蓝</li>
+                        <li>💛 荧光笔：用于标记错误</li>
+                        <li>⭐ 朗读打卡贴纸：每阶段不同主题</li>
+                        <li>🏅 进度里程碑奖章：每阶段完成可获得</li>
+                    </ul>
+                </div>
+                <div class="toolkit-card">
+                    <h4>💻 数字工具</h4>
+                    <ul>
+                        <li>📱 节拍器APP推荐清单（免费）</li>
+                        <li>🎙️ 录音APP推荐清单（免费）</li>
+                        <li>🔊 情感朗读示范音频库（10个经典片段）</li>
+                        <li>📊 错误分析记录表（Excel模板）</li>
+                        <li>📁 朗读作品集模板（PPT/PDF）</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== VALUE VISUALIZATION ==================== -->
+        <section id="visualization">
+            <div class="section-title">
+                <h2>📈 价值可视化系统</h2>
+                <p>让进步看得见、摸得着、可展示</p>
+                <div class="section-divider"></div>
+            </div>
+            <div class="viz-grid">
+                <div class="viz-card">
+                    <span class="viz-icon">🎧</span>
+                    <h5>音频对比</h5>
+                    <p>每月首尾录制同一段落，听进步</p>
+                </div>
+                <div class="viz-card">
+                    <span class="viz-icon">📉</span>
+                    <h5>数据图表</h5>
+                    <p>错误率下降曲线图、朗读速度稳定图</p>
+                </div>
+                <div class="viz-card">
+                    <span class="viz-icon">💿</span>
+                    <h5>作品集增长</h5>
+                    <p>每月新增1-2个精品录音</p>
+                </div>
+                <div class="viz-card">
+                    <span class="viz-icon">💬</span>
+                    <h5>第三方反馈</h5>
+                    <p>老师评价、同学反应、亲友鼓励</p>
+                </div>
+            </div>
+
+            <!-- Quarterly Milestones -->
+            <div style="margin-top:28px;">
+                <h4 style="text-align:center;font-weight:700;margin-bottom:16px;font-size:1.05rem;">🏆 季度里程碑</h4>
+                <div class="milestone-row">
+                    <div class="milestone-item">
+                        <span class="milestone-medal">🥇</span>
+                        <h5>季度一：习惯建立奖</h5>
+                        <p>连续21天打卡</p>
+                    </div>
+                    <div class="milestone-item">
+                        <span class="milestone-medal">🥈</span>
+                        <h5>季度二：精准朗读奖</h5>
+                        <p>错误率降低50%</p>
+                    </div>
+                    <div class="milestone-item">
+                        <span class="milestone-medal">🥉</span>
+                        <h5>季度三：情感表达奖</h5>
+                        <p>完成3个情感丰富作品</p>
+                    </div>
+                    <div class="milestone-item">
+                        <span class="milestone-medal">🏅</span>
+                        <h5>季度四：自信表达者奖</h5>
+                        <p>成功举办家庭朗读会</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== FAQ ==================== -->
+        <section id="faq">
+            <div class="section-title">
+                <h2>🧩 家长常见问题解决方案库</h2>
+                <p>遇到问题不用慌，这里有系统应对方案</p>
+                <div class="section-divider"></div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    ❓ 问题1：孩子就是不愿意读怎么办？
+                    <span class="faq-arrow">▼</span>
+                </div>
+                <div class="faq-answer">
+                    <strong>三级应对方案：</strong><br>
+                    <span class="level-tag">一级</span> 降低难度（读更简单的材料）<br>
+                    <span class="level-tag">二级</span> 改变形式（亲子轮流读、角色扮演读）<br>
+                    <span class="level-tag">三级</span> 外部激励（完成可获小奖励）
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    ❓ 问题2：孩子进步很慢，着急怎么办？
+                    <span class="faq-arrow">▼</span>
+                </div>
+                <div class="faq-answer">
+                    <strong>科学解释：</strong>提供《朗读能力发展曲线图》，说明平台期正常<br>
+                    <strong>行动建议：</strong>回到上一阶段巩固，不强行推进
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    ❓ 问题3：家长自己普通话不标准怎么办？
+                    <span class="faq-arrow">▼</span>
+                </div>
+                <div class="faq-answer">
+                    <strong>明确原则：</strong>家长不示范，只陪伴<br>
+                    <strong>专业支持：</strong>提供标准朗读音频让孩子跟读
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    ❓ 问题4：时间不够怎么办？
+                    <span class="faq-arrow">▼</span>
+                </div>
+                <div class="faq-answer">
+                    <strong>极简版：</strong>每日5分钟核心练习（只做当前阶段最关键练习）<br>
+                    <strong>灵活版：</strong>拆分成3个5分钟段（早晨、下午、晚上各5分钟）
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== MODULE FEATURES ==================== -->
+        <section id="features" style="margin-top:30px;">
+            <div class="section-title">
+                <h2>🎯 模块特色</h2>
+                <p>让家长既容易操作又需要指导的精心设计</p>
+                <div class="section-divider"></div>
+            </div>
+            <div class="toolkit-grid">
+                <div class="toolkit-card">
+                    <h4>✅ 易操作设计</h4>
+                    <ul>
+                        <li>流程固定：每天同样的步骤，形成习惯</li>
+                        <li>工具简单：手机+笔+纸，无需复杂设备</li>
+                        <li>时间明确：15分钟，不多不少</li>
+                        <li>指示清晰：每一步都有明确指令</li>
+                    </ul>
+                </div>
+                <div class="toolkit-card">
+                    <h4>🎓 需要指导的设计</h4>
+                    <ul>
+                        <li>阶段过渡：何时进入下一阶段需要专业判断</li>
+                        <li>问题诊断：遇到瓶颈需要分析原因</li>
+                        <li>技巧提升：每个阶段都有需要教授的新技巧</li>
+                        <li>心态调整：家长和孩子都需要心理支持</li>
+                    </ul>
+                </div>
+            </div>
+            <div style="display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:18px;">
+                <span class="tag tag-purple" style="font-size:0.82rem;padding:6px 14px;">🤖 智能诊断：通过录音分析给出阶段建议</span>
+                <span class="tag tag-pink" style="font-size:0.82rem;padding:6px 14px;">📺 每周答疑：直播解答本周常见问题</span>
+                <span class="tag tag-blue" style="font-size:0.82rem;padding:6px 14px;">📖 案例分享：其他家长的成功经验</span>
+                <span class="tag tag-green" style="font-size:0.82rem;padding:6px 14px;">🆘 紧急支持：可预约一对一指导</span>
+            </div>
+        </section>
+
+        <!-- ==================== VALUE SUMMARY ==================== -->
+        <section id="summary">
+            <div class="section-title">
+                <h2>💎 模块价值升华</h2>
+                <p>对孩子和家长的深远影响</p>
+                <div class="section-divider"></div>
+            </div>
+            <div class="summary-grid">
+                <div class="summary-card">
+                    <h4>👧 对孩子的价值</h4>
+                    <ul>
+                        <li><strong>语文能力：</strong>识字、理解、表达全面提升</li>
+                        <li><strong>学习习惯：</strong>每日坚持，专注力提升</li>
+                        <li><strong>自信心：</strong>从害怕读到享受读</li>
+                        <li><strong>情感智力：</strong>通过理解文本情感提升共情能力</li>
+                    </ul>
+                </div>
+                <div class="summary-card">
+                    <h4>👨‍👩‍👧 对家长的价值</h4>
+                    <ul>
+                        <li><strong>可操作：</strong>不需要专业知识，按步骤做即可</li>
+                        <li><strong>看得到：</strong>每月都有明确进步证据</li>
+                        <li><strong>有支持：</strong>遇到问题有人可问，有法可解</li>
+                        <li><strong>亲子关系：</strong>共同完成一项长期计划，增强连接</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="highlight-box" style="margin-top:20px;text-align:center;font-size:0.9rem;">
+                <strong>🔐 课程壁垒：</strong> 五阶段体系（市面上罕见的完整朗读成长路径）· 专业诊断（基于录音的智能分析）· 家庭活动整合（朗读会等设计增强家庭文化）
+            </div>
+        </section>
+
+        <!-- ==================== FOOTER CTA ==================== -->
+        <div class="footer-cta">
+            <h3>🌟 开启孩子的朗读成长之旅</h3>
+            <p>从"读字"到"读心"，每天15分钟，见证成长的力量</p>
+            <a href="#" class="btn-pill" onclick="alert('欢迎咨询朗读力成长系统！\n\n请关注我们的公众号获取更多信息。');return false;">📩 获取完整指导方案</a>
+        </div>
+
+    </main>
+
+    <!-- Scroll to top -->
+    <a href="#" class="scroll-top" id="scrollTop" title="回到顶部">↑</a>
+
+    <script>
+        // Toggle stage cards
+        function toggleStage(header) {
+            const card = header.parentElement;
+            card.classList.toggle('open');
+        }
+
+        // Toggle FAQ items
+        function toggleFaq(question) {
+            const item = question.parentElement;
+            item.classList.toggle('open');
+        }
+
+        // Scroll to top button visibility
+        const scrollTopBtn = document.getElementById('scrollTop');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 500) {
+                scrollTopBtn.classList.add('visible');
+            } else {
+                scrollTopBtn.classList.remove('visible');
+            }
+
+            // Highlight active nav link based on scroll position
+            const sections = document.querySelectorAll('section[id], .stage-card[id]');
+            const navLinks = document.querySelectorAll('.sticky-nav a');
+            let currentId = '';
+            sections.forEach(section => {
+                const rect = section.getBoundingClientRect();
+                if (rect.top <= 120) {
+                    currentId = section.id;
+                }
+            });
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + currentId) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // Smooth scroll for nav links
+        document.querySelectorAll('.sticky-nav a[href^="#"]').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const navHeight = document.querySelector('.sticky-nav').offsetHeight;
+                    const targetPosition = target.getBoundingClientRect().top + window.pageYOffset -
+                        navHeight - 10;
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Scroll to top
+        scrollTopBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // Initialize: ensure stage 1 is open
+        document.addEventListener('DOMContentLoaded', () => {
+            const stage1 = document.getElementById('stage1');
+            if (stage1 && !stage1.classList.contains('open')) {
+                stage1.classList.add('open');
+            }
+        });
+    </script>
+</body>
+</html>

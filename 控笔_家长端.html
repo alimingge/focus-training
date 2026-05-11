@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>控笔训练 · 家庭操作版 | 四级递进系统</title>
+    <style>
+        :root {
+            --ink: #2C2416;
+            --paper: #FDFAF3;
+            --warm-cream: #FFFBF0;
+            --sepia: #8B7355;
+            --sepia-light: #C4A882;
+            --accent-red: #C75B3A;
+            --accent-blue: #4A6FA5;
+            --accent-green: #5E8A6F;
+            --accent-gold: #C48B3A;
+            --border: #E6DDCC;
+            --card-bg: #FFFFFF;
+            --shadow-sm: 0 1px 4px rgba(60, 40, 15, 0.04);
+            --shadow: 0 4px 18px rgba(60, 40, 15, 0.06);
+            --shadow-lg: 0 10px 32px rgba(60, 40, 15, 0.10);
+            --radius-sm: 8px;
+            --radius: 14px;
+            --radius-lg: 20px;
+            --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Sans SC', 'KaiTi', 'STKaiti', sans-serif;
+            background: var(--paper);
+            color: var(--ink);
+            line-height: 1.75;
+            -webkit-font-smoothing: antialiased;
+            scroll-behavior: smooth;
+            font-size: 15px;
+            background-image: radial-gradient(circle, rgba(139, 115, 85, 0.03) 1px, transparent 1px);
+            background-size: 30px 30px;
+        }
+        .hero {
+            background: linear-gradient(170deg, #FFFBF0 0%, #FDFAF3 35%, #F9F4E8 70%, #FFFBF0 100%);
+            padding: 50px 20px 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 1px solid #E6DDCC;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -90px;
+            right: -60px;
+            width: 320px;
+            height: 320px;
+            background: radial-gradient(circle, rgba(199, 91, 58, 0.05) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -70px;
+            left: -50px;
+            width: 280px;
+            height: 280px;
+            background: radial-gradient(circle, rgba(74, 111, 165, 0.04) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 750px;
+            margin: 0 auto;
+        }
+        .hero-badge {
+            display: inline-block;
+            background: #fff;
+            color: #8B7355;
+            font-size: 0.82rem;
+            font-weight: 600;
+            padding: 5px 18px;
+            border-radius: 20px;
+            letter-spacing: 0.04em;
+            margin-bottom: 16px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid #E6DDCC;
+        }
+        .hero h1 {
+            font-size: 2.3rem;
+            font-weight: 800;
+            letter-spacing: -0.01em;
+            color: #2C2416;
+            margin-bottom: 8px;
+            line-height: 1.3;
+        }
+        .hero h1 span {
+            background: linear-gradient(135deg, #C75B3A, #8B7355, #4A6FA5);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .hero-subtitle {
+            font-size: 0.95rem;
+            color: #6B5D4A;
+            font-weight: 400;
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+        .hero-tagline {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: #fff;
+            padding: 9px 22px;
+            border-radius: 24px;
+            font-size: 0.88rem;
+            font-weight: 500;
+            color: var(--ink);
+            box-shadow: var(--shadow);
+            border: 1px solid #E6DDCC;
+        }
+        .sticky-nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(253, 250, 243, 0.92);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid #E6DDCC;
+            padding: 0 10px;
+            overflow-x: auto;
+            white-space: nowrap;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        .sticky-nav::-webkit-scrollbar {
+            display: none;
+        }
+        .sticky-nav-inner {
+            max-width: 1080px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 2px;
+            padding: 7px 0;
+        }
+        .sticky-nav a {
+            display: inline-block;
+            text-decoration: none;
+            font-size: 0.74rem;
+            font-weight: 500;
+            color: #6B5D4A;
+            padding: 6px 11px;
+            border-radius: 16px;
+            transition: var(--transition);
+            flex-shrink: 0;
+            letter-spacing: 0.02em;
+        }
+        .sticky-nav a:hover,
+        .sticky-nav a.active {
+            background: #F0E8D5;
+            color: #5C3D1E;
+            font-weight: 600;
+        }
+        .sticky-nav a.nav-dot {
+            width: 28px;
+            height: 28px;
+            padding: 0;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.7rem;
+            color: #fff;
+            flex-shrink: 0;
+        }
+        .nd1 {
+            background: #C75B3A;
+        }
+        .nd2 {
+            background: #4A6FA5;
+        }
+        .nd3 {
+            background: #5E8A6F;
+        }
+        .nd4 {
+            background: #8B7355;
+        }
+        .container {
+            max-width: 1080px;
+            margin: 0 auto;
+            padding: 14px 16px 50px;
+        }
+        .section-title {
+            text-align: center;
+            margin: 44px 0 18px;
+        }
+        .section-title h2 {
+            font-size: 1.45rem;
+            font-weight: 700;
+            letter-spacing: -0.006em;
+            margin-bottom: 4px;
+            color: var(--ink);
+        }
+        .section-title p {
+            color: #8B7355;
+            font-size: 0.84rem;
+        }
+        .section-divider {
+            width: 48px;
+            height: 3px;
+            border-radius: 2px;
+            margin: 8px auto 0;
+            background: linear-gradient(90deg, #C75B3A, #C4A882);
+        }
+        .stage-card {
+            background: #fff;
+            border-radius: var(--radius-lg);
+            margin-bottom: 18px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            border: 1px solid #E6DDCC;
+            transition: var(--transition);
+        }
+        .stage-card:hover {
+            box-shadow: var(--shadow-lg);
+        }
+        .stage-header {
+            padding: 18px 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            user-select: none;
+        }
+        .stage-num {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1.1rem;
+            color: #fff;
+            flex-shrink: 0;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+        }
+        .sn1 {
+            background: #C75B3A;
+        }
+        .sn2 {
+            background: #4A6FA5;
+        }
+        .sn3 {
+            background: #5E8A6F;
+        }
+        .sn4 {
+            background: #8B7355;
+        }
+        .stage-header-text h3 {
+            font-size: 1rem;
+            font-weight: 700;
+            line-height: 1.3;
+            color: #2C2416;
+        }
+        .stage-header-text .stage-sub {
+            font-size: 0.74rem;
+            color: #8B7355;
+        }
+        .stage-meta {
+            margin-left: auto;
+            text-align: right;
+            flex-shrink: 0;
+            font-size: 0.72rem;
+            color: #8B7355;
+            line-height: 1.4;
+        }
+        .stage-arrow {
+            font-size: 1rem;
+            transition: var(--transition);
+            color: #8B7355;
+            flex-shrink: 0;
+            margin-left: 2px;
+        }
+        .stage-card.open .stage-arrow {
+            transform: rotate(180deg);
+        }
+        .stage-body {
+            display: none;
+            padding: 0 20px 20px;
+            border-top: 1px solid #E6DDCC;
+            padding-top: 16px;
+            animation: fadeSlideIn 0.3s ease;
+        }
+        .stage-card.open .stage-body {
+            display: block;
+        }
+        @keyframes fadeSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-5px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .stage-two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+        }
+        @media (max-width: 680px) {
+            .stage-two-col {
+                grid-template-columns: 1fr;
+            }
+        }
+        .stage-col {
+            border-radius: var(--radius-sm);
+            padding: 16px;
+            border: 1px solid #E6DDCC;
+            background: #FEFCFA;
+        }
+        .stage-col.parent-do {
+            border-left: 4px solid #5E8A6F;
+            background: #F9FBF7;
+        }
+        .stage-col.guide-need {
+            border-left: 4px solid #C48B3A;
+            background: #FFFDF8;
+        }
+        .stage-col h5 {
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #2C2416;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .stage-col ul {
+            list-style: none;
+            padding: 0;
+        }
+        .stage-col ul li {
+            font-size: 0.8rem;
+            color: #5C4A32;
+            padding: 3px 0 3px 16px;
+            position: relative;
+            line-height: 1.6;
+        }
+        .stage-col ul li::before {
+            content: '•';
+            position: absolute;
+            left: 1px;
+            color: #BFB8A8;
+            font-weight: 700;
+        }
+        .highlight-box {
+            border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+            padding: 10px 14px;
+            margin: 8px 0;
+            font-size: 0.78rem;
+            color: #5C4A32;
+            line-height: 1.6;
+        }
+        .highlight-red {
+            background: #FFF5F0;
+            border-left: 3px solid #C75B3A;
+        }
+        .highlight-blue {
+            background: #F0F5FA;
+            border-left: 3px solid #4A6FA5;
+        }
+        .highlight-green {
+            background: #F2F8F4;
+            border-left: 3px solid #5E8A6F;
+        }
+        .highlight-sepia {
+            background: #FFFDF8;
+            border-left: 3px solid #C48B3A;
+        }
+        .tag-xs {
+            display: inline-block;
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 3px 9px;
+            border-radius: 10px;
+            margin: 2px;
+            letter-spacing: 0.02em;
+            background: #F0E8D5;
+            color: #5C3D1E;
+        }
+        .tag-xs.red {
+            background: #FFE8E0;
+            color: #C75B3A;
+        }
+        .tag-xs.blue {
+            background: #E0ECF5;
+            color: #4A6FA5;
+        }
+        .tag-xs.green {
+            background: #E2F0E8;
+            color: #5E8A6F;
+        }
+        .path-table-wrap {
+            overflow-x: auto;
+            margin: 14px 0;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-sm);
+            border: 1px solid #E6DDCC;
+            background: #fff;
+        }
+        .path-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.76rem;
+            min-width: 650px;
+        }
+        .path-table th {
+            background: #F8F3EB;
+            padding: 10px 8px;
+            text-align: center;
+            font-weight: 700;
+            font-size: 0.72rem;
+            color: #5C3D1E;
+            letter-spacing: 0.03em;
+            border-bottom: 2px solid #E0D5C0;
+        }
+        .path-table td {
+            padding: 8px;
+            text-align: center;
+            border-bottom: 1px solid #F0EBE2;
+            color: #3D3226;
+            font-size: 0.74rem;
+            vertical-align: middle;
+        }
+        .path-table tr:last-child td {
+            border-bottom: none;
+        }
+        .stage-dot-cell {
+            display: inline-block;
+            width: 28px;
+            height: 28px;
+            line-height: 28px;
+            border-radius: 50%;
+            color: #fff;
+            font-weight: 700;
+            font-size: 0.75rem;
+            text-align: center;
+        }
+        .scene-card {
+            background: #fff;
+            border: 1px solid #E6DDCC;
+            border-radius: var(--radius);
+            margin-bottom: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+        }
+        .scene-header {
+            padding: 14px 18px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.86rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            user-select: none;
+            background: #FDFAF3;
+            transition: var(--transition);
+        }
+        .scene-header:hover {
+            background: #FFFBF0;
+        }
+        .scene-arrow {
+            transition: var(--transition);
+            font-size: 0.85rem;
+            color: #8B7355;
+        }
+        .scene-card.open .scene-arrow {
+            transform: rotate(180deg);
+        }
+        .scene-body {
+            display: none;
+            padding: 0 18px 14px;
+            border-top: 1px solid #E6DDCC;
+            padding-top: 12px;
+            font-size: 0.8rem;
+            color: #5C4A32;
+            line-height: 1.65;
+            animation: fadeSlideIn 0.3s ease;
+        }
+        .scene-card.open .scene-body {
+            display: block;
+        }
+        .checklist-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 12px;
+        }
+        .checklist-card {
+            background: #fff;
+            border: 1px solid #E6DDCC;
+            border-radius: var(--radius);
+            padding: 16px;
+            box-shadow: var(--shadow-sm);
+        }
+        .checklist-card h5 {
+            font-weight: 700;
+            font-size: 0.85rem;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: #2C2416;
+        }
+        .checklist-card ul {
+            list-style: none;
+            padding: 0;
+        }
+        .checklist-card ul li {
+            font-size: 0.78rem;
+            color: #5C4A32;
+            padding: 2px 0 2px 16px;
+            position: relative;
+            line-height: 1.55;
+        }
+        .checklist-card ul li::before {
+            content: '☐';
+            position: absolute;
+            left: 0;
+            color: #BFB8A8;
+            font-size: 0.7rem;
+            top: 3px;
+        }
+        .tool-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 12px;
+        }
+        .tool-card {
+            background: #fff;
+            border: 1px solid #E6DDCC;
+            border-radius: var(--radius);
+            padding: 16px;
+            box-shadow: var(--shadow-sm);
+        }
+        .tool-card h5 {
+            font-weight: 700;
+            font-size: 0.85rem;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .tool-card ul {
+            list-style: none;
+            padding: 0;
+        }
+        .tool-card ul li {
+            font-size: 0.78rem;
+            color: #5C4A32;
+            padding: 2px 0 2px 16px;
+            position: relative;
+            line-height: 1.55;
+        }
+        .tool-card ul li::before {
+            content: '📎';
+            position: absolute;
+            left: 0;
+            font-size: 0.6rem;
+            top: 4px;
+        }
+        .cost-badge {
+            display: inline-block;
+            background: #E2F0E8;
+            color: #5E8A6F;
+            font-size: 0.65rem;
+            font-weight: 600;
+            padding: 2px 8px;
+            border-radius: 10px;
+            margin-left: 4px;
+        }
+        .footer-cta {
+            text-align: center;
+            padding: 36px 20px;
+            background: linear-gradient(160deg, #FFFBF0, #FDFAF3, #F9F4E8);
+            border-radius: var(--radius-lg);
+            margin-top: 28px;
+            border: 1px solid #E6DDCC;
+        }
+        .footer-cta h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+            color: #2C2416;
+        }
+        .footer-cta p {
+            color: #8B7355;
+            margin-bottom: 4px;
+            font-size: 0.82rem;
+            line-height: 1.6;
+        }
+        .scroll-top {
+            position: fixed;
+            bottom: 22px;
+            right: 22px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #fff;
+            border: 1px solid #E6DDCC;
+            box-shadow: var(--shadow);
+            cursor: pointer;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 99;
+            transition: var(--transition);
+            opacity: 0;
+            pointer-events: none;
+            text-decoration: none;
+            color: #8B7355;
+        }
+        .scroll-top.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .scroll-top:hover {
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-2px);
+        }
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 1.3rem;
+            }
+            .hero-subtitle {
+                font-size: 0.8rem;
+            }
+            .stage-header {
+                flex-wrap: wrap;
+                gap: 6px;
+                padding: 14px;
+            }
+            .stage-meta {
+                margin-left: 0;
+                text-align: left;
+                width: 100%;
+            }
+            .stage-body {
+                padding: 0 14px 16px;
+                padding-top: 12px;
+            }
+            .stage-two-col {
+                grid-template-columns: 1fr;
+            }
+            .container {
+                padding: 8px 8px 36px;
+            }
+            .sticky-nav a {
+                font-size: 0.65rem;
+                padding: 5px 6px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="hero">
+        <div class="hero-content">
+            <span class="hero-badge">✍️ 家庭操作版 · 四级递进</span>
+            <h1>控笔训练 <span>家庭培养系统</span></h1>
+            <p class="hero-subtitle">家长一看就懂，一做就会。每天5-15分钟，四级递进<br>从“手愿意动”到“又好又快”再到“化为习惯”</p>
+            <div class="hero-tagline">
+                🤚 唤醒期 · 🎯 控制期 · ⚡ 速度期 · 📚 应用期
+            </div>
+        </div>
+    </header>
+
+    <nav class="sticky-nav" id="stickyNav">
+        <div class="sticky-nav-inner">
+            <a href="#stage1" class="nav-dot nd1">1</a>
+            <a href="#stage2" class="nav-dot nd2">2</a>
+            <a href="#stage3" class="nav-dot nd3">3</a>
+            <a href="#stage4" class="nav-dot nd4">4</a>
+            <a href="#path">进阶路径</a>
+            <a href="#scenes">常见问题</a>
+            <a href="#checklist">核对清单</a>
+            <a href="#toolkit">工具包</a>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div class="section-title">
+            <h2>📊 四级家庭操作体系</h2>
+            <p>每级清晰区分“家长能做的”与“需要我指导的”，边界明确</p>
+            <div class="section-divider"></div>
+        </div>
+
+        <!-- 第一级 -->
+        <div class="stage-card open" id="stage1">
+            <div class="stage-header" onclick="toggleStage(this)">
+                <div class="stage-num sn1">1</div>
+                <div class="stage-header-text">
+                    <h3>唤醒期 · 让手愿意动</h3>
+                    <span class="stage-sub">从“抗拒握笔”到“主动练习”</span>
+                </div>
+                <div class="stage-meta">第1-2个月<br>每日5分钟</div>
+                <span class="stage-arrow">▼</span>
+            </div>
+            <div class="stage-body">
+                <div class="stage-two-col">
+                    <div class="stage-col parent-do">
+                        <h5>✅ 家长能做的（简单操作）</h5>
+                        <ul>
+                            <li><strong>准备三样东西（2分钟）：</strong>粗三角铅笔（文具店10元）、可擦拭练习板（或厚白纸+透明文件袋+白板笔）、厨房计时器</li>
+                            <li><strong>手部按摩（30秒）：</strong>按我给的图示捏手指——从拇指到小指，轻轻捏揉每个指关节</li>
+                            <li><strong>自由涂鸦（3分钟）：</strong>“随便画，想画什么画什么”——不设任何限制，重点是手在动</li>
+                            <li><strong>描线游戏（1分钟）：</strong>描我给的粗线条图案（大圆、大波浪、大横线），慢慢描</li>
+                            <li><strong>擦干净板子（30秒）：</strong>让孩子自己擦，也是手部动作练习</li>
+                            <li><strong>一句话鼓励：</strong>“今天你的小手工作了5分钟，真棒！”在日历上贴贴纸✅</li>
+                        </ul>
+                    </div>
+                    <div class="stage-col guide-need">
+                        <h5>🎓 需要我指导的（核心价值）</h5>
+                        <div class="highlight-box highlight-sepia">
+                            <strong>✅ 如何判断孩子准备好了？</strong>提供“5分钟观察清单”——观察握笔姿势、用力程度、持续注意力。A类可直接描线；B类手部力量弱需先做捏橡皮泥等训练；C类触觉敏感需先做沙盘写字等脱敏。
+                        </div>
+                        <div class="highlight-box highlight-sepia">
+                            <strong>✅ 如何应对拒绝？</strong>三级应对：一级换工具（彩色笔/沙盘/水写布）；二级改形式（家长画一半/比赛）；三级建连接（画喜欢的动物食物）。我根据孩子情况推荐切入方式。
+                        </div>
+                        <div class="highlight-box highlight-sepia">
+                            <strong>✅ 何时增加难度？</strong>提供“升级信号检查表”：连续5天主动练习、能持续握笔3分钟以上、涂鸦时手部放松不僵硬。满足2条即可进入下一级。
+                        </div>
+                    </div>
+                </div>
+                <p style="font-size:0.76rem;color:#8B7355;margin-top:8px;">📦 <strong>工具包：</strong>粗三角铅笔3支（不同颜色约10元） · 可擦拭练习板（约15元） · 厨房计时器 · 贴纸日历</p>
+            </div>
+        </div>
+
+        <!-- 第二级 -->
+        <div class="stage-card" id="stage2">
+            <div class="stage-header" onclick="toggleStage(this)">
+                <div class="stage-num sn2">2</div>
+                <div class="stage-header-text">
+                    <h3>控制期 · 让手听指挥</h3>
+                    <span class="stage-sub">从“随意涂画”到“精准控制”</span>
+                </div>
+                <div class="stage-meta">第3-4个月<br>每日10分钟</div>
+                <span class="stage-arrow">▼</span>
+            </div>
+            <div class="stage-body">
+                <div class="stage-two-col">
+                    <div class="stage-col parent-do">
+                        <h5>✅ 家长能做的（简单操作）</h5>
+                        <ul>
+                            <li><strong>升级工具：</strong>普通铅笔+握笔器（我推荐型号）、田字格练习纸（打印或购买）、红蓝两色笔</li>
+                            <li><strong>描红练习（3分钟）：</strong>描我给的红色范字，要求一笔一划慢慢描，尽量重合</li>
+                            <li><strong>空格书写（3分钟）：</strong>在描红字旁边的空格里自己写一遍，参考范字</li>
+                            <li><strong>独立书写（3分钟）：</strong>在空白田字格里独立写，不看范字</li>
+                            <li><strong>标记反馈（1分钟）：</strong>用蓝笔圈出写得最好的3个字，告诉孩子“这三个字特别好，因为横平竖直”</li>
+                            <li><strong>数据记录：</strong>练习纸右上角写日期，数一数写了多少字，拍张照片存档用于月度对比</li>
+                        </ul>
+                    </div>
+                    <div class="stage-col guide-need">
+                        <h5>🎓 需要我指导的（核心价值）</h5>
+                        <div class="highlight-box highlight-sepia">
+                            <strong>✅ 错误诊断与纠正：</strong>提供“常见问题速查表”——字写出格（边界感弱→格子描边游戏）、笔画抖（手腕不稳→支撑练习）、用力过猛（紧张→软握笔+复写纸游戏）、左右颠倒（空间感→镜像游戏）。我需要看练习样本精准定位。
+                        </div>
+                        <div class="highlight-box highlight-sepia">
+                            <strong>✅ 个性化练习生成：</strong>每周提交3张练习纸照片→我分析问题→生成下周练习重点。边界问题提供加粗格子纸，笔画问题提供分解笔画练习，结构问题提供部件组合练习。
+                        </div>
+                        <div class="highlight-box highlight-sepia">
+                            <strong>✅ 进步停滞突破：</strong>连续2周无明显进步时提供“突破三选一”：回退巩固法（回上一级巩固一周）、交叉训练法（加入新形式如沙盘写字）、游戏激励法（闯关游戏每关有奖励）。
+                        </div>
+                    </div>
+                </div>
+                <p style="font-size:0.76rem;color:#8B7355;margin-top:8px;">📦 <strong>工具包：</strong>普通铅笔+握笔器（约20元） · 田字格练习本（或打印纸） · 红蓝双色笔</p>
+            </div>
+        </div>
+
+        <!-- 第三级 -->
+        <div class="stage-card" id="stage3">
+            <div class="stage-header" onclick="toggleStage(this)">
+                <div class="stage-num sn3">3</div>
+                <div class="stage-header-text">
+                    <h3>速度期 · 又好又快</h3>
+                    <span class="stage-sub">从“写得好”到“写得又快又好”</span>
+                </div>
+                <div class="stage-meta">第5-7个月<br>每日12分钟</div>
+                <span class="stage-arrow">▼</span>
+            </div>
+            <div class="stage-body">
+                <div class="stage-two-col">
+                    <div class="stage-col parent-do">
+                        <h5>✅ 家长能做的（简单操作）</h5>
+                        <ul>
+                            <li><strong>计时训练准备：</strong>厨房计时器、速度记录表（我提供模板）、不同难度练习纸（简单/中等/挑战）</li>
+                            <li><strong>热身（2分钟）：</strong>写10个熟悉的字，不计时，只求质量</li>
+                            <li><strong>速度挑战（5分钟）：</strong>计时写15个字，记录所用时间</li>
+                            <li><strong>质量提升（4分钟）：</strong>从15字中挑3个不够好的，每个写3遍越写越好</li>
+                            <li><strong>记录（1分钟）：</strong>在记录表上填时间和自我评分（1-5星）</li>
+                            <li><strong>周末小比赛：</strong>周六家庭速写比赛（同样内容比谁又快又好），周日最美字评选（本周最佳贴墙上）</li>
+                        </ul>
+                    </div>
+                    <div class="stage-col guide-need">
+                        <h5>🎓 需要我指导的（核心价值）</h5>
+                        <div class="highlight-box highlight-sepia">
+                            <strong>✅ 速度-质量平衡点寻找：</strong>提供“平衡公式”——基础速度（每字秒数根据年龄测算）×质量系数。每周动态调整目标速度，确保孩子在“挑战区”而非“崩溃区”。
+                        </div>
+                        <div class="highlight-box highlight-sepia">
+                            <strong>✅ 压力情境模拟训练：</strong>设计3级压力情境逐步适应考试环境——一级安静充足时间、二级背景噪音正常时限、三级倒计时压力有限时间有干扰。
+                        </div>
+                        <div class="highlight-box highlight-sepia">
+                            <strong>✅ 学科专项迁移训练：</strong>数学专项（数字书写速度、竖式对齐）、语文专项（生字书写、作文草稿效率）、英语专项（字母连写、单词间距）。
+                        </div>
+                    </div>
+                </div>
+                <p style="font-size:0.76rem;color:#8B7355;margin-top:8px;">📦 <strong>工具包：</strong>厨房计时器 · 速度记录表（打印） · 三种难度练习纸（电子版） · 背景噪音音频</p>
+            </div>
+        </div>
+
+        <!-- 第四级 -->
+        <div class="stage-card" id="stage4">
+            <div class="stage-header" onclick="toggleStage(this)">
+                <div class="stage-num sn4">4</div>
+                <div class="stage-header-text">
+                    <h3>应用期 · 化为习惯</h3>
+                    <span class="stage-sub">从“刻意练习”到“自动运行”</span>
+                </div>
+                <div class="stage-meta">第8-12个月<br>每周20分钟</div>
+                <span class="stage-arrow">▼</span>
+            </div>
+            <div class="stage-body">
+                <div class="stage-two-col">
+                    <div class="stage-col parent-do">
+                        <h5>✅ 家长能做的（简单操作）</h5>
+                        <ul>
+                            <li><strong>日常作业即训练：</strong>准备各科作业本、作业观察记录表、拍照存档文件夹</li>
+                            <li><strong>周一至周四：</strong>正常做作业，家长只观察不指导</li>
+                            <li><strong>周五晚（15分钟）：</strong>作业分析会——找出写得最好的3处、可改进的1处、讨论改进方法</li>
+                            <li><strong>周末（5分钟）：</strong>针对改进点专项练习</li>
+                            <li><strong>成果展示：</strong>每月制作“进步对比图”、每季度制作“作品集”、每半年举办“家庭书写展”</li>
+                        </ul>
+                    </div>
+                    <div class="stage-col guide-need">
+                        <h5>🎓 需要我指导的（核心价值）</h5>
+                        <div class="highlight-box highlight-sepia">
+                            <strong>✅ 作业问题深度分析：</strong>通过作业照片分析时间压力下书写质量变化、不同科目间书写差异、疲劳程度与错误率关系。提供“作业书写优化方案”。
+                        </div>
+                        <div class="highlight-box highlight-sepia">
+                            <strong>✅ 习惯固化策略：</strong>21天三阶段——第1-7天环境触发设计（固定时间地点工具）、第8-14天行为链建立（准备→书写→检查→整理）、第15-21天自我监控培养（自己检查评分）。
+                        </div>
+                        <div class="highlight-box highlight-sepia">
+                            <strong>✅ 长期发展路径规划：</strong>小升初书写要求预测、中学笔记效率训练前瞻、兴趣发展建议（硬笔书法、艺术字等）。
+                        </div>
+                    </div>
+                </div>
+                <p style="font-size:0.76rem;color:#8B7355;margin-top:8px;">📦 <strong>工具包：</strong>各科作业本 · 作业观察记录表（打印） · 手机拍照存档 · 文件夹或相册</p>
+            </div>
+        </div>
+
+        <!-- 进阶路径图 -->
+        <section id="path">
+            <div class="section-title">
+                <h2>📈 四级进阶路径图</h2>
+                <p>升级标准清晰，家长可自行判断</p>
+                <div class="section-divider"></div>
+            </div>
+            <div class="path-table-wrap">
+                <table class="path-table">
+                    <thead><tr><th>级别</th><th>核心目标</th><th>升级标准（家长可判断）</th><th>建议时间</th></tr></thead>
+                    <tbody>
+                        <tr><td><span class="stage-dot-cell" style="background:#C75B3A;">1</span></td><td>让手愿意动</td><td>连续5天主动练习；能持续握笔3分钟以上</td><td>1-2个月</td></tr>
+                        <tr><td><span class="stage-dot-cell" style="background:#4A6FA5;">2</span></td><td>让手听指挥</td><td>能描红基本重合；空格书写有模有样；错误类型明确</td><td>3-4个月</td></tr>
+                        <tr><td><span class="stage-dot-cell" style="background:#5E8A6F;">3</span></td><td>又好又快</td><td>速度达到同龄基准；质量评分3分以上</td><td>5-7个月</td></tr>
+                        <tr><td><span class="stage-dot-cell" style="background:#8B7355;">4</span></td><td>化为习惯</td><td>作业书写质量稳定；能自查自纠；主动应用</td><td>8-12个月</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- 常见问题 -->
+        <section id="scenes">
+            <div class="section-title">
+                <h2>🧩 家庭常见问题解决方案</h2>
+                <p>三个高频困境，家长能做的 + 需要我指导的</p>
+                <div class="section-divider"></div>
+            </div>
+            <div class="scene-card">
+                <div class="scene-header" onclick="toggleScene(this)">🤚 问题一：孩子说“手好累” <span class="scene-arrow">▼</span></div>
+                <div class="scene-body"><strong>✅ 家长能做的：</strong>立即停止做手部放松操；减少明天练习时间；检查握笔姿势和工具。<br><strong>🎓 需要我指导的：</strong>判断是正常疲劳还是姿势问题；提供针对性放松方法；调整训练强度和频率。</div>
+            </div>
+            <div class="scene-card">
+                <div class="scene-header" onclick="toggleScene(this)">🐌 问题二：进步很慢，家长着急 <span class="scene-arrow">▼</span></div>
+                <div class="scene-body"><strong>✅ 家长能做的：</strong>回看一个月前的练习找进步点；降低期望庆祝小进步；暂时减少练习量。<br><strong>🎓 需要我指导的：</strong>分析进步缓慢原因（方法/材料/心理）；提供突破性训练方案。</div>
+            </div>
+            <div class="scene-card">
+                <div class="scene-header" onclick="toggleScene(this)">⏰ 问题三：学校作业太多没时间练习 <span class="scene-arrow">▼</span></div>
+                <div class="scene-body"><strong>✅ 家长能做的：</strong>将作业中的书写部分当作练习；周末集中补练习；每天只做核心5分钟。<br><strong>🎓 需要我指导的：</strong>如何将训练融入作业；极简有效训练方案；与老师沟通的策略。</div>
+            </div>
+        </section>
+
+        <!-- 月度核对清单 -->
+        <section id="checklist">
+            <div class="section-title">
+                <h2>📋 家长月度核对清单</h2>
+                <p>每月最后一天花15分钟</p>
+                <div class="section-divider"></div>
+            </div>
+            <div class="checklist-grid">
+                <div class="checklist-card"><h5>📊 成果整理</h5><ul><li>拍照记录本月练习纸</li><li>整理速度记录表</li><li>对比月初月末字迹</li><li>标记进步最大的字</li></ul></div>
+                <div class="checklist-card"><h5>📈 数据统计</h5><ul><li>每日练习天数</li><li>握笔时长变化</li><li>书写速度趋势</li><li>质量评分变化</li></ul></div>
+                <div class="checklist-card"><h5>🔍 问题梳理</h5><ul><li>本月最大困难是什么？</li><li>哪种方法最有效？</li><li>需要厉老师帮助的具体问题？</li></ul></div>
+                <div class="checklist-card"><h5>🎯 下月规划</h5><ul><li>是否进阶？</li><li>需要什么新工具？</li><li>设定一个可测量的小目标</li></ul></div>
+            </div>
+        </section>
+
+        <!-- 工具包总览 -->
+        <section id="toolkit">
+            <div class="section-title">
+                <h2>🛠️ 家庭工具包总览</h2>
+                <p>物理工具成本低于100元，数字资源全部由我提供</p>
+                <div class="section-divider"></div>
+            </div>
+            <div class="tool-grid">
+                <div class="tool-card"><h5>📦 物理工具 <span class="cost-badge">&lt;100元</span></h5><ul><li>一级：粗三角铅笔3支+可擦拭练习板+计时器+贴纸日历（约20元）</li><li>二级：普通铅笔+握笔器+田字格本+红蓝笔（约30元）</li><li>三级：进阶计时器+速度记录本+三种练习纸（约25元）</li><li>四级：作业观察记录表+进步对比相册+展示材料（约25元）</li></ul></div>
+                <div class="tool-card"><h5>💻 数字工具（全部免费）</h5><ul><li>练习纸库：PDF可无限打印</li><li>记录表模板：Excel/Word格式</li><li>背景音音频：教室环境音</li><li>示范视频：手部操、握笔姿势</li></ul></div>
+            </div>
+        </section>
+
+        <!-- 价值承诺 -->
+        <div class="footer-cta">
+            <h3>💎 最终给家长的价值承诺</h3>
+            <p><strong>简单操作承诺：</strong>您只需要每天花5-15分钟，准备好简单工具，按我给的四步流程陪孩子练习。流程固定，工具易得，步骤清晰。</p>
+            <p><strong>专业价值承诺：</strong>但想要达到最佳效果——让孩子写字又好又快又轻松，让写字问题不再影响学习成绩——您需要我的专业诊断、个性化方案和持续指导。</p>
+            <p><strong>成果可视承诺：</strong>每个月您都会看到可测量的进步：握笔姿势改善、字迹工整度提升、书写速度加快。每季度都有作品集对比。</p>
+            <p style="font-weight:600;color:#C75B3A;margin-top:8px;">✍️ 从“催着写”到“主动写”，从“写得累”到“写得轻松”。这双小手，值得最好的开始。</p>
+        </div>
+    </main>
+
+    <a href="#" class="scroll-top" id="scrollTop" title="回到顶部">↑</a>
+
+    <script>
+        function toggleStage(header) { header.parentElement.classList.toggle('open'); }
+        function toggleScene(header) { header.parentElement.classList.toggle('open'); }
+        const scrollTopBtn = document.getElementById('scrollTop');
+        window.addEventListener('scroll', () => { if (window.scrollY > 500) { scrollTopBtn.classList.add('visible'); } else { scrollTopBtn.classList.remove('visible'); } const sections = document.querySelectorAll('section[id], .stage-card[id]'); const navLinks = document.querySelectorAll('.sticky-nav a'); let currentId = ''; sections.forEach(section => { const rect = section.getBoundingClientRect(); if (rect.top <= 140) { currentId = section.id; } }); navLinks.forEach(link => { link.classList.remove('active'); if (link.getAttribute('href') === '#' + currentId) { link.classList.add('active'); } }); });
+        document.querySelectorAll('.sticky-nav a[href^="#"]').forEach(link => { link.addEventListener('click', function(e) { e.preventDefault(); const target = document.querySelector(this.getAttribute('href')); if (target) { const navHeight = document.querySelector('.sticky-nav').offsetHeight; const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - navHeight - 8; window.scrollTo({ top: targetPosition, behavior: 'smooth' }); } }); });
+        scrollTopBtn.addEventListener('click', function(e) { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); });
+        document.addEventListener('DOMContentLoaded', () => { const firstCard = document.getElementById('stage1'); if (firstCard && !firstCard.classList.contains('open')) { firstCard.classList.add('open'); } });
+    </script>
+</body>
+</html>

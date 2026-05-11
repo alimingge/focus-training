@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>厉老师专注力特训体系3.0 · 三端协同全人成长生态系统</title>
+    <style>
+        :root {
+            --deep-blue: #2C4A6E;
+            --teal: #3D7B7D;
+            --warm-gold: #C48B3A;
+            --terracotta: #C06B4A;
+            --plum: #6B4E7B;
+            --sage: #5F826A;
+            --cream: #FDFBF7;
+            --card-bg: #FFFFFF;
+            --text: #2E2620;
+            --text-light: #5C4F45;
+            --text-lighter: #8C7E6F;
+            --border: #E6DDD0;
+            --shadow-sm: 0 1px 4px rgba(50, 30, 10, 0.04);
+            --shadow: 0 4px 20px rgba(50, 30, 10, 0.06);
+            --shadow-lg: 0 10px 34px rgba(50, 30, 10, 0.10);
+            --radius-sm: 8px;
+            --radius: 14px;
+            --radius-lg: 20px;
+            --radius-xl: 26px;
+            --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Sans SC', sans-serif;
+            background: var(--cream);
+            color: var(--text);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+            scroll-behavior: smooth;
+            font-size: 15px;
+            background-image: radial-gradient(circle, rgba(0, 0, 0, 0.015) 1px, transparent 1px);
+            background-size: 32px 32px;
+        }
+        .hero {
+            background: linear-gradient(165deg, #F5F0E8 0%, #FDFBF7 20%, #F8F4EF 40%, #FDFBF7 60%, #F3F0EC 80%, #FDFBF7 100%);
+            padding: 50px 20px 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 1px solid #E6DDD0;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -120px;
+            right: -80px;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(196, 139, 58, 0.06) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -100px;
+            left: -70px;
+            width: 350px;
+            height: 350px;
+            background: radial-gradient(circle, rgba(61, 123, 125, 0.05) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 850px;
+            margin: 0 auto;
+        }
+        .hero-badge {
+            display: inline-block;
+            background: #fff;
+            color: #C48B3A;
+            font-size: 0.82rem;
+            font-weight: 700;
+            padding: 6px 20px;
+            border-radius: 22px;
+            letter-spacing: 0.05em;
+            margin-bottom: 16px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid #E8D8C0;
+        }
+        .hero h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            letter-spacing: -0.015em;
+            color: #2E2620;
+            margin-bottom: 8px;
+            line-height: 1.3;
+        }
+        .hero h1 .gradient-text {
+            background: linear-gradient(135deg, #C48B3A, #C06B4A, #3D7B7D, #6B4E7B);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .hero-subtitle {
+            font-size: 0.95rem;
+            color: #5C4F45;
+            font-weight: 400;
+            margin-bottom: 8px;
+            line-height: 1.6;
+        }
+        .hero-tagline {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #fff;
+            padding: 10px 22px;
+            border-radius: 26px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #2E2620;
+            box-shadow: var(--shadow);
+            border: 1px solid #E6DDD0;
+        }
+
+        .sticky-nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(253, 251, 247, 0.9);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border-bottom: 1px solid #E6DDD0;
+            padding: 0 10px;
+            overflow-x: auto;
+            white-space: nowrap;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        .sticky-nav::-webkit-scrollbar {
+            display: none;
+        }
+        .sticky-nav-inner {
+            max-width: 1150px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 2px;
+            padding: 7px 0;
+        }
+        .sticky-nav a {
+            display: inline-block;
+            text-decoration: none;
+            font-size: 0.74rem;
+            font-weight: 500;
+            color: #5C4F45;
+            padding: 6px 11px;
+            border-radius: 16px;
+            transition: var(--transition);
+            flex-shrink: 0;
+            letter-spacing: 0.02em;
+        }
+        .sticky-nav a:hover,
+        .sticky-nav a.active {
+            background: #F0E8D8;
+            color: #C48B3A;
+            font-weight: 600;
+        }
+
+        .container {
+            max-width: 1150px;
+            margin: 0 auto;
+            padding: 14px 16px 50px;
+        }
+        .section-title {
+            text-align: center;
+            margin: 44px 0 18px;
+        }
+        .section-title h2 {
+            font-size: 1.45rem;
+            font-weight: 700;
+            letter-spacing: -0.006em;
+            margin-bottom: 4px;
+            color: #2E2620;
+        }
+        .section-title p {
+            color: #8C7E6F;
+            font-size: 0.84rem;
+        }
+        .section-divider {
+            width: 48px;
+            height: 3px;
+            border-radius: 2px;
+            margin: 8px auto 0;
+            background: linear-gradient(90deg, #C48B3A, #3D7B7D, #6B4E7B);
+        }
+
+        /* 金字塔 */
+        .pyramid-wrap {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            margin: 20px auto;
+            max-width: 700px;
+        }
+        .pyramid-layer {
+            text-align: center;
+            padding: 14px 20px;
+            border-radius: var(--radius-sm);
+            font-weight: 700;
+            font-size: 0.85rem;
+            color: #fff;
+            letter-spacing: 0.03em;
+            transition: var(--transition);
+            cursor: default;
+            box-shadow: var(--shadow-sm);
+            width: 100%;
+        }
+        .pyramid-layer:hover {
+            transform: scale(1.015);
+            box-shadow: var(--shadow);
+        }
+        .pl-top {
+            background: #C48B3A;
+            width: 45%;
+        }
+        .pl-5 {
+            background: #C06B4A;
+            width: 55%;
+        }
+        .pl-4 {
+            background: #D4956B;
+            width: 65%;
+        }
+        .pl-3 {
+            background: #3D7B7D;
+            width: 78%;
+        }
+        .pl-2 {
+            background: #5F826A;
+            width: 88%;
+        }
+        .pl-1 {
+            background: #6B4E7B;
+            width: 100%;
+        }
+        .pl-base {
+            background: #2C4A6E;
+            width: 100%;
+            border-radius: var(--radius-sm);
+            font-size: 0.78rem;
+            padding: 10px 20px;
+        }
+
+        /* 三端 */
+        .triple-arch {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            justify-content: center;
+            align-items: flex-start;
+            margin: 16px 0;
+        }
+        .arch-card {
+            background: #fff;
+            border: 1px solid #E6DDD0;
+            border-radius: var(--radius);
+            padding: 20px 18px;
+            text-align: center;
+            flex: 1 1 260px;
+            max-width: 340px;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+        }
+        .arch-card:hover {
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-3px);
+        }
+        .arch-card .arch-icon {
+            font-size: 2.4rem;
+            display: block;
+            margin-bottom: 8px;
+        }
+        .arch-card h4 {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #2E2620;
+            margin-bottom: 4px;
+        }
+        .arch-card p {
+            font-size: 0.76rem;
+            color: #8C7E6F;
+            line-height: 1.5;
+        }
+        .arch-arrow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            color: #C48B3A;
+            flex-shrink: 0;
+            padding: 0 4px;
+        }
+
+        /* 表格 */
+        .table-wrap {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            margin: 14px 0;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-sm);
+            border: 1px solid #E6DDD0;
+            background: #fff;
+        }
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.78rem;
+            min-width: 700px;
+        }
+        .data-table th {
+            background: #F8F3EB;
+            padding: 10px 8px;
+            text-align: center;
+            font-weight: 700;
+            font-size: 0.72rem;
+            color: #5C3D1E;
+            letter-spacing: 0.03em;
+            border-bottom: 2px solid #E0D5C0;
+        }
+        .data-table td {
+            padding: 9px 8px;
+            text-align: center;
+            border-bottom: 1px solid #F0EBE2;
+            color: #3D3226;
+            font-size: 0.76rem;
+            vertical-align: middle;
+        }
+        .data-table tr:last-child td {
+            border-bottom: none;
+        }
+        .data-table .tag-cell {
+            display: inline-block;
+            font-weight: 600;
+            font-size: 0.68rem;
+            padding: 3px 8px;
+            border-radius: 10px;
+            letter-spacing: 0.02em;
+        }
+        .tag-pillar1 {
+            background: #E8F0F5;
+            color: #2C4A6E;
+        }
+        .tag-pillar2 {
+            background: #FFF0E8;
+            color: #C06B4A;
+        }
+        .tag-pillar3 {
+            background: #E8F0ED;
+            color: #3D7B7D;
+        }
+        .tag-pillar4 {
+            background: #F0EAF5;
+            color: #6B4E7B;
+        }
+        .tag-support {
+            background: #FFF8EF;
+            color: #C48B3A;
+        }
+
+        /* 卡片 */
+        .info-card {
+            background: #fff;
+            border: 1px solid #E6DDD0;
+            border-radius: var(--radius);
+            padding: 18px;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            cursor: pointer;
+            user-select: none;
+            margin-bottom: 10px;
+        }
+        .info-card:hover {
+            box-shadow: var(--shadow);
+        }
+        .info-card-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: #2E2620;
+        }
+        .info-card .card-arrow {
+            margin-left: auto;
+            font-size: 0.9rem;
+            transition: var(--transition);
+            color: #8C7E6F;
+        }
+        .info-card.open .card-arrow {
+            transform: rotate(180deg);
+        }
+        .info-card-body {
+            display: none;
+            margin-top: 12px;
+            padding-top: 10px;
+            border-top: 1px dashed #E6DDD0;
+            font-size: 0.8rem;
+            color: #5C4F45;
+            line-height: 1.65;
+            animation: fadeSlideIn 0.3s ease;
+        }
+        .info-card.open .info-card-body {
+            display: block;
+        }
+        @keyframes fadeSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-4px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .highlight-box {
+            background: #FFFDF8;
+            border-left: 3px solid #C48B3A;
+            border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+            padding: 12px 16px;
+            margin: 10px 0;
+            font-size: 0.8rem;
+            color: #5C4F45;
+            line-height: 1.6;
+        }
+        .highlight-box.teal {
+            border-left-color: #3D7B7D;
+        }
+        .highlight-box.plum {
+            border-left-color: #6B4E7B;
+        }
+        .highlight-box.terracotta {
+            border-left-color: #C06B4A;
+        }
+
+        .tree-list {
+            list-style: none;
+            padding-left: 0;
+            font-size: 0.78rem;
+            color: #5C4F45;
+            line-height: 1.7;
+        }
+        .tree-list li {
+            padding: 2px 0 2px 20px;
+            position: relative;
+        }
+        .tree-list li::before {
+            content: '├─';
+            position: absolute;
+            left: 2px;
+            color: #BFB8A8;
+            font-size: 0.65rem;
+            top: 2px;
+        }
+        .tree-list li:last-child::before {
+            content: '└─';
+        }
+
+        .footer-cta {
+            text-align: center;
+            padding: 36px 20px;
+            background: linear-gradient(160deg, #F8F3EB, #FDFBF7, #F3F0EC);
+            border-radius: var(--radius-xl);
+            margin-top: 28px;
+            border: 2px dashed #E0D5C0;
+        }
+        .footer-cta h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+            color: #2E2620;
+        }
+        .footer-cta p {
+            color: #8C7E6F;
+            margin-bottom: 4px;
+            font-size: 0.84rem;
+            line-height: 1.6;
+        }
+        .btn-pill {
+            display: inline-block;
+            background: linear-gradient(135deg, #C48B3A, #C06B4A);
+            color: #fff;
+            font-weight: 600;
+            font-size: 0.88rem;
+            padding: 10px 26px;
+            border-radius: 24px;
+            text-decoration: none;
+            letter-spacing: 0.02em;
+            transition: var(--transition);
+            box-shadow: 0 5px 18px rgba(196, 139, 58, 0.25);
+            border: none;
+            cursor: pointer;
+            margin-top: 8px;
+        }
+        .btn-pill:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(196, 139, 58, 0.35);
+        }
+
+        .scroll-top {
+            position: fixed;
+            bottom: 22px;
+            right: 22px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #fff;
+            border: 1px solid #E6DDD0;
+            box-shadow: var(--shadow);
+            cursor: pointer;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 99;
+            transition: var(--transition);
+            opacity: 0;
+            pointer-events: none;
+            text-decoration: none;
+            color: #C48B3A;
+        }
+        .scroll-top.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .scroll-top:hover {
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 1.55rem;
+            }
+            .hero-subtitle {
+                font-size: 0.82rem;
+            }
+            .pyramid-layer {
+                font-size: 0.7rem;
+                padding: 10px 14px;
+            }
+            .triple-arch {
+                flex-direction: column;
+                align-items: center;
+            }
+            .arch-arrow {
+                transform: rotate(90deg);
+                padding: 4px 0;
+            }
+            .arch-card {
+                max-width: 100%;
+                width: 100%;
+            }
+            .container {
+                padding: 8px 8px 36px;
+            }
+            .sticky-nav a {
+                font-size: 0.66rem;
+                padding: 5px 7px;
+            }
+        }
+        @media (max-width: 480px) {
+            .hero {
+                padding: 30px 10px 24px;
+            }
+            .hero h1 {
+                font-size: 1.25rem;
+            }
+            .pyramid-wrap {
+                gap: 2px;
+            }
+            .pyramid-layer {
+                font-size: 0.65rem;
+                padding: 8px 10px;
+            }
+            .data-table {
+                font-size: 0.65rem;
+                min-width: 550px;
+            }
+            .data-table th,
+            .data-table td {
+                padding: 5px 4px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="hero">
+        <div class="hero-content">
+            <span class="hero-badge">🏆 厉老师专注力特训体系 3.0</span>
+            <h1>三端协同 <span class="gradient-text">全人成长生态系统</span></h1>
+            <p class="hero-subtitle">状态先于专注 · 无痕训练 · 家长为教练 · 生态化培养</p>
+            <div class="hero-tagline">
+                🧠 四大支柱 · 📐 六层金字塔 · 🔄 三端协同 · 📅 12个月全景规划
+            </div>
+        </div>
+    </header>
+
+    <nav class="sticky-nav" id="stickyNav">
+        <div class="sticky-nav-inner">
+            <a href="#pyramid">金字塔</a>
+            <a href="#triple-arch">三端架构</a>
+            <a href="#pillars">四大支柱</a>
+            <a href="#phases">发展阶段</a>
+            <a href="#weekly">周执行</a>
+            <a href="#docs">文档结构</a>
+            <a href="#mapping">三端对应</a>
+        </div>
+    </nav>
+
+    <main class="container">
+
+        <!-- ==================== 六层金字塔 ==================== -->
+        <section id="pyramid">
+            <div class="section-title">
+                <h2>📐 六层金字塔模型</h2>
+                <p>从理念到成果，层层支撑全人成长</p>
+                <div class="section-divider"></div>
+            </div>
+            <div class="pyramid-wrap">
+                <div class="pyramid-layer pl-top">🏆 荣誉殿堂（成果层）— 认证体系 · 成长档案 · 作品展示 · 庆典</div>
+                <div class="pyramid-layer pl-5">🔄 成长打卡中心（运营层）— 每日打卡 · 进度追踪 · 社群互动 · 激励</div>
+                <div class="pyramid-layer pl-4">🧠 四大支柱（能力培养层）— 智慧学习力 · 强健心智体魄 · 卓越行为习惯 · 未来生存力</div>
+                <div class="pyramid-layer pl-3">🏠 家长赋能中心（支持层）— 家长教练培养 · 家庭系统优化 · 社群互助</div>
+                <div class="pyramid-layer pl-2">🔬 潜能测评系统（诊断层）— 入营评估 · 阶段性诊断 · 年度综合报告</div>
+                <div class="pyramid-layer pl-1">💡 元认知·家长觉醒（理念层）— 教育哲学 · 成长型思维 · 全人发展观</div>
+            </div>
+        </section>
+
+        <!-- ==================== 三端协同 ==================== -->
+        <section id="triple-arch">
+            <div class="section-title">
+                <h2>🔄 三端协同架构</h2>
+                <p>教师指导 · 家长操作 · 学生执行，三位一体</p>
+                <div class="section-divider"></div>
+            </div>
+            <div class="triple-arch">
+                <div class="arch-card">
+                    <span class="arch-icon">👨‍🏫</span>
+                    <h4>教师端（指导端）</h4>
+                    <p><strong>体系总教练·问题解决专家</strong></p>
+                    <p>诊断评估 · 方案设计 · 专业指导<br>瓶颈突破 · 成果认证</p>
+                    <p style="font-size:0.7rem;color:#8C7E6F;">交付：诊断工具 · 方案库 · 直播指导 · 一对一咨询</p>
+                </div>
+                <div class="arch-arrow">→</div>
+                <div class="arch-card">
+                    <span class="arch-icon">👨‍👩‍👧</span>
+                    <h4>家长端（操作端）</h4>
+                    <p><strong>家庭训练执行官·环境营造者</strong></p>
+                    <p>学会方法 · 记录观察 · 反馈协助<br>环境营造 · 数据记录 · 陪伴鼓励</p>
+                    <p style="font-size:0.7rem;color:#8C7E6F;">交付：操作手册 · 工具包 · 记录模板 · 话术库 · 社群支持</p>
+                </div>
+                <div class="arch-arrow">→</div>
+                <div class="arch-card">
+                    <span class="arch-icon">👦</span>
+                    <h4>学生端（执行端）</h4>
+                    <p><strong>专注力小勇士·自主成长者</strong></p>
+                    <p>完成任务 · 真实表达 · 享受进步<br>自我管理 · 创意展示</p>
+                    <p style="font-size:0.7rem;color:#8C7E6F;">交付：任务卡 · 游戏材料 · 激励系统 · 作品集 · 展示平台</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== 四大支柱模块 ==================== -->
+        <section id="pillars">
+            <div class="section-title">
+                <h2>🧠 完整模块体系（四大支柱 + 渗透系统）</h2>
+                <p>20个模块，覆盖学习力·心智体魄·行为习惯·未来生存力</p>
+                <div class="section-divider"></div>
+            </div>
+            <div class="table-wrap">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>编号</th><th>模块名称</th><th>所属支柱</th><th>引入时间</th><th>训练频率</th><th>核心价值</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>01</td><td>朗读力成长系统</td><td><span class="tag-cell tag-pillar1">智慧学习力</span></td><td>第1周</td><td>每日15分钟</td><td>眼口脑协调发展，从读字到读心</td></tr>
+                        <tr><td>02</td><td>专注力运动生态系统</td><td><span class="tag-cell tag-pillar1">智慧学习力</span></td><td>第1周</td><td>每日20-30分钟</td><td>通过身体训练大脑，四大生理基础</td></tr>
+                        <tr><td>03</td><td>神经通路雕刻系统（控笔）</td><td><span class="tag-cell tag-pillar1">智慧学习力</span></td><td>第2周</td><td>每日10-15分钟</td><td>精细动作塑造神经网络</td></tr>
+                        <tr><td>04</td><td>逻辑思维预演系统（数独）</td><td><span class="tag-cell tag-pillar1">智慧学习力</span></td><td>第3个月</td><td>每日15分钟</td><td>系统性思维培养，从具象到抽象</td></tr>
+                        <tr><td>05</td><td>数感与计算思维系统（口诀）</td><td><span class="tag-cell tag-pillar1">智慧学习力</span></td><td>第2个月</td><td>每日10分钟</td><td>建立高速提取通道，自动化反应</td></tr>
+                        <tr><td>06</td><td>多感官记忆系统</td><td><span class="tag-cell tag-pillar1">智慧学习力</span></td><td>第3个月</td><td>每日12-15分钟</td><td>三重感官通道整合</td></tr>
+                        <tr><td>07</td><td>感觉统合基础训练</td><td><span class="tag-cell tag-pillar2">强健心智体魄</span></td><td>第1个月</td><td>每周2-3次</td><td>前庭·本体·触觉三重神经整合</td></tr>
+                        <tr><td>08</td><td>视觉功能专项训练</td><td><span class="tag-cell tag-pillar2">强健心智体魄</span></td><td>第4个月</td><td>每日10-12分钟</td><td>视觉输入·处理·动作三通路</td></tr>
+                        <tr><td>09</td><td>情绪智力发展系统</td><td><span class="tag-cell tag-pillar2">强健心智体魄</span></td><td>渗透性</td><td>每日10分钟</td><td>情绪识别→表达→调节→赋能</td></tr>
+                        <tr><td>10</td><td>抗挫折与心理韧性</td><td><span class="tag-cell tag-pillar2">强健心智体魄</span></td><td>第5个月</td><td>渗透性</td><td>成长型思维·失败重构·弹性恢复</td></tr>
+                        <tr><td>11</td><td>时间感知与节律培养</td><td><span class="tag-cell tag-pillar3">卓越行为习惯</span></td><td>渗透性</td><td>每日10-12分钟</td><td>内在时间节律建立</td></tr>
+                        <tr><td>12</td><td>生理节律与大脑波优化</td><td><span class="tag-cell tag-pillar3">卓越行为习惯</span></td><td>渗透性</td><td>每日5-10分钟</td><td>生物钟校准，专注友好状态</td></tr>
+                        <tr><td>13</td><td>家庭贡献者计划（家务）</td><td><span class="tag-cell tag-pillar3">卓越行为习惯</span></td><td>第1个月</td><td>每日10-15分钟</td><td>责任驱动内驱力</td></tr>
+                        <tr><td>14</td><td>高效能学习习惯</td><td><span class="tag-cell tag-pillar3">卓越行为习惯</span></td><td>第3个月</td><td>渗透性</td><td>预习·听课·复习闭环</td></tr>
+                        <tr><td>15</td><td>内在动机自主驱动</td><td><span class="tag-cell tag-pillar4">未来生存力</span></td><td>渗透性</td><td>每日渗透</td><td>自主感·胜任感·归属感</td></tr>
+                        <tr><td>16</td><td>自主娱乐管理系统</td><td><span class="tag-cell tag-pillar4">未来生存力</span></td><td>第2个月</td><td>每日30分钟+周末</td><td>心流体验，从消费者到创造者</td></tr>
+                        <tr><td>17</td><td>元认知与学习策略</td><td><span class="tag-cell tag-pillar4">未来生存力</span></td><td>第6个月</td><td>渗透性</td><td>学会如何学习</td></tr>
+                        <tr><td>18</td><td>社交协作与创造性解决问题</td><td><span class="tag-cell tag-pillar4">未来生存力</span></td><td>第7个月</td><td>每周1-2次</td><td>倾听专注·共情关注·团队协作</td></tr>
+                        <tr><td>19</td><td>营养睡眠生理基础</td><td><span class="tag-cell tag-support">生理支持</span></td><td>第1个月</td><td>全程渗透</td><td>大脑营养供给·睡眠神经修复</td></tr>
+                        <tr><td>20</td><td>肠道-脑轴健康支持</td><td><span class="tag-cell tag-support">生理支持</span></td><td>第2个月</td><td>全程渗透</td><td>肠脑连接，情绪与专注的生理基础</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- ==================== 四大发展阶段 ==================== -->
+        <section id="phases">
+            <div class="section-title">
+                <h2>📅 四大发展阶段与模块引入顺序</h2>
+                <p>12个月全景规划，科学优先级逻辑</p>
+                <div class="section-divider"></div>
+            </div>
+            <div class="table-wrap">
+                <table class="data-table">
+                    <thead>
+                        <tr><th>阶段</th><th>时间</th><th>核心目标</th><th>引入模块</th><th>家长角色</th><th>教师角色</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>第一阶段</strong></td><td>第1-3个月</td><td>建立习惯·调整系统·从对抗到合作</td>
+                            <td>00测评→01朗读→02运动→03控笔→13家务→07感统→19营养→11时间→12节律→09情绪→15动机</td>
+                            <td>陪伴者·观察者·鼓励者</td><td>起点诊断·方案设计·习惯建立指导</td>
+                        </tr>
+                        <tr>
+                            <td><strong>第二阶段</strong></td><td>第4-6个月</td><td>提升精准度·培养深度能力</td>
+                            <td>05口诀→16娱乐→04数独→08视觉→06记忆→20肠道</td>
+                            <td>支持者·资源提供者</td><td>能力诊断·策略教学·瓶颈突破</td>
+                        </tr>
+                        <tr>
+                            <td><strong>第三阶段</strong></td><td>第7-9个月</td><td>能力整合·培养迁移和创造</td>
+                            <td>14学习习惯→17元认知→18社交协作</td>
+                            <td>教练·引导者</td><td>迁移指导·整合训练·创新激发</td>
+                        </tr>
+                        <tr>
+                            <td><strong>第四阶段</strong></td><td>第10-12个月</td><td>固化能力·展示成果·规划未来</td>
+                            <td>各模块高阶·终极庆典</td><td>合作伙伴·欣赏者</td><td>成果认证·长期规划·校友网络</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- 优先级逻辑 -->
+            <div class="highlight-box">
+                <strong>📌 模块引入优先级逻辑：</strong><br>
+                <strong>第一优先级（第1周-第1月）：</strong>00潜能测评→01朗读+02运动（最易上手）→07感统+13家务（生理基础+责任意识）→渗透模块启动<br>
+                <strong>第二优先级（第2-3月）：</strong>03控笔（与朗读/运动形成三角）→05口诀→16娱乐→19-20生理支持<br>
+                <strong>第三优先级（第4-6月）：</strong>04数独（需前序基础）→08视觉→06记忆<br>
+                <strong>第四优先级（第7-9月）：</strong>14学习习惯→17元认知→18社交协作（需自主性和情绪能力基础）
+            </div>
+        </section>
+
+        <!-- ==================== 周执行模板 ==================== -->
+        <section id="weekly">
+            <div class="section-title">
+                <h2>📋 周执行模板（学期期间）</h2>
+                <p>周一至周五 + 周末，时间精确到时段</p>
+                <div class="section-divider"></div>
+            </div>
+            <div class="table-wrap">
+                <table class="data-table">
+                    <thead>
+                        <tr><th>时段</th><th>活动</th><th>涉及模块</th><th>时长</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>早晨</td><td>晨间唤醒·能量确认·口诀速读</td><td>12节律·15动机·05口诀</td><td>10分钟</td></tr>
+                        <tr><td>放学后</td><td>户外运动·感统训练·家务任务</td><td>02运动·07感统·13家务</td><td>25-30分钟</td></tr>
+                        <tr><td>作业前</td><td>控笔训练·视觉训练</td><td>03控笔·08视觉</td><td>10-15分钟</td></tr>
+                        <tr><td>作业后</td><td>朗读训练·数独/记忆</td><td>01朗读·04数独·06记忆</td><td>20-25分钟</td></tr>
+                        <tr><td>自由时间</td><td>自主娱乐·兴趣探索</td><td>16娱乐</td><td>30分钟</td></tr>
+                        <tr><td>睡前</td><td>情绪记录·时间回顾·感恩分享</td><td>09情绪·11时间</td><td>10分钟</td></tr>
+                        <tr style="background:#FFFDF8;"><td colspan="4"><strong>📅 周末安排</strong></td></tr>
+                        <tr><td>周六上午</td><td>家庭清洁·家务实践</td><td>13家务</td><td>1小时</td></tr>
+                        <tr><td>周六下午</td><td>深度娱乐项目·户外拓展</td><td>16娱乐·02运动</td><td>2-3小时</td></tr>
+                        <tr><td>周六晚上</td><td>家庭分享会·作品展示</td><td>综合</td><td>30分钟</td></tr>
+                        <tr><td>周日上午</td><td>户外活动·社交娱乐</td><td>02运动·18社交</td><td>2小时</td></tr>
+                        <tr><td>周日下午</td><td>周计划会议·材料准备</td><td>11时间·综合</td><td>30分钟</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- ==================== 文档结构 ==================== -->
+        <section id="docs">
+            <div class="section-title">
+                <h2>📁 整体文档结构（产品级）</h2>
+                <p>六大文件夹，三端内容 + 通用工具 + 运营支持 + 品牌理念</p>
+                <div class="section-divider"></div>
+            </div>
+            <div class="info-card open" onclick="toggleInfoCard(this)">
+                <div class="info-card-header">
+                    📁 厉老师专注力特训体系3.0 <span class="card-arrow">▼</span>
+                </div>
+                <div class="info-card-body">
+                    <ul class="tree-list">
+                        <li>📄 00_体系总览与使用指南 — 体系介绍·三端协同说明·12个月全景图·家长入门第一课</li>
+                        <li>📁 01_教师端（专业指导库）— 00.1潜能测评～21.1终极庆典（22份文档）</li>
+                        <li>📁 02_家长端（操作手册库）— 00.2潜能发现四日营～21.2成长见证荣耀盛典（22份文档）</li>
+                        <li>📁 03_学生端（任务激励库）— 00.3成长启动营～21.3荣耀盛典（22份文档）</li>
+                        <li>📁 04_通用工具包 — 诊断评估工具·记录模板库·话术库·激励系统素材·音视频资源·可打印资源库</li>
+                        <li>📁 05_运营支持体系 — 社群运营SOP·直播体系·知识库架构·转化漏斗·案例库建设</li>
+                        <li>📁 06_品牌与理念 — 厉老师教育哲学·核心语录金句库·家长觉醒课程·品牌视觉规范</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== 三端对应关系 ==================== -->
+        <section id="mapping">
+            <div class="section-title">
+                <h2>📊 三端内容对应关系（部分展示）</h2>
+                <p>每个模块均有教师端·家长端·学生端三个版本</p>
+                <div class="section-divider"></div>
+            </div>
+            <div class="table-wrap">
+                <table class="data-table">
+                    <thead>
+                        <tr><th>模块编号</th><th>教师端（X.1）</th><th>家长端（X.2）</th><th>学生端（X.3）</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>00</td><td>深度测评·专业解读</td><td>四日营操作指南</td><td>游戏化测评任务</td></tr>
+                        <tr><td>01</td><td>朗读五阶教学体系</td><td>五级操作流程</td><td>小主播任务卡</td></tr>
+                        <tr><td>02</td><td>运动四层训练体系</td><td>四层安全执行指南</td><td>勇士挑战系统</td></tr>
+                        <tr><td>03</td><td>控笔四阶诊断方案</td><td>四阶操作手册</td><td>艺术家任务卡</td></tr>
+                        <tr><td>04</td><td>数独六策略教学</td><td>四阶陪伴指南</td><td>侦探解谜包</td></tr>
+                        <tr><td>05</td><td>口诀四阶训练法</td><td>四阶记录方法</td><td>闪电侠挑战</td></tr>
+                        <tr><td>06</td><td>记忆六策略系统</td><td>四阶协助方案</td><td>达人游戏集</td></tr>
+                        <tr><td>07</td><td>感统三维诊断</td><td>四阶安全执行</td><td>勇士游戏包</td></tr>
+                        <tr><td>08</td><td>视觉三通路训练</td><td>四阶观察指南</td><td>侦探训练卡</td></tr>
+                        <tr><td>09</td><td>情绪四阶培养法</td><td>四阶对话指南</td><td>管家工具包</td></tr>
+                        <tr><td>10</td><td>韧性四阶训练</td><td>四阶支持方案</td><td>战士挑战卡</td></tr>
+                        <tr><td>11</td><td>时间四阶教学</td><td>四阶游戏带领</td><td>主人任务卡</td></tr>
+                        <tr><td>12</td><td>节律四阶优化</td><td>四阶仪式执行</td><td>专家记录表</td></tr>
+                        <tr><td>13</td><td>家务四阶培养</td><td>四阶放手指南</td><td>帮手任务卡</td></tr>
+                        <tr><td>14</td><td>习惯四阶养成</td><td>四阶环境设计</td><td>能手习惯卡</td></tr>
+                        <tr><td>15</td><td>动机四阶激发</td><td>四阶互动改变</td><td>达人选择卡</td></tr>
+                        <tr><td>16</td><td>娱乐三层管理</td><td>三层支持方案</td><td>创客项目指南</td></tr>
+                        <tr><td>17</td><td>元认知四阶训练</td><td>四阶提问指南</td><td>教练反思卡</td></tr>
+                        <tr><td>18</td><td>社交四维培养</td><td>活动组织指南</td><td>领袖活动包</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- ==================== 三端定位总览 ==================== -->
+        <div class="section-title" style="margin-top:36px;">
+            <h2>🎯 三端定位与核心功能</h2>
+            <p>各司其职，协同发力</p>
+            <div class="section-divider"></div>
+        </div>
+        <div class="table-wrap">
+            <table class="data-table">
+                <thead>
+                    <tr><th>端口</th><th>核心定位</th><th>主要功能</th><th>交付形式</th></tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>教师端</strong></td>
+                        <td>体系总教练·问题解决专家</td>
+                        <td>诊断评估·方案设计·专业指导·瓶颈突破·成果认证</td>
+                        <td>诊断工具·方案库·直播指导·一对一咨询</td>
+                    </tr>
+                    <tr>
+                        <td><strong>家长端</strong></td>
+                        <td>家庭训练执行官·环境营造者</td>
+                        <td>学习操作·环境营造·记录观察·协助执行·反馈问题</td>
+                        <td>操作手册·工具包·记录模板·话术库·社群支持</td>
+                    </tr>
+                    <tr>
+                        <td><strong>学生端</strong></td>
+                        <td>专注力小勇士·自主成长者</td>
+                        <td>完成任务·真实表达·享受进步·自我管理·创意展示</td>
+                        <td>任务卡·游戏材料·激励系统·作品集·展示平台</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- ==================== 核心理念 ==================== -->
+        <div class="highlight-box" style="text-align:center;font-size:0.88rem;margin-top:20px;">
+            <strong>🌟 核心理念：</strong>状态先于专注 · 无痕训练 · 家长为教练 · 生态化培养<br>
+            <span style="font-size:0.78rem;color:#8C7E6F;">20个模块 · 12个月全景规划 · 三端协同 · 六层金字塔支撑 · 四大发展阶段递进</span>
+        </div>
+
+        <!-- ==================== 页脚 ==================== -->
+        <div class="footer-cta">
+            <h3>🏆 厉老师专注力特训体系 3.0</h3>
+            <p>三端协同全人成长生态系统</p>
+            <p style="font-weight:600;color:#C48B3A;">让每一个孩子，在科学的训练体系中，成长为专注、自信、有韧性的自己。</p>
+            <a href="#" class="btn-pill" onclick="alert('欢迎了解厉老师专注力特训体系3.0！\n\n获取完整体系资料，请关注我们的官方渠道。');return false;">📩 获取完整体系介绍</a>
+        </div>
+
+    </main>
+
+    <a href="#" class="scroll-top" id="scrollTop" title="回到顶部">↑</a>
+
+    <script>
+        function toggleInfoCard(card) {
+            card.classList.toggle('open');
+        }
+
+        const scrollTopBtn = document.getElementById('scrollTop');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 500) {
+                scrollTopBtn.classList.add('visible');
+            } else {
+                scrollTopBtn.classList.remove('visible');
+            }
+            const sections = document.querySelectorAll('section[id]');
+            const navLinks = document.querySelectorAll('.sticky-nav a');
+            let currentId = '';
+            sections.forEach(section => {
+                const rect = section.getBoundingClientRect();
+                if (rect.top <= 150) { currentId = section.id; }
+            });
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + currentId) { link.classList.add('active'); }
+            });
+        });
+
+        document.querySelectorAll('.sticky-nav a[href^="#"]').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const navHeight = document.querySelector('.sticky-nav').offsetHeight;
+                    const targetPosition = target.getBoundingClientRect().top + window.pageYOffset -
+                        navHeight - 8;
+                    window.scrollTo({ top: targetPosition, behavior: 'smooth' });
+                }
+            });
+        });
+
+        scrollTopBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>

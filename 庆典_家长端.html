@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>成长见证与荣耀盛典 · 家庭操作版 | 四步庆典指南</title>
+    <style>
+        :root {
+            --ce-gold: #C48B3A;
+            --ce-gold-light: #FFFBF2;
+            --ce-burgundy: #8B3A4A;
+            --ce-burgundy-light: #FDF5F7;
+            --ce-teal: #3D7B7D;
+            --ce-teal-light: #F2F8F8;
+            --ce-plum: #5E4A6E;
+            --ce-plum-light: #F6F4F8;
+            --ce-sage: #7A8B6F;
+            --ce-sage-light: #F4F6F2;
+            --text: #2E2620;
+            --text-light: #5C4F45;
+            --text-lighter: #8C7E6F;
+            --bg: #FDFBF8;
+            --card-bg: #FFFFFF;
+            --border: #E6DDD0;
+            --shadow-sm: 0 1px 4px rgba(50, 30, 10, 0.04);
+            --shadow: 0 4px 18px rgba(50, 30, 10, 0.06);
+            --shadow-lg: 0 10px 30px rgba(50, 30, 10, 0.10);
+            --radius-sm: 10px;
+            --radius: 16px;
+            --radius-lg: 22px;
+            --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Sans SC', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.75;
+            -webkit-font-smoothing: antialiased;
+            scroll-behavior: smooth;
+            font-size: 15px;
+            background-image: radial-gradient(circle, rgba(196, 139, 58, 0.03) 1px, transparent 1px);
+            background-size: 28px 28px;
+        }
+        .hero {
+            background: linear-gradient(165deg, #FFFBF2 0%, #FDFBF8 20%, #FDF5F7 40%, #FDFBF8 60%, #F2F8F8 80%, #FDFBF8 100%);
+            padding: 50px 20px 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 1px solid #E6DDD0;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -100px;
+            right: -70px;
+            width: 340px;
+            height: 340px;
+            background: radial-gradient(circle, rgba(196, 139, 58, 0.07) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -80px;
+            left: -60px;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(139, 58, 74, 0.05) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 760px;
+            margin: 0 auto;
+        }
+        .hero-badge {
+            display: inline-block;
+            background: #fff;
+            color: #C48B3A;
+            font-size: 0.82rem;
+            font-weight: 700;
+            padding: 6px 20px;
+            border-radius: 22px;
+            letter-spacing: 0.04em;
+            margin-bottom: 16px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid #F0E0C8;
+        }
+        .hero h1 {
+            font-size: 2.3rem;
+            font-weight: 800;
+            letter-spacing: -0.015em;
+            color: #2E2620;
+            margin-bottom: 8px;
+            line-height: 1.3;
+        }
+        .hero h1 span {
+            background: linear-gradient(135deg, #C48B3A, #8B3A4A, #3D7B7D);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .hero-subtitle {
+            font-size: 0.95rem;
+            color: #5C4F45;
+            font-weight: 400;
+            margin-bottom: 8px;
+            line-height: 1.6;
+        }
+        .hero-tagline {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #fff;
+            padding: 9px 22px;
+            border-radius: 24px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #2E2620;
+            box-shadow: var(--shadow);
+            border: 1px solid #E6DDD0;
+        }
+        .sticky-nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(253, 251, 248, 0.92);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid #E6DDD0;
+            padding: 0 10px;
+            overflow-x: auto;
+            white-space: nowrap;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        .sticky-nav::-webkit-scrollbar {
+            display: none;
+        }
+        .sticky-nav-inner {
+            max-width: 1080px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 2px;
+            padding: 7px 0;
+        }
+        .sticky-nav a {
+            display: inline-block;
+            text-decoration: none;
+            font-size: 0.74rem;
+            font-weight: 500;
+            color: #5C4F45;
+            padding: 6px 11px;
+            border-radius: 16px;
+            transition: var(--transition);
+            flex-shrink: 0;
+            letter-spacing: 0.02em;
+        }
+        .sticky-nav a:hover,
+        .sticky-nav a.active {
+            background: #F5ECD8;
+            color: #C48B3A;
+            font-weight: 600;
+        }
+        .sticky-nav a.nav-dot {
+            width: 28px;
+            height: 28px;
+            padding: 0;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.7rem;
+            color: #fff;
+            flex-shrink: 0;
+        }
+        .nd1 {
+            background: #C48B3A;
+        }
+        .nd2 {
+            background: #8B3A4A;
+        }
+        .nd3 {
+            background: #3D7B7D;
+        }
+        .nd4 {
+            background: #5E4A6E;
+        }
+        .container {
+            max-width: 1080px;
+            margin: 0 auto;
+            padding: 14px 16px 50px;
+        }
+        .section-title {
+            text-align: center;
+            margin: 44px 0 18px;
+        }
+        .section-title h2 {
+            font-size: 1.45rem;
+            font-weight: 700;
+            letter-spacing: -0.006em;
+            margin-bottom: 4px;
+            color: #2E2620;
+        }
+        .section-title p {
+            color: #8C7E6F;
+            font-size: 0.84rem;
+        }
+        .section-divider {
+            width: 48px;
+            height: 3px;
+            border-radius: 2px;
+            margin: 8px auto 0;
+            background: linear-gradient(90deg, #C48B3A, #8B3A4A, #3D7B7D);
+        }
+        .stage-card {
+            background: #fff;
+            border-radius: var(--radius-lg);
+            margin-bottom: 18px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            border: 1px solid #E6DDD0;
+            transition: var(--transition);
+        }
+        .stage-card:hover {
+            box-shadow: var(--shadow-lg);
+        }
+        .stage-header {
+            padding: 18px 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            user-select: none;
+        }
+        .stage-num {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1.1rem;
+            color: #fff;
+            flex-shrink: 0;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.10);
+        }
+        .sn1 {
+            background: #C48B3A;
+        }
+        .sn2 {
+            background: #8B3A4A;
+        }
+        .sn3 {
+            background: #3D7B7D;
+        }
+        .sn4 {
+            background: #5E4A6E;
+        }
+        .stage-header-text h3 {
+            font-size: 1rem;
+            font-weight: 700;
+            line-height: 1.3;
+            color: #2E2620;
+        }
+        .stage-header-text .stage-sub {
+            font-size: 0.74rem;
+            color: #8C7E6F;
+        }
+        .stage-meta {
+            margin-left: auto;
+            text-align: right;
+            flex-shrink: 0;
+            font-size: 0.72rem;
+            color: #8C7E6F;
+            line-height: 1.4;
+        }
+        .stage-arrow {
+            font-size: 1rem;
+            transition: var(--transition);
+            color: #8C7E6F;
+            flex-shrink: 0;
+            margin-left: 2px;
+        }
+        .stage-card.open .stage-arrow {
+            transform: rotate(180deg);
+        }
+        .stage-body {
+            display: none;
+            padding: 0 20px 20px;
+            border-top: 1px solid #E6DDD0;
+            padding-top: 16px;
+            animation: fadeSlideIn 0.3s ease;
+        }
+        .stage-card.open .stage-body {
+            display: block;
+        }
+        @keyframes fadeSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-5px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .stage-two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+        }
+        @media (max-width: 680px) {
+            .stage-two-col {
+                grid-template-columns: 1fr;
+            }
+        }
+        .stage-col {
+            border-radius: var(--radius-sm);
+            padding: 16px;
+            border: 1px solid #E6DDD0;
+            background: #FEFCFA;
+        }
+        .stage-col.parent-do {
+            border-left: 4px solid #7A8B6F;
+            background: #F9FBF7;
+        }
+        .stage-col.guide-need {
+            border-left: 4px solid #C48B3A;
+            background: #FFFDF8;
+        }
+        .stage-col h5 {
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #2E2620;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .stage-col ul {
+            list-style: none;
+            padding: 0;
+        }
+        .stage-col ul li {
+            font-size: 0.8rem;
+            color: #5C4F45;
+            padding: 3px 0 3px 16px;
+            position: relative;
+            line-height: 1.6;
+        }
+        .stage-col ul li::before {
+            content: '•';
+            position: absolute;
+            left: 1px;
+            color: #BFB8A8;
+            font-weight: 700;
+        }
+        .highlight-box {
+            border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+            padding: 10px 14px;
+            margin: 8px 0;
+            font-size: 0.78rem;
+            color: #5C4F45;
+            line-height: 1.6;
+        }
+        .highlight-gold {
+            background: #FFFBF2;
+            border-left: 3px solid #C48B3A;
+        }
+        .highlight-burgundy {
+            background: #FDF5F7;
+            border-left: 3px solid #8B3A4A;
+        }
+        .highlight-teal {
+            background: #F2F8F8;
+            border-left: 3px solid #3D7B7D;
+        }
+        .highlight-plum {
+            background: #F6F4F8;
+            border-left: 3px solid #5E4A6E;
+        }
+        .tag-xs {
+            display: inline-block;
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 3px 9px;
+            border-radius: 10px;
+            margin: 2px;
+            letter-spacing: 0.02em;
+            background: #F5ECD8;
+            color: #C48B3A;
+        }
+        .tag-xs.red {
+            background: #FBE8EC;
+            color: #8B3A4A;
+        }
+        .tag-xs.teal {
+            background: #E0F0EF;
+            color: #3D7B7D;
+        }
+        .tag-xs.plum {
+            background: #EDE8F2;
+            color: #5E4A6E;
+        }
+        .path-table-wrap {
+            overflow-x: auto;
+            margin: 14px 0;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-sm);
+            border: 1px solid #E6DDD0;
+            background: #fff;
+        }
+        .path-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.76rem;
+            min-width: 650px;
+        }
+        .path-table th {
+            background: #FFFBF2;
+            padding: 10px 8px;
+            text-align: center;
+            font-weight: 700;
+            font-size: 0.72rem;
+            color: #C48B3A;
+            letter-spacing: 0.03em;
+            border-bottom: 2px solid #F0E0C8;
+        }
+        .path-table td {
+            padding: 8px;
+            text-align: center;
+            border-bottom: 1px solid #F0EBE2;
+            color: #3D3226;
+            font-size: 0.74rem;
+            vertical-align: middle;
+        }
+        .path-table tr:last-child td {
+            border-bottom: none;
+        }
+        .stage-dot-cell {
+            display: inline-block;
+            width: 28px;
+            height: 28px;
+            line-height: 28px;
+            border-radius: 50%;
+            color: #fff;
+            font-weight: 700;
+            font-size: 0.75rem;
+            text-align: center;
+        }
+        .scene-card {
+            background: #fff;
+            border: 1px solid #E6DDD0;
+            border-radius: var(--radius);
+            margin-bottom: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+        }
+        .scene-header {
+            padding: 14px 18px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.86rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            user-select: none;
+            background: #FDFBF8;
+            transition: var(--transition);
+        }
+        .scene-header:hover {
+            background: #FFFBF2;
+        }
+        .scene-arrow {
+            transition: var(--transition);
+            font-size: 0.85rem;
+            color: #8C7E6F;
+        }
+        .scene-card.open .scene-arrow {
+            transform: rotate(180deg);
+        }
+        .scene-body {
+            display: none;
+            padding: 0 18px 14px;
+            border-top: 1px solid #E6DDD0;
+            padding-top: 12px;
+            font-size: 0.8rem;
+            color: #5C4F45;
+            line-height: 1.65;
+            animation: fadeSlideIn 0.3s ease;
+        }
+        .scene-card.open .scene-body {
+            display: block;
+        }
+        .checklist-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 12px;
+        }
+        .checklist-card {
+            background: #fff;
+            border: 1px solid #E6DDD0;
+            border-radius: var(--radius);
+            padding: 16px;
+            box-shadow: var(--shadow-sm);
+        }
+        .checklist-card h5 {
+            font-weight: 700;
+            font-size: 0.85rem;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: #2E2620;
+        }
+        .checklist-card ul {
+            list-style: none;
+            padding: 0;
+        }
+        .checklist-card ul li {
+            font-size: 0.78rem;
+            color: #5C4F45;
+            padding: 2px 0 2px 16px;
+            position: relative;
+            line-height: 1.55;
+        }
+        .checklist-card ul li::before {
+            content: '☐';
+            position: absolute;
+            left: 0;
+            color: #BFB8A8;
+            font-size: 0.7rem;
+            top: 3px;
+        }
+        .tool-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 12px;
+        }
+        .tool-card {
+            background: #fff;
+            border: 1px solid #E6DDD0;
+            border-radius: var(--radius);
+            padding: 16px;
+            box-shadow: var(--shadow-sm);
+        }
+        .tool-card h5 {
+            font-weight: 700;
+            font-size: 0.85rem;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .tool-card ul {
+            list-style: none;
+            padding: 0;
+        }
+        .tool-card ul li {
+            font-size: 0.78rem;
+            color: #5C4F45;
+            padding: 2px 0 2px 16px;
+            position: relative;
+            line-height: 1.55;
+        }
+        .tool-card ul li::before {
+            content: '📎';
+            position: absolute;
+            left: 0;
+            font-size: 0.6rem;
+            top: 4px;
+        }
+        .cost-badge {
+            display: inline-block;
+            background: #E0F0EF;
+            color: #3D7B7D;
+            font-size: 0.65rem;
+            font-weight: 600;
+            padding: 2px 8px;
+            border-radius: 10px;
+            margin-left: 4px;
+        }
+        .footer-cta {
+            text-align: center;
+            padding: 36px 20px;
+            background: linear-gradient(160deg, #FFFBF2, #FDFBF8, #FDF5F7);
+            border-radius: var(--radius-lg);
+            margin-top: 28px;
+            border: 1px solid #E6DDD0;
+        }
+        .footer-cta h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+            color: #2E2620;
+        }
+        .footer-cta p {
+            color: #8C7E6F;
+            margin-bottom: 4px;
+            font-size: 0.82rem;
+            line-height: 1.6;
+        }
+        .scroll-top {
+            position: fixed;
+            bottom: 22px;
+            right: 22px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #fff;
+            border: 1px solid #E6DDD0;
+            box-shadow: var(--shadow);
+            cursor: pointer;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 99;
+            transition: var(--transition);
+            opacity: 0;
+            pointer-events: none;
+            text-decoration: none;
+            color: #C48B3A;
+        }
+        .scroll-top.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .scroll-top:hover {
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-2px);
+        }
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 1.3rem;
+            }
+            .hero-subtitle {
+                font-size: 0.8rem;
+            }
+            .stage-header {
+                flex-wrap: wrap;
+                gap: 6px;
+                padding: 14px;
+            }
+            .stage-meta {
+                margin-left: 0;
+                text-align: left;
+                width: 100%;
+            }
+            .stage-body {
+                padding: 0 14px 16px;
+                padding-top: 12px;
+            }
+            .stage-two-col {
+                grid-template-columns: 1fr;
+            }
+            .container {
+                padding: 8px 8px 36px;
+            }
+            .sticky-nav a {
+                font-size: 0.65rem;
+                padding: 5px 6px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="hero">
+        <div class="hero-content">
+            <span class="hero-badge">🏆 家庭操作版 · 四步庆典指南</span>
+            <h1>成长见证与荣耀盛典 <span>家庭培养系统</span></h1>
+            <p class="hero-subtitle">从“训练执行者”到“成长见证者”<br>您不需要成为庆典策划专家，只需要按照四步指南，和孩子一起回顾、庆祝、认证、展望</p>
+            <div class="hero-tagline">
+                📁 成果整理 · 🎉 家庭庆典 · 🏅 成果认证 · 🚀 未来启航
+            </div>
+        </div>
+    </header>
+
+    <nav class="sticky-nav" id="stickyNav">
+        <div class="sticky-nav-inner">
+            <a href="#step1" class="nav-dot nd1">1</a>
+            <a href="#step2" class="nav-dot nd2">2</a>
+            <a href="#step3" class="nav-dot nd3">3</a>
+            <a href="#step4" class="nav-dot nd4">4</a>
+            <a href="#path">庆典路径</a>
+            <a href="#scenes">常见问题</a>
+            <a href="#toolkit">工具包</a>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div class="section-title">
+            <h2>📊 四步庆典操作体系</h2>
+            <p>每步清晰区分“家长能做的”与“需要我指导的”，边界明确</p>
+            <div class="section-divider"></div>
+        </div>
+
+        <!-- 第一步 -->
+        <div class="stage-card open" id="step1">
+            <div class="stage-header" onclick="toggleStage(this)">
+                <div class="stage-num sn1">1</div>
+                <div class="stage-header-text">
+                    <h3>成果整理周 · 一起回顾这一年</h3>
+                    <span class="stage-sub">从“散落的数据”到“沉甸甸的成长档案”</span>
+                </div>
+                <div class="stage-meta">庆典月第1周<br>一周任务清单</div>
+                <span class="stage-arrow">▼</span>
+            </div>
+            <div class="stage-body">
+                <div class="stage-two-col">
+                    <div class="stage-col parent-do">
+                        <h5>✅ 家长能做的（简单操作）</h5>
+                        <ul>
+                            <li><strong>准备工具（15分钟）：</strong>大文件夹或相册（做成长档案）、手机/电脑（整理数字资料）、打印出来的月度记录表、彩笔贴纸装饰材料</li>
+                            <li><strong>数据大收集（2天）：</strong>把各模块的月度记录表、季度评估报告、打卡日历收集到一起。和孩子一起翻看，说说“你看，那时候你还在练这个！”</li>
+                            <li><strong>作品大精选（2天）：</strong>从朗读录音、书写作品、创意作品、项目成果中各选3-5件“最有故事的”。不选“最完美的”，选“最有回忆的”</li>
+                            <li><strong>对比大发现（1天）：</strong>找出“一年前”和“一年后”的对比素材——第一天的朗读录音vs现在的、第一张控笔练习vs现在的。和孩子一起听、一起看，聊聊变化</li>
+                            <li><strong>感言大征集（2天）：</strong>引导孩子说一段“成长感言”，您自己也准备一段“见证感言”。可以写下来、录下来、画下来</li>
+                        </ul>
+                    </div>
+                    <div class="stage-col guide-need">
+                        <h5>🎓 需要我指导的（核心价值）</h5>
+                        <div class="highlight-box highlight-gold">
+                            <strong>✅ 如何引导孩子回顾成长（不变成说教）：</strong>提问示范：“你还记得那时候练控笔，手总是酸，现在呢？”“你觉得这一年，自己哪里变厉害了？”避免：“你看你以前多差，现在好多了”（这是否定过去）。我需要提供“成长回顾引导话术卡”。
+                        </div>
+                        <div class="highlight-box highlight-gold">
+                            <strong>✅ 如何筛选“最有故事”的作品：</strong>标准：记录“第一次”的（第一次独立完成、第一次突破纪录）、记录“坚持”的（连续打卡记录）、记录“创造”的（自己设计的作品）。我需要提供《作品筛选指南》。
+                        </div>
+                        <div class="highlight-box highlight-gold">
+                            <strong>✅ 如何制作成长档案：</strong>我提供《年度成长档案制作模板》：封面、目录、模块分页、对比页、感言页。电子版可以用PPT/PDF制作，实体版可以打印装订。让孩子多动手，您做助手。
+                        </div>
+                    </div>
+                </div>
+                <p style="font-size:0.76rem;color:#8C7E6F;margin-top:8px;">📦 <strong>工具包：</strong>成长档案制作材料（文件夹/相册、彩笔、贴纸） · 各模块月度记录（已有） · 《成长回顾引导话术卡》（我提供） · 《成长档案制作模板》（我提供）</p>
+            </div>
+        </div>
+
+        <!-- 第二步 -->
+        <div class="stage-card" id="step2">
+            <div class="stage-header" onclick="toggleStage(this)">
+                <div class="stage-num sn2">2</div>
+                <div class="stage-header-text">
+                    <h3>家庭庆典周 · 一起庆祝这一刻</h3>
+                    <span class="stage-sub">从“日常训练”到“荣耀时刻”</span>
+                </div>
+                <div class="stage-meta">庆典月第2周<br>1-2小时庆典</div>
+                <span class="stage-arrow">▼</span>
+            </div>
+            <div class="stage-body">
+                <div class="stage-two-col">
+                    <div class="stage-col parent-do">
+                        <h5>✅ 家长能做的（简单操作）</h5>
+                        <ul>
+                            <li><strong>庆典策划（提前2天准备）：</strong>定时间（周末晚上1-2小时）、定地点（客厅布置成成长展示区）、定流程（成果展示→成长故事→颁奖→感恩→庆祝）、定参与人（核心家人可邀请祖父母视频）</li>
+                            <li><strong>成果展示（20分钟）：</strong>孩子担任“讲解员”，带领家人参观成长展示区，介绍每一件作品背后的故事</li>
+                            <li><strong>成长故事分享（15分钟）：</strong>孩子分享“这一年我最难忘的时刻”，家长分享“我眼中你的成长”</li>
+                            <li><strong>颁奖仪式（15分钟）：</strong>家长给孩子颁发“年度成长证书”（我提供模板），孩子也可以给家长颁发“最佳陪伴奖”</li>
+                            <li><strong>感恩环节（10分钟）：</strong>互相拥抱、说感谢的话、送小礼物</li>
+                            <li><strong>庆祝活动（30分钟）：</strong>切蛋糕、家庭游戏、合影留念</li>
+                        </ul>
+                    </div>
+                    <div class="stage-col guide-need">
+                        <h5>🎓 需要我指导的（核心价值）</h5>
+                        <div class="highlight-box highlight-gold">
+                            <strong>✅ 庆典流程个性化调整：</strong>根据家庭特点调整——孩子内向→简化发言环节增加作品展示；家庭人多→增加互动环节；时间紧张→精简版1小时完成。我需要提供“不同场景庆典流程适配建议”。
+                        </div>
+                        <div class="highlight-box highlight-gold">
+                            <strong>✅ 颁奖环节如何设计：</strong>不只颁一个奖！可以设置多个趣味奖项：“坚持之星”“突破之星”“创意之星”“温暖之星”。让孩子也给家长颁奖：“最佳陪伴奖”“最耐心倾听奖”“最好玩伴奖”。我提供《家庭奖项创意库》和《颁奖词模板》。
+                        </div>
+                        <div class="highlight-box highlight-gold">
+                            <strong>✅ 感恩环节如何真诚不尴尬：</strong>不一定非要说很长的话。可以是一个拥抱、一张小卡片、一份手作礼物。家长先示范：“我想感谢你，因为这一年我看到了你的努力……”我需要提供“感恩表达引导话术”。
+                        </div>
+                    </div>
+                </div>
+                <p style="font-size:0.76rem;color:#8C7E6F;margin-top:8px;">📦 <strong>工具包：</strong>《家庭庆典完整策划包》（流程脚本、主持词、邀请函、奖项模板） · 成长证书（打印） · 庆祝道具（气球、彩带、蛋糕）</p>
+            </div>
+        </div>
+
+        <!-- 第三步 -->
+        <div class="stage-card" id="step3">
+            <div class="stage-header" onclick="toggleStage(this)">
+                <div class="stage-num sn3">3</div>
+                <div class="stage-header-text">
+                    <h3>成果认证周 · 一起收获荣誉</h3>
+                    <span class="stage-sub">从“家庭庆祝”到“专业认证”</span>
+                </div>
+                <div class="stage-meta">庆典月第3周<br>提交成果包</div>
+                <span class="stage-arrow">▼</span>
+            </div>
+            <div class="stage-body">
+                <div class="stage-two-col">
+                    <div class="stage-col parent-do">
+                        <h5>✅ 家长能做的（简单操作）</h5>
+                        <ul>
+                            <li><strong>提交成果包（我提供提交入口）：</strong>成长档案（电子版或照片）、3-5件代表作品、孩子成长感言（文字/录音/视频）、家长见证感言（文字/录音）</li>
+                            <li><strong>获得认证：</strong>等待厉老师团队的年度评估（约3-5个工作日）；收到《年度成长力认证报告》（电子版+可打印版）；收到年度勋章和证书（邮寄实体）；获得校友资格和专属编号</li>
+                            <li><strong>社群分享（可选）：</strong>在学员社群分享成长故事（隐私保护前提下）；看其他家庭的成长故事，互相祝贺；参与“年度成长之星”评选</li>
+                        </ul>
+                    </div>
+                    <div class="stage-col guide-need">
+                        <h5>🎓 需要我指导的（核心价值）</h5>
+                        <div class="highlight-box highlight-gold">
+                            <strong>✅ 如何帮助孩子理解“认证”的意义：</strong>认证不是“考试分数”，而是“成长里程碑”——它记录了你的努力和进步。无论获得什么等级都值得庆祝——因为每个人都完成了12个月的挑战。我需要提供“认证意义亲子共读卡”。
+                        </div>
+                        <div class="highlight-box highlight-gold">
+                            <strong>✅ 如何在社群中分享（隐私保护）：</strong>可以分享：成长数据（如“专注时长提升了50%”）、作品（不露脸）、感言（用昵称）。不建议分享：孩子全名、学校、正面清晰照片、家庭具体地址。我提供《社群分享隐私保护指南》。
+                        </div>
+                        <div class="highlight-box highlight-gold">
+                            <strong>✅ 校友资格怎么用：</strong>持续获取资源（每月校友专属内容、季度校友直播）；老学员优惠（续报或推荐亲友享受专属优惠）；线下活动优先（校友日活动、线下工作坊优先报名）。我提供《校友权益手册》。
+                        </div>
+                    </div>
+                </div>
+                <p style="font-size:0.76rem;color:#8C7E6F;margin-top:8px;">📦 <strong>工具包：</strong>成果提交通道（我提供链接） · 《认证意义亲子共读卡》 · 《社群分享隐私保护指南》 · 《校友权益手册》</p>
+            </div>
+        </div>
+
+        <!-- 第四步 -->
+        <div class="stage-card" id="step4">
+            <div class="stage-header" onclick="toggleStage(this)">
+                <div class="stage-num sn4">4</div>
+                <div class="stage-header-text">
+                    <h3>未来启航周 · 一起规划明天</h3>
+                    <span class="stage-sub">从“课程结营”到“终身成长”</span>
+                </div>
+                <div class="stage-meta">庆典月第4周<br>家庭展望会议</div>
+                <span class="stage-arrow">▼</span>
+            </div>
+            <div class="stage-body">
+                <div class="stage-two-col">
+                    <div class="stage-col parent-do">
+                        <h5>✅ 家长能做的（简单操作）</h5>
+                        <ul>
+                            <li><strong>能力迁移讨论（30分钟家庭会议）：</strong>一起讨论：“这一年学到的本领，怎么用到新学期？”举例：朗读能力→语文预习更轻松；时间感知→作业规划更合理；内在动机→不用催自己学。填写《能力迁移计划表》</li>
+                            <li><strong>新目标设定（20分钟）：</strong>基于当前水平，设定新学期1-3个小目标。目标要具体可测量（如“每天自主朗读15分钟”而非“语文更好”）。写下来贴在书桌前</li>
+                            <li><strong>启航仪式（15分钟）：</strong>制作“时间胶囊”：写下新目标，约定一个开启时间（如期末/明年生日）。在“成长树”海报上贴上新年愿望。全家击掌：“新学期，我们一起加油！”</li>
+                        </ul>
+                    </div>
+                    <div class="stage-col guide-need">
+                        <h5>🎓 需要我指导的（核心价值）</h5>
+                        <div class="highlight-box highlight-gold">
+                            <strong>✅ 如何让能力真正迁移到新学期：</strong>关键：在新学期第一周就刻意应用。家长角色：从“训练陪伴者”变为“资源支持者”。我需要提供《新学期第一周能力迁移实践指南》。
+                        </div>
+                        <div class="highlight-box highlight-gold">
+                            <strong>✅ 如何设定“跳一跳够得着”的新目标：</strong>基于当前水平，目标难度适中——80%可能成功，20%需要努力。避免“完美目标”，改为“过程目标”。我提供《新目标设定SMART模板》。
+                        </div>
+                        <div class="highlight-box highlight-gold">
+                            <strong>✅ 如何让启航仪式有仪式感：</strong>时间胶囊：用瓶子或盒子封存目标纸条。成长树：画大树每片叶子写愿望。全家约定：制定一条“新学期家庭支持公约”。</div>
+                    </div>
+                </div>
+                <p style="font-size:0.76rem;color:#8C7E6F;margin-top:8px;">📦 <strong>工具包：</strong>《能力迁移计划表》（我提供） · 《新目标设定SMART模板》（我提供） · 时间胶囊材料（瓶子/盒子、纸条） · 成长树海报（我提供模板）</p>
+            </div>
+        </div>
+
+        <!-- 庆典路径图 -->
+        <section id="path">
+            <div class="section-title">
+                <h2>📈 四步庆典路径图</h2>
+                <p>一个月完成成长见证与荣耀盛典</p>
+                <div class="section-divider"></div>
+            </div>
+            <div class="path-table-wrap">
+                <table class="path-table">
+                    <thead><tr><th>步骤</th><th>核心任务</th><th>完成标志</th><th>建议时间</th></tr></thead>
+                    <tbody>
+                        <tr><td><span class="stage-dot-cell" style="background:#C48B3A;">1</span></td><td>整理回顾</td><td>完成成长档案；选好代表作品；录制感言</td><td>第1周</td></tr>
+                        <tr><td><span class="stage-dot-cell" style="background:#8B3A4A;">2</span></td><td>家庭庆祝</td><td>举行家庭庆典；颁发成长证书；拍摄庆典合影</td><td>第2周</td></tr>
+                        <tr><td><span class="stage-dot-cell" style="background:#3D7B7D;">3</span></td><td>获得认证</td><td>提交成果包；收到年度报告和勋章；加入校友网络</td><td>第3周</td></tr>
+                        <tr><td><span class="stage-dot-cell" style="background:#5E4A6E;">4</span></td><td>规划未来</td><td>完成能力迁移计划；设定新目标；举行启航仪式</td><td>第4周</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- 常见问题 -->
+        <section id="scenes">
+            <div class="section-title">
+                <h2>🧩 家庭常见问题解决方案</h2>
+                <p>三个高频情境，家长能做的 + 需要我指导的</p>
+                <div class="section-divider"></div>
+            </div>
+            <div class="scene-card">
+                <div class="scene-header" onclick="toggleScene(this)">🤷 问题一：“孩子不愿意回顾，觉得没什么好说的” <span class="scene-arrow">▼</span></div>
+                <div class="scene-body"><strong>✅ 家长能做的：</strong>您先回顾，说您看到的他的变化，用具体事例。不强迫他说，他听着就行。<br><strong>🎓 需要我指导的：</strong>判断是“真的没感觉”还是“害羞/不知怎么表达”。提供“非语言回顾法”（画出来、贴照片、做对比图）。</div>
+            </div>
+            <div class="scene-card">
+                <div class="scene-header" onclick="toggleScene(this)">😕 问题二：“家庭庆典家人不配合，觉得太形式主义” <span class="scene-arrow">▼</span></div>
+                <div class="scene-body"><strong>✅ 家长能做的：</strong>简化流程，只保留核心环节（成果展示+一张合影+一句话鼓励）。用成果说话——“你看，这是孩子一年的进步”。<br><strong>🎓 需要我指导的：</strong>提供“极简版庆典方案”（15分钟完成）。如何用数据说服家人认可训练价值。</div>
+            </div>
+            <div class="scene-card">
+                <div class="scene-header" onclick="toggleScene(this)">😟 问题三：“担心结营后能力退化” <span class="scene-arrow">▼</span></div>
+                <div class="scene-body"><strong>✅ 家长能做的：</strong>制定“最小维持方案”（每周2-3次核心训练）。在新学期第一周刻意应用学到的能力。<br><strong>🎓 需要我指导的：</strong>提供《能力防退化指南》。校友资源持续支持。判断何时需要“回炉”复习。</div>
+            </div>
+        </section>
+
+        <!-- 工具包总览 -->
+        <section id="toolkit">
+            <div class="section-title">
+                <h2>🛠️ 家庭工具包总览</h2>
+                <p>物理工具成本低于50元，数字资源全部由我提供</p>
+                <div class="section-divider"></div>
+            </div>
+            <div class="tool-grid">
+                <div class="tool-card"><h5>📦 物理工具 <span class="cost-badge">&lt;50元</span></h5><ul><li>第一步：成长档案材料（文件夹、彩笔、贴纸约20元）</li><li>第二步：庆典道具（气球彩带蛋糕自备，证书打印约5元）</li><li>第三步：认证材料（已有，邮寄费用包含在课程中）</li><li>第四步：时间胶囊材料（瓶子/盒子纸条约5元）、成长树海报（打印约5元）</li></ul></div>
+                <div class="tool-card"><h5>💻 数字资源（我提供）</h5><ul><li>成长回顾引导话术卡</li><li>成长档案制作模板（PPT/PDF）</li><li>家庭庆典完整策划包（流程、主持词、邀请函、奖项模板）</li><li>能力迁移计划表</li><li>新目标设定SMART模板</li><li>校友权益手册</li><li>新学期第一周能力迁移实践指南</li></ul></div>
+            </div>
+        </section>
+
+        <!-- 价值承诺 -->
+        <div class="footer-cta">
+            <h3>💎 最终给家长的价值承诺</h3>
+            <p><strong>简单操作承诺：</strong>您只需要按照四步指南，花一个月的时间，和孩子一起回顾、庆祝、认证、规划。所有工具和模板我们都准备好了，您只需要带着爱和欣赏参与其中。</p>
+            <p><strong>专业价值承诺：</strong>但想要让这一年的训练成果真正内化为孩子的能力，让庆典不仅是热闹而是成长的里程碑，让结营不是结束而是新的开始——您需要我们的专业引导、认证体系和持续支持。</p>
+            <p><strong>成果可视承诺：</strong>庆典月结束，您将拥有：一本沉甸甸的成长档案、一场难忘的家庭庆典、一份专业的年度认证报告、一个清晰的新学期规划。更重要的是，您和孩子都会带着满满的成就感和信心，开启下一段成长旅程。</p>
+            <p style="font-weight:600;color:#C48B3A;margin-top:8px;">🏆 从“训练执行者”到“成长见证者”，这是您和孩子共同的荣耀时刻。</p>
+        </div>
+    </main>
+
+    <a href="#" class="scroll-top" id="scrollTop" title="回到顶部">↑</a>
+
+    <script>
+        function toggleStage(header) { header.parentElement.classList.toggle('open'); }
+        function toggleScene(header) { header.parentElement.classList.toggle('open'); }
+        const scrollTopBtn = document.getElementById('scrollTop');
+        window.addEventListener('scroll', () => { if (window.scrollY > 500) { scrollTopBtn.classList.add('visible'); } else { scrollTopBtn.classList.remove('visible'); } const sections = document.querySelectorAll('section[id], .stage-card[id]'); const navLinks = document.querySelectorAll('.sticky-nav a'); let currentId = ''; sections.forEach(section => { const rect = section.getBoundingClientRect(); if (rect.top <= 140) { currentId = section.id; } }); navLinks.forEach(link => { link.classList.remove('active'); if (link.getAttribute('href') === '#' + currentId) { link.classList.add('active'); } }); });
+        document.querySelectorAll('.sticky-nav a[href^="#"]').forEach(link => { link.addEventListener('click', function(e) { e.preventDefault(); const target = document.querySelector(this.getAttribute('href')); if (target) { const navHeight = document.querySelector('.sticky-nav').offsetHeight; const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - navHeight - 8; window.scrollTo({ top: targetPosition, behavior: 'smooth' }); } }); });
+        scrollTopBtn.addEventListener('click', function(e) { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); });
+        document.addEventListener('DOMContentLoaded', () => { const firstCard = document.getElementById('step1'); if (firstCard && !firstCard.classList.contains('open')) { firstCard.classList.add('open'); } });
+    </script>
+</body>
+</html>

@@ -1,0 +1,965 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>社交协作 · 家庭操作版 | 四阶社会能力培养系统</title>
+    <style>
+        :root {
+            --social-blue: #4A80C0;
+            --social-blue-light: #F0F6FC;
+            --social-green: #5E9A6D;
+            --social-green-light: #F4F9F5;
+            --social-amber: #D4953A;
+            --social-amber-light: #FFFDF7;
+            --social-plum: #7B5E8B;
+            --social-plum-light: #F8F4FA;
+            --social-coral: #E07088;
+            --social-coral-light: #FFF5F7;
+            --text: #2E2620;
+            --text-light: #5C4F45;
+            --text-lighter: #8C7E6F;
+            --bg: #FDFBF8;
+            --card-bg: #FFFFFF;
+            --border: #E6DDD0;
+            --shadow-sm: 0 1px 4px rgba(50, 30, 10, 0.04);
+            --shadow: 0 4px 18px rgba(50, 30, 10, 0.06);
+            --shadow-lg: 0 10px 30px rgba(50, 30, 10, 0.10);
+            --radius-sm: 10px;
+            --radius: 16px;
+            --radius-lg: 22px;
+            --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Sans SC', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.75;
+            -webkit-font-smoothing: antialiased;
+            scroll-behavior: smooth;
+            font-size: 15px;
+            background-image: radial-gradient(circle, rgba(74, 128, 192, 0.02) 1px, transparent 1px), radial-gradient(circle, rgba(94, 154, 109, 0.02) 1px, transparent 1px);
+            background-size: 32px 32px, 44px 44px;
+            background-position: 0 0, 22px 22px;
+        }
+        .hero {
+            background: linear-gradient(165deg, #F0F6FC 0%, #FDFBF8 20%, #F4F9F5 40%, #FDFBF8 60%, #FFFDF7 80%, #FDFBF8 100%);
+            padding: 50px 20px 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 1px solid #E6DDD0;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -100px;
+            right: -70px;
+            width: 340px;
+            height: 340px;
+            background: radial-gradient(circle, rgba(74, 128, 192, 0.05) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -80px;
+            left: -60px;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(94, 154, 109, 0.04) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 760px;
+            margin: 0 auto;
+        }
+        .hero-badge {
+            display: inline-block;
+            background: #fff;
+            color: #4A80C0;
+            font-size: 0.82rem;
+            font-weight: 700;
+            padding: 6px 20px;
+            border-radius: 22px;
+            letter-spacing: 0.04em;
+            margin-bottom: 16px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid #D0DCE8;
+        }
+        .hero h1 {
+            font-size: 2.3rem;
+            font-weight: 800;
+            letter-spacing: -0.015em;
+            color: #2E2620;
+            margin-bottom: 8px;
+            line-height: 1.3;
+        }
+        .hero h1 span {
+            background: linear-gradient(135deg, #4A80C0, #5E9A6D, #7B5E8B);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .hero-subtitle {
+            font-size: 0.95rem;
+            color: #5C4F45;
+            font-weight: 400;
+            margin-bottom: 8px;
+            line-height: 1.6;
+        }
+        .hero-tagline {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #fff;
+            padding: 9px 22px;
+            border-radius: 24px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #2E2620;
+            box-shadow: var(--shadow);
+            border: 1px solid #E6DDD0;
+        }
+        .sticky-nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(253, 251, 248, 0.9);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid #E6DDD0;
+            padding: 0 10px;
+            overflow-x: auto;
+            white-space: nowrap;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        .sticky-nav::-webkit-scrollbar {
+            display: none;
+        }
+        .sticky-nav-inner {
+            max-width: 1080px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 2px;
+            padding: 7px 0;
+        }
+        .sticky-nav a {
+            display: inline-block;
+            text-decoration: none;
+            font-size: 0.74rem;
+            font-weight: 500;
+            color: #5C4F45;
+            padding: 6px 11px;
+            border-radius: 16px;
+            transition: var(--transition);
+            flex-shrink: 0;
+            letter-spacing: 0.02em;
+        }
+        .sticky-nav a:hover,
+        .sticky-nav a.active {
+            background: #E8F0F5;
+            color: #4A80C0;
+            font-weight: 600;
+        }
+        .sticky-nav a.nav-dot {
+            width: 28px;
+            height: 28px;
+            padding: 0;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.7rem;
+            color: #fff;
+            flex-shrink: 0;
+        }
+        .nd1 {
+            background: #4A80C0;
+        }
+        .nd2 {
+            background: #5E9A6D;
+        }
+        .nd3 {
+            background: #D4953A;
+        }
+        .nd4 {
+            background: #7B5E8B;
+        }
+        .container {
+            max-width: 1080px;
+            margin: 0 auto;
+            padding: 14px 16px 50px;
+        }
+        .section-title {
+            text-align: center;
+            margin: 44px 0 18px;
+        }
+        .section-title h2 {
+            font-size: 1.45rem;
+            font-weight: 700;
+            letter-spacing: -0.006em;
+            margin-bottom: 4px;
+            color: #2E2620;
+        }
+        .section-title p {
+            color: #8C7E6F;
+            font-size: 0.84rem;
+        }
+        .section-divider {
+            width: 48px;
+            height: 3px;
+            border-radius: 2px;
+            margin: 8px auto 0;
+            background: linear-gradient(90deg, #4A80C0, #5E9A6D, #7B5E8B);
+        }
+        .stage-card {
+            background: #fff;
+            border-radius: var(--radius-lg);
+            margin-bottom: 18px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            border: 1px solid #E6DDD0;
+            transition: var(--transition);
+        }
+        .stage-card:hover {
+            box-shadow: var(--shadow-lg);
+        }
+        .stage-header {
+            padding: 18px 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            user-select: none;
+        }
+        .stage-num {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1.1rem;
+            color: #fff;
+            flex-shrink: 0;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+        }
+        .sn1 {
+            background: #4A80C0;
+        }
+        .sn2 {
+            background: #5E9A6D;
+        }
+        .sn3 {
+            background: #D4953A;
+        }
+        .sn4 {
+            background: #7B5E8B;
+        }
+        .stage-header-text h3 {
+            font-size: 1rem;
+            font-weight: 700;
+            line-height: 1.3;
+            color: #2E2620;
+        }
+        .stage-header-text .stage-sub {
+            font-size: 0.74rem;
+            color: #8C7E6F;
+        }
+        .stage-meta {
+            margin-left: auto;
+            text-align: right;
+            flex-shrink: 0;
+            font-size: 0.72rem;
+            color: #8C7E6F;
+            line-height: 1.4;
+        }
+        .stage-arrow {
+            font-size: 1rem;
+            transition: var(--transition);
+            color: #8C7E6F;
+            flex-shrink: 0;
+            margin-left: 2px;
+        }
+        .stage-card.open .stage-arrow {
+            transform: rotate(180deg);
+        }
+        .stage-body {
+            display: none;
+            padding: 0 20px 20px;
+            border-top: 1px solid #E6DDD0;
+            padding-top: 16px;
+            animation: fadeSlideIn 0.3s ease;
+        }
+        .stage-card.open .stage-body {
+            display: block;
+        }
+        @keyframes fadeSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-5px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .stage-two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+        }
+        @media (max-width: 680px) {
+            .stage-two-col {
+                grid-template-columns: 1fr;
+            }
+        }
+        .stage-col {
+            border-radius: var(--radius-sm);
+            padding: 16px;
+            border: 1px solid #E6DDD0;
+            background: #FEFCFA;
+        }
+        .stage-col.parent-do {
+            border-left: 4px solid #5E9A6D;
+            background: #F9FBF7;
+        }
+        .stage-col.guide-need {
+            border-left: 4px solid #C48B3A;
+            background: #FFFDF8;
+        }
+        .stage-col h5 {
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #2E2620;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .stage-col ul {
+            list-style: none;
+            padding: 0;
+        }
+        .stage-col ul li {
+            font-size: 0.8rem;
+            color: #5C4F45;
+            padding: 3px 0 3px 16px;
+            position: relative;
+            line-height: 1.6;
+        }
+        .stage-col ul li::before {
+            content: '•';
+            position: absolute;
+            left: 1px;
+            color: #BFB8A8;
+            font-weight: 700;
+        }
+        .highlight-box {
+            border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+            padding: 10px 14px;
+            margin: 8px 0;
+            font-size: 0.78rem;
+            color: #5C4F45;
+            line-height: 1.6;
+        }
+        .highlight-blue {
+            background: #F5F8FB;
+            border-left: 3px solid #4A80C0;
+        }
+        .highlight-green {
+            background: #F4F9F5;
+            border-left: 3px solid #5E9A6D;
+        }
+        .highlight-amber {
+            background: #FFFDF8;
+            border-left: 3px solid #C48B3A;
+        }
+        .highlight-plum {
+            background: #F8F4FA;
+            border-left: 3px solid #7B5E8B;
+        }
+        .tag-xs {
+            display: inline-block;
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 3px 9px;
+            border-radius: 10px;
+            margin: 2px;
+            letter-spacing: 0.02em;
+            background: #E8F0F5;
+            color: #4A80C0;
+        }
+        .tag-xs.green {
+            background: #E8F2E8;
+            color: #5E9A6D;
+        }
+        .tag-xs.amber {
+            background: #FFF8EF;
+            color: #C8941E;
+        }
+        .tag-xs.plum {
+            background: #F0EAF5;
+            color: #7B5E8B;
+        }
+        .path-table-wrap {
+            overflow-x: auto;
+            margin: 14px 0;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-sm);
+            border: 1px solid #E6DDD0;
+            background: #fff;
+        }
+        .path-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.76rem;
+            min-width: 650px;
+        }
+        .path-table th {
+            background: #F5F8FB;
+            padding: 10px 8px;
+            text-align: center;
+            font-weight: 700;
+            font-size: 0.72rem;
+            color: #4A80C0;
+            letter-spacing: 0.03em;
+            border-bottom: 2px solid #D0DCE8;
+        }
+        .path-table td {
+            padding: 8px;
+            text-align: center;
+            border-bottom: 1px solid #F0EBE2;
+            color: #3D3226;
+            font-size: 0.74rem;
+            vertical-align: middle;
+        }
+        .path-table tr:last-child td {
+            border-bottom: none;
+        }
+        .stage-dot-cell {
+            display: inline-block;
+            width: 28px;
+            height: 28px;
+            line-height: 28px;
+            border-radius: 50%;
+            color: #fff;
+            font-weight: 700;
+            font-size: 0.75rem;
+            text-align: center;
+        }
+        .scene-card {
+            background: #fff;
+            border: 1px solid #E6DDD0;
+            border-radius: var(--radius);
+            margin-bottom: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+        }
+        .scene-header {
+            padding: 14px 18px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.86rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            user-select: none;
+            background: #FDFBF8;
+            transition: var(--transition);
+        }
+        .scene-header:hover {
+            background: #F5F8FB;
+        }
+        .scene-arrow {
+            transition: var(--transition);
+            font-size: 0.85rem;
+            color: #8C7E6F;
+        }
+        .scene-card.open .scene-arrow {
+            transform: rotate(180deg);
+        }
+        .scene-body {
+            display: none;
+            padding: 0 18px 14px;
+            border-top: 1px solid #E6DDD0;
+            padding-top: 12px;
+            font-size: 0.8rem;
+            color: #5C4F45;
+            line-height: 1.65;
+            animation: fadeSlideIn 0.3s ease;
+        }
+        .scene-card.open .scene-body {
+            display: block;
+        }
+        .checklist-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 12px;
+        }
+        .checklist-card {
+            background: #fff;
+            border: 1px solid #E6DDD0;
+            border-radius: var(--radius);
+            padding: 16px;
+            box-shadow: var(--shadow-sm);
+        }
+        .checklist-card h5 {
+            font-weight: 700;
+            font-size: 0.85rem;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: #2E2620;
+        }
+        .checklist-card ul {
+            list-style: none;
+            padding: 0;
+        }
+        .checklist-card ul li {
+            font-size: 0.78rem;
+            color: #5C4F45;
+            padding: 2px 0 2px 16px;
+            position: relative;
+            line-height: 1.55;
+        }
+        .checklist-card ul li::before {
+            content: '☐';
+            position: absolute;
+            left: 0;
+            color: #BFB8A8;
+            font-size: 0.7rem;
+            top: 3px;
+        }
+        .tool-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 12px;
+        }
+        .tool-card {
+            background: #fff;
+            border: 1px solid #E6DDD0;
+            border-radius: var(--radius);
+            padding: 16px;
+            box-shadow: var(--shadow-sm);
+        }
+        .tool-card h5 {
+            font-weight: 700;
+            font-size: 0.85rem;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .tool-card ul {
+            list-style: none;
+            padding: 0;
+        }
+        .tool-card ul li {
+            font-size: 0.78rem;
+            color: #5C4F45;
+            padding: 2px 0 2px 16px;
+            position: relative;
+            line-height: 1.55;
+        }
+        .tool-card ul li::before {
+            content: '📎';
+            position: absolute;
+            left: 0;
+            font-size: 0.6rem;
+            top: 4px;
+        }
+        .cost-badge {
+            display: inline-block;
+            background: #E0F0EF;
+            color: #3D8B7B;
+            font-size: 0.65rem;
+            font-weight: 600;
+            padding: 2px 8px;
+            border-radius: 10px;
+            margin-left: 4px;
+        }
+        .footer-cta {
+            text-align: center;
+            padding: 36px 20px;
+            background: linear-gradient(160deg, #F5F8FB, #FDFBF8, #F4F9F5);
+            border-radius: var(--radius-lg);
+            margin-top: 28px;
+            border: 1px solid #E6DDD0;
+        }
+        .footer-cta h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+            color: #2E2620;
+        }
+        .footer-cta p {
+            color: #8C7E6F;
+            margin-bottom: 4px;
+            font-size: 0.82rem;
+            line-height: 1.6;
+        }
+        .scroll-top {
+            position: fixed;
+            bottom: 22px;
+            right: 22px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #fff;
+            border: 1px solid #E6DDD0;
+            box-shadow: var(--shadow);
+            cursor: pointer;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 99;
+            transition: var(--transition);
+            opacity: 0;
+            pointer-events: none;
+            text-decoration: none;
+            color: #4A80C0;
+        }
+        .scroll-top.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .scroll-top:hover {
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-2px);
+        }
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 1.3rem;
+            }
+            .hero-subtitle {
+                font-size: 0.8rem;
+            }
+            .stage-header {
+                flex-wrap: wrap;
+                gap: 6px;
+                padding: 14px;
+            }
+            .stage-meta {
+                margin-left: 0;
+                text-align: left;
+                width: 100%;
+            }
+            .stage-body {
+                padding: 0 14px 16px;
+                padding-top: 12px;
+            }
+            .stage-two-col {
+                grid-template-columns: 1fr;
+            }
+            .container {
+                padding: 8px 8px 36px;
+            }
+            .sticky-nav a {
+                font-size: 0.65rem;
+                padding: 5px 6px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="hero">
+        <div class="hero-content">
+            <span class="hero-badge">🤝 家庭操作版 · 四阶社会能力培养</span>
+            <h1>社交协作与创造性解决问题 <span>家庭培养系统</span></h1>
+            <p class="hero-subtitle">从“催着叫人”到“主动合作”，从“独自玩耍”到“团队共创”<br>社交不是“教出来”的，是在有设计的互动中“长出来”的</p>
+            <div class="hero-tagline">
+                👀 社交觉察 · 💬 沟通表达 · 🤝 团队协作 · 🚀 创造性解决
+            </div>
+        </div>
+    </header>
+
+    <nav class="sticky-nav" id="stickyNav">
+        <div class="sticky-nav-inner">
+            <a href="#stage1" class="nav-dot nd1">1</a>
+            <a href="#stage2" class="nav-dot nd2">2</a>
+            <a href="#stage3" class="nav-dot nd3">3</a>
+            <a href="#stage4" class="nav-dot nd4">4</a>
+            <a href="#path">进阶路径</a>
+            <a href="#scenes">常见问题</a>
+            <a href="#checklist">核对清单</a>
+            <a href="#toolkit">工具包</a>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div class="section-title">
+            <h2>📊 四阶家庭操作体系</h2>
+            <p>每阶清晰区分“家长能做的”与“需要我指导的”，边界明确</p>
+            <div class="section-divider"></div>
+        </div>
+
+        <!-- 第一阶 -->
+        <div class="stage-card open" id="stage1">
+            <div class="stage-header" onclick="toggleStage(this)">
+                <div class="stage-num sn1">1</div>
+                <div class="stage-header-text">
+                    <h3>社交觉察与合作启蒙期 · 从“我自己”到“我们一起”</h3>
+                    <span class="stage-sub">建立关注他人与初步合作的意识</span>
+                </div>
+                <div class="stage-meta">第1-2个月<br>每日渗透+每周2次</div>
+                <span class="stage-arrow">▼</span>
+            </div>
+            <div class="stage-body">
+                <div class="stage-two-col">
+                    <div class="stage-col parent-do">
+                        <h5>✅ 家长能做的（简单操作）</h5>
+                        <ul>
+                            <li><strong>准备工具（3分钟）：</strong>“合作任务卡”（我提供打印）、“倾听小耳朵”提示牌（纸板剪成耳朵形状）、小沙漏（1-3分钟）、手机录像功能</li>
+                            <li><strong>传话筒游戏（每天晚饭5分钟）：</strong>爸爸说一件今天的事（2-3句），妈妈复述，孩子确认“妈妈说得对吗？”。规则：说的人说完，听的人才能开口</li>
+                            <li><strong>合作小任务（每周2次）：</strong>抽取合作任务卡——一起铺床、一起收拾积木（一人捡红一人捡蓝）、一起做水果拼盘。完成后击掌说“合作愉快！”</li>
+                            <li><strong>情绪猜猜看（每天渗透）：</strong>当家人有明显表情时，轻声问孩子：“你看妈妈现在是什么心情？你怎么看出来的？”</li>
+                            <li><strong>等待沙漏（需要轮流时）：</strong>拿出小沙漏，约定“沙子漏完就到你了”。孩子安静等待后说：“我看到你等了一整个沙漏，这不容易。”</li>
+                        </ul>
+                    </div>
+                    <div class="stage-col guide-need">
+                        <h5>🎓 需要我指导的（核心价值）</h5>
+                        <div class="highlight-box highlight-amber">
+                            <strong>✅ 我的孩子为什么不愿意合作？</strong>可能原因：任务太简单/太难、不理解“合作”是什么意思、过往合作体验不好（总是被指挥）。我需要帮您分析具体原因，调整任务设计和互动方式。提供“合作意愿观察表”帮您记录。
+                        </div>
+                        <div class="highlight-box highlight-amber">
+                            <strong>✅ 孩子总是打断别人说话怎么办？</strong>不是“没礼貌”，是执行功能中的“抑制控制”还在发展。使用可视化提示：别人说话时，把手放在孩子手上或膝盖上，作为“等待信号”。我需要帮您判断是否需要感统或执行功能专项支持。
+                        </div>
+                        <div class="highlight-box highlight-amber">
+                            <strong>✅ 孩子对他人情绪“视而不见”：</strong>从最明显的情绪开始（大笑、大哭），逐步到细微表情。看动画片时暂停，讨论“他现在什么心情？”我需要提供“情绪识别分级图片库”辅助训练。
+                        </div>
+                    </div>
+                </div>
+                <p style="font-size:0.76rem;color:#8C7E6F;margin-top:8px;">📦 <strong>工具包：</strong>合作任务卡（打印） · 倾听小耳朵（自制） · 小沙漏 · 小镜子（观察表情用）</p>
+            </div>
+        </div>
+
+        <!-- 第二阶 -->
+        <div class="stage-card" id="stage2">
+            <div class="stage-header" onclick="toggleStage(this)">
+                <div class="stage-num sn2">2</div>
+                <div class="stage-header-text">
+                    <h3>沟通表达与观点采择期 · 从“我说我的”到“我听你的”</h3>
+                    <span class="stage-sub">发展双向沟通与换位思考能力</span>
+                </div>
+                <div class="stage-meta">第3-5个月<br>每周专项练习</div>
+                <span class="stage-arrow">▼</span>
+            </div>
+            <div class="stage-body">
+                <div class="stage-two-col">
+                    <div class="stage-col parent-do">
+                        <h5>✅ 家长能做的（简单操作）</h5>
+                        <ul>
+                            <li><strong>工具升级：</strong>“发言棒”（任何小物件如遥控器笔）、“想法气泡”便签（两种颜色）、“表达公式卡”（贴冰箱上）、“解决冲突小剧场”情景卡（打印）</li>
+                            <li><strong>发言棒家庭会议（每周1次15分钟）：</strong>话题如“周末吃什么”。只有拿发言棒的人能说话。下一个人必须先说“我听到你说的是……”，再说自己的</li>
+                            <li><strong>想法气泡对比（每周1次）：</strong>针对有分歧的事各自写在便签上。贴在一起对比：“我们的想法哪里一样？哪里不一样？”</li>
+                            <li><strong>表达公式天天用（每天）：</strong>指着表达公式卡：“我觉得______（情绪词），因为______，我希望______。”您先示范</li>
+                            <li><strong>互换角色小剧场（每周1次）：</strong>抽一张情景卡，您演孩子，孩子演对方。演完问：“你演我的时候，什么感觉？”</li>
+                        </ul>
+                    </div>
+                    <div class="stage-col guide-need">
+                        <h5>🎓 需要我指导的（核心价值）</h5>
+                        <div class="highlight-box highlight-amber">
+                            <strong>✅ 孩子不愿意用“表达公式”：</strong>从“我觉得”开始，只说情绪词就够了。后面的“因为”“希望”慢慢加。您大量示范，不要求孩子立刻用。我需要提供“表达公式游戏化”方案。
+                        </div>
+                        <div class="highlight-box highlight-amber">
+                            <strong>✅ 孩子复述别人话时总是说错：</strong>说错了不是故意，是工作记忆容量有限。您可以补充：“你听到了XX，说得很好。我再说一遍完整的……”我需要帮您判断是听知觉问题还是注意力问题，提供针对性支持。
+                        </div>
+                        <div class="highlight-box highlight-amber">
+                            <strong>✅ 角色扮演时孩子笑场或不认真：</strong>这是正常的！保持游戏感，不要变成“上课”。您先认真演，用夸张的语气和动作吸引他进入。我需要提供“让孩子入戏的小技巧”。
+                        </div>
+                    </div>
+                </div>
+                <p style="font-size:0.76rem;color:#8C7E6F;margin-top:8px;">📦 <strong>工具包：</strong>发言棒（小物件） · 想法气泡便签（两色） · 表达公式卡（打印贴墙） · 情景卡（打印）</p>
+            </div>
+        </div>
+
+        <!-- 第三阶 -->
+        <div class="stage-card" id="stage3">
+            <div class="stage-header" onclick="toggleStage(this)">
+                <div class="stage-num sn3">3</div>
+                <div class="stage-header-text">
+                    <h3>团队协作与项目共创期 · 从“一起做”到“一起创”</h3>
+                    <span class="stage-sub">在真实项目中发展团队协作能力</span>
+                </div>
+                <div class="stage-meta">第6-9个月<br>每月一个协作项目</div>
+                <span class="stage-arrow">▼</span>
+            </div>
+            <div class="stage-body">
+                <div class="stage-two-col">
+                    <div class="stage-col parent-do">
+                        <h5>✅ 家长能做的（简单操作）</h5>
+                        <ul>
+                            <li><strong>工具升级：</strong>“团队角色卡”（记录员/计时员/材料员/发言人/组长图文版）、“项目计划板”（白板或大纸贴墙）、“头脑风暴”规则海报、“反馈三明治”提示卡</li>
+                            <li><strong>选项目（月初）：</strong>从“家庭项目主题库”选一个——策划周末游、制作家庭菜单、布置节日装饰、拍家庭小视频、阳台种菜</li>
+                            <li><strong>分角色（项目开始）：</strong>拿出角色卡让孩子先选，家人再选。戴角色挂牌。明确：“记录员记什么？计时员管什么？”</li>
+                            <li><strong>开项目会（每周日15分钟）：</strong>用项目计划板——上周干了啥？这周要干啥？有啥困难？谁需要帮助？让孩子（如果是组长）主持</li>
+                            <li><strong>头脑风暴（需要创意时）：</strong>贴出规则海报——①越多越好②不批评③搭便车④越疯越好。您带头说一个疯点子打开脑洞</li>
+                            <li><strong>项目庆祝与反馈（月底）：</strong>展示成果拍照留念。使用反馈三明治：“你做得特别好的是……（具体）”“如果……可以更好”“总之太棒了！”</li>
+                        </ul>
+                    </div>
+                    <div class="stage-col guide-need">
+                        <h5>🎓 需要我指导的（核心价值）</h5>
+                        <div class="highlight-box highlight-amber">
+                            <strong>✅ 孩子选了角色但不履行职责：</strong>可能是角色要求不清晰。使用角色卡上的“我要做什么”清单具象化。提醒时用角色称呼：“组长，我们接下来该干什么？”我需要帮您调整角色难度，或提供“角色职责可视化图表”。
+                        </div>
+                        <div class="highlight-box highlight-amber">
+                            <strong>✅ 项目进行中家人意见冲突：</strong>这是绝佳的学习机会！不急着平息，引导使用表达公式和倾听。引入“方案PK”机制：各自陈述方案优点，然后投票或融合。我需要提供“家庭协作冲突调解指南”。
+                        </div>
+                        <div class="highlight-box highlight-amber">
+                            <strong>✅ 孩子对项目失去兴趣想半途而废：</strong>回顾初心：“我们一开始为什么要做这个？”调整目标：“如果太难我们简化一下？”设立里程碑奖励：“完成这一步我们就……”我需要帮您分析是项目设计问题还是坚持力问题。
+                        </div>
+                    </div>
+                </div>
+                <p style="font-size:0.76rem;color:#8C7E6F;margin-top:8px;">📦 <strong>工具包：</strong>团队角色卡（打印可配挂绳） · 项目计划板（白板/大纸） · 头脑风暴规则海报（打印） · 反馈三明治提示卡</p>
+            </div>
+        </div>
+
+        <!-- 第四阶 -->
+        <div class="stage-card" id="stage4">
+            <div class="stage-header" onclick="toggleStage(this)">
+                <div class="stage-num sn4">4</div>
+                <div class="stage-header-text">
+                    <h3>创造性解决问题与社会领导力期 · 从“解决问题”到“创造改变”</h3>
+                    <span class="stage-sub">培养创新思维与社会影响力</span>
+                </div>
+                <div class="stage-meta">第10-12个月<br>每月一个项目</div>
+                <span class="stage-arrow">▼</span>
+            </div>
+            <div class="stage-body">
+                <div class="stage-two-col">
+                    <div class="stage-col parent-do">
+                        <h5>✅ 家长能做的（简单操作）</h5>
+                        <ul>
+                            <li><strong>家庭问题解决官（第10个月）：</strong>让孩子观察家里一个小麻烦（如门口鞋乱）。用“五步解决法”卡——①观察②定义③想点子④做一个试试⑤看看效果。选一个方案真的实施！</li>
+                            <li><strong>社交难题破解（第11个月）：</strong>模拟或回顾一个社交困境（如朋友生气了）。用“问题解决地图”——发生了什么？各方什么感受？有哪些办法？每种办法的后果？选一种试试（角色扮演）</li>
+                            <li><strong>小创客挑战（第12个月）：</strong>给孩子开放任务——“用废旧材料做个有用的东西”“设计一个让全家开心的游戏”。不帮忙只提供材料和鼓励。完成后举办“家庭发布会”</li>
+                            <li><strong>温暖小行动（第12个月末）：</strong>引导孩子想“我能为别人做什么”——给邻居老人画卡片、整理旧玩具捐出、帮取快递。完成一个小行动聊聊感受</li>
+                        </ul>
+                    </div>
+                    <div class="stage-col guide-need">
+                        <h5>🎓 需要我指导的（核心价值）</h5>
+                        <div class="highlight-box highlight-amber">
+                            <strong>✅ 孩子说“我想不出问题”：</strong>您先观察一周记录下家里的“小麻烦”供他选择。从最显而易见的开始：“你看鞋都跑出来了，每次都要摆，麻烦吗？”我需要提供“家庭问题发现清单”启发思路。
+                        </div>
+                        <div class="highlight-box highlight-amber">
+                            <strong>✅ 孩子的方案“不切实际”：</strong>先不否定！问：“这个主意很有意思！如果要实现第一步要做什么？”通过“原型制作”让想法落地。如果确实不可行引导对比可行性。我需要提供“创意可行性评估引导话术”。
+                        </div>
+                        <div class="highlight-box highlight-amber">
+                            <strong>✅ 孩子不敢实施怕别人笑话/失败：</strong>从小范围开始先在家里试只给家人看。分享您自己的“失败故事”。强调“尝试比结果重要”。我需要提供“失败庆祝仪式”设计方案。
+                        </div>
+                    </div>
+                </div>
+                <p style="font-size:0.76rem;color:#8C7E6F;margin-top:8px;">📦 <strong>工具包：</strong>“五步解决法”卡 · 问题解决地图（可打印） · 小创客材料箱（废旧材料收集） · 温暖小行动记录卡</p>
+            </div>
+        </div>
+
+        <!-- 进阶路径图 -->
+        <section id="path">
+            <div class="section-title">
+                <h2>📈 四阶进阶路径图</h2>
+                <p>升级标准清晰，家长可自行判断</p>
+                <div class="section-divider"></div>
+            </div>
+            <div class="path-table-wrap">
+                <table class="path-table">
+                    <thead><tr><th>阶段</th><th>核心目标</th><th>升级标准（家长可判断）</th><th>建议时间</th></tr></thead>
+                    <tbody>
+                        <tr><td><span class="stage-dot-cell" style="background:#4A80C0;">1</span></td><td>社交觉察与合作</td><td>能完成3个以上合作任务；等待时能安静；开始注意他人情绪</td><td>1-2个月</td></tr>
+                        <tr><td><span class="stage-dot-cell" style="background:#5E9A6D;">2</span></td><td>沟通与观点采择</td><td>能使用“我觉得”句式；能复述他人观点；角色扮演能投入</td><td>3-5个月</td></tr>
+                        <tr><td><span class="stage-dot-cell" style="background:#D4953A;">3</span></td><td>团队协作与共创</td><td>能承担团队角色并履行职责；参与完成完整项目</td><td>6-9个月</td></tr>
+                        <tr><td><span class="stage-dot-cell" style="background:#7B5E8B;">4</span></td><td>创造解决与领导</td><td>完成问题解决项目；产出创造性作品；完成一个小善举</td><td>10-12个月</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- 常见问题 -->
+        <section id="scenes">
+            <div class="section-title">
+                <h2>🧩 家庭常见问题解决方案</h2>
+                <p>三个高频困境，家长能做的 + 需要我指导的</p>
+                <div class="section-divider"></div>
+            </div>
+            <div class="scene-card">
+                <div class="scene-header" onclick="toggleScene(this)">🤐 问题一：“孩子在外面不敢说话，在家很能说” <span class="scene-arrow">▼</span></div>
+                <div class="scene-body"><strong>✅ 家长能做的：</strong>不贴“胆小”标签；创造低压力社交场景（邀请一个好朋友来家玩）；提前准备“话题卡片”。<br><strong>🎓 需要我指导的：</strong>判断是选择性缄默倾向还是社交焦虑；提供“渐进暴露”方案；分析与家庭养育方式的关系。</div>
+            </div>
+            <div class="scene-card">
+                <div class="scene-header" onclick="toggleScene(this)">😤 问题二：“两个孩子总是抢东西、打架” <span class="scene-arrow">▼</span></div>
+                <div class="scene-body"><strong>✅ 家长能做的：</strong>使用“发言棒”轮流表达；使用计时器轮流玩；引导共同创造规则。<br><strong>🎓 需要我指导的：</strong>分析冲突的功能（争抢注意？控制权？）；提供“手足冲突调解SOP”；设计合作活动。</div>
+            </div>
+            <div class="scene-card">
+                <div class="scene-header" onclick="toggleScene(this)">🧍 问题三：“孩子总是一个人玩，不跟别人玩” <span class="scene-arrow">▼</span></div>
+                <div class="scene-body"><strong>✅ 家长能做的：</strong>从平行游戏开始（各玩各的但在一起）；提供需要合作才能完成的玩具；不强迫尊重独处需求。<br><strong>🎓 需要我指导的：</strong>判断是性格内向还是社交技能缺乏；提供“社交阶梯”个性化方案；分析是否存在感统/执行功能影响。</div>
+            </div>
+        </section>
+
+        <!-- 月度核对清单 -->
+        <section id="checklist">
+            <div class="section-title">
+                <h2>📋 家长月度核对清单</h2>
+                <p>每月最后一天花15分钟</p>
+                <div class="section-divider"></div>
+            </div>
+            <div class="checklist-grid">
+                <div class="checklist-card"><h5>📊 成果整理</h5><ul><li>整理合作任务完成照片</li><li>回顾家庭会议录像</li><li>收集项目成果作品</li><li>记录孩子的社交金句</li></ul></div>
+                <div class="checklist-card"><h5>📈 数据统计</h5><ul><li>使用“我觉得”句式次数</li><li>成功合作任务数量</li><li>角色履职天数</li><li>创造性点子数量</li></ul></div>
+                <div class="checklist-card"><h5>🔍 问题梳理</h5><ul><li>本月最大社交挑战是什么？</li><li>哪种游戏/活动最有效？</li><li>需要厉老师帮助的具体问题？</li></ul></div>
+                <div class="checklist-card"><h5>🎯 下月规划</h5><ul><li>是否进阶？</li><li>需要什么新工具？</li><li>设定一个社交成长小目标</li></ul></div>
+            </div>
+        </section>
+
+        <!-- 工具包总览 -->
+        <section id="toolkit">
+            <div class="section-title">
+                <h2>🛠️ 家庭工具包总览</h2>
+                <p>物理工具成本低于80元，数字资源全部由我提供</p>
+                <div class="section-divider"></div>
+            </div>
+            <div class="tool-grid">
+                <div class="tool-card"><h5>📦 物理工具 <span class="cost-badge">&lt;80元</span></h5><ul><li>第一阶：合作任务卡+倾听小耳朵+小沙漏+小镜子（约15元）</li><li>第二阶：发言棒+想法气泡便签+表达公式卡+情景卡（约20元）</li><li>第三阶：团队角色卡+挂绳+项目计划白板+头脑风暴海报（约25元）</li><li>第四阶：五步解决法卡+问题解决地图+小创客材料箱（约20元）</li></ul></div>
+                <div class="tool-card"><h5>💻 数字资源（我提供）</h5><ul><li>打印材料库：合作任务卡、表达公式卡、情景卡、团队角色卡、头脑风暴海报、五步解决法卡、问题解决地图</li><li>活动方案库：家庭项目主题库（20个创意）、小创客挑战任务库（30个）、温暖小行动点子库</li><li>指导音频/视频：家庭会议主持示范、角色扮演示范、冲突调解示范</li></ul></div>
+            </div>
+        </section>
+
+        <!-- 价值承诺 -->
+        <div class="footer-cta">
+            <h3>💎 最终给家长的价值承诺</h3>
+            <p><strong>简单操作承诺：</strong>您不需要成为社交教练，只需要按照四阶路径，在家庭日常中多玩几个游戏、多开几次会、多做几个项目。工具和流程我们都设计好了。</p>
+            <p><strong>专业价值承诺：</strong>但想要真正理解孩子在群体中的行为模式，突破社交瓶颈，激发协作与创造潜能——您需要我帮您“看见”孩子行为背后的原因，提供精准的引导策略。</p>
+            <p><strong>成果可视承诺：</strong>每月您都会看到变化：从关注自己到关注他人，从单向表达到双向沟通，从独自玩耍到享受合作，从遇到问题求助到主动想办法。一年后，您会拥有一个更自信、更合群、更有创造力的孩子。</p>
+            <p style="font-weight:600;color:#4A80C0;margin-top:8px;">🤝 从“我自己”到“我们一起”，从“解决问题”到“创造改变”。这是送给孩子一生的社交智慧礼物。</p>
+        </div>
+    </main>
+
+    <a href="#" class="scroll-top" id="scrollTop" title="回到顶部">↑</a>
+
+    <script>
+        function toggleStage(header) { header.parentElement.classList.toggle('open'); }
+        function toggleScene(header) { header.parentElement.classList.toggle('open'); }
+        const scrollTopBtn = document.getElementById('scrollTop');
+        window.addEventListener('scroll', () => { if (window.scrollY > 500) { scrollTopBtn.classList.add('visible'); } else { scrollTopBtn.classList.remove('visible'); } const sections = document.querySelectorAll('section[id], .stage-card[id]'); const navLinks = document.querySelectorAll('.sticky-nav a'); let currentId = ''; sections.forEach(section => { const rect = section.getBoundingClientRect(); if (rect.top <= 140) { currentId = section.id; } }); navLinks.forEach(link => { link.classList.remove('active'); if (link.getAttribute('href') === '#' + currentId) { link.classList.add('active'); } }); });
+        document.querySelectorAll('.sticky-nav a[href^="#"]').forEach(link => { link.addEventListener('click', function(e) { e.preventDefault(); const target = document.querySelector(this.getAttribute('href')); if (target) { const navHeight = document.querySelector('.sticky-nav').offsetHeight; const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - navHeight - 8; window.scrollTo({ top: targetPosition, behavior: 'smooth' }); } }); });
+        scrollTopBtn.addEventListener('click', function(e) { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); });
+        document.addEventListener('DOMContentLoaded', () => { const firstCard = document.getElementById('stage1'); if (firstCard && !firstCard.classList.contains('open')) { firstCard.classList.add('open'); } });
+    </script>
+</body>
+</html>

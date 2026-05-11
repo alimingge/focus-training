@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数独小侦探 · 我的思维超能力修炼手册 | 学生端</title>
+    <style>
+        :root {
+            --detective-navy: #2C4A6E;
+            --detective-navy-light: #F2F5F9;
+            --detective-teal: #3D8B7B;
+            --detective-teal-light: #F0F8F6;
+            --detective-amber: #E8A840;
+            --detective-amber-light: #FFF9EB;
+            --detective-burgundy: #8B4A5E;
+            --detective-burgundy-light: #FDF5F7;
+            --detective-slate: #5B6E8C;
+            --detective-slate-light: #F5F7FA;
+            --bg: #FFFDF9;
+            --card-bg: #FFFFFF;
+            --text: #3D2E1E;
+            --text-light: #6B5A42;
+            --border: #F0E4D0;
+            --shadow-sm: 0 1px 4px rgba(60, 30, 10, 0.05);
+            --shadow: 0 4px 18px rgba(60, 30, 10, 0.07);
+            --shadow-lg: 0 10px 30px rgba(60, 30, 10, 0.10);
+            --radius-sm: 10px;
+            --radius: 16px;
+            --radius-lg: 22px;
+            --radius-xl: 28px;
+            --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Sans SC', 'KaiTi', 'STKaiti', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+            scroll-behavior: smooth;
+            font-size: 15px;
+            background-image: radial-gradient(circle, rgba(44, 74, 110, 0.025) 1px, transparent 1px), radial-gradient(circle, rgba(61, 139, 123, 0.025) 1px, transparent 1px);
+            background-size: 34px 34px, 46px 46px;
+            background-position: 0 0, 23px 23px;
+        }
+        .hero {
+            background: linear-gradient(160deg, #F2F5F9 0%, #FFFDF9 18%, #F0F8F6 38%, #FFFDF9 58%, #FDF5F7 78%, #FFFDF9 100%);
+            padding: 48px 20px 38px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 1px solid #F0E4D0;
+        }
+        .hero::before {
+            content: '🔍';
+            position: absolute;
+            top: 28px;
+            left: 8%;
+            font-size: 2.2rem;
+            animation: floatIcon 3.5s ease-in-out infinite;
+            pointer-events: none;
+        }
+        .hero::after {
+            content: '🧩';
+            position: absolute;
+            top: 48px;
+            right: 10%;
+            font-size: 2rem;
+            animation: floatIcon 3s ease-in-out 0.7s infinite;
+            pointer-events: none;
+        }
+        @keyframes floatIcon {
+            0%,
+            100% {
+                transform: translateY(0) scale(1);
+            }
+            50% {
+                transform: translateY(-14px) scale(1.12);
+            }
+        }
+        .sparkle {
+            position: absolute;
+            pointer-events: none;
+            font-size: 1rem;
+            animation: sparklePop 2.5s ease-in-out infinite;
+        }
+        .sparkle:nth-child(1) {
+            top: 65px;
+            left: 25%;
+            animation-delay: 0s;
+        }
+        .sparkle:nth-child(2) {
+            top: 28px;
+            right: 22%;
+            animation-delay: 1s;
+        }
+        .sparkle:nth-child(3) {
+            bottom: 38px;
+            left: 34%;
+            animation-delay: 1.8s;
+        }
+        @keyframes sparklePop {
+            0%,
+            100% {
+                opacity: 0.2;
+                transform: scale(0.7);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.4);
+            }
+        }
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 780px;
+            margin: 0 auto;
+        }
+        .hero-badge {
+            display: inline-block;
+            background: #fff;
+            color: #2C4A6E;
+            font-size: 0.85rem;
+            font-weight: 700;
+            padding: 6px 20px;
+            border-radius: 24px;
+            letter-spacing: 0.04em;
+            margin-bottom: 14px;
+            box-shadow: var(--shadow-sm);
+            border: 2px dashed #C0D0E4;
+        }
+        .hero h1 {
+            font-size: 2.4rem;
+            font-weight: 800;
+            letter-spacing: -0.01em;
+            color: #3D2E1E;
+            margin-bottom: 8px;
+            line-height: 1.3;
+        }
+        .hero h1 .gradient-text {
+            background: linear-gradient(135deg, #2C4A6E, #3D8B7B, #8B4A5E);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .hero-subtitle {
+            font-size: 1rem;
+            color: #6B5A42;
+            font-weight: 400;
+            margin-bottom: 8px;
+            line-height: 1.6;
+        }
+        .hero-tagline {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #fff;
+            padding: 10px 22px;
+            border-radius: 26px;
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: #3D2E1E;
+            box-shadow: var(--shadow);
+            border: 1px solid #F0E4D0;
+        }
+        .sticky-nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(255, 253, 249, 0.9);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid #F0E4D0;
+            padding: 0 10px;
+            overflow-x: auto;
+            white-space: nowrap;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        .sticky-nav::-webkit-scrollbar {
+            display: none;
+        }
+        .sticky-nav-inner {
+            max-width: 1050px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 2px;
+            padding: 7px 0;
+        }
+        .sticky-nav a {
+            display: inline-block;
+            text-decoration: none;
+            font-size: 0.76rem;
+            font-weight: 600;
+            color: #6B5A42;
+            padding: 6px 12px;
+            border-radius: 18px;
+            transition: var(--transition);
+            flex-shrink: 0;
+            letter-spacing: 0.02em;
+        }
+        .sticky-nav a:hover,
+        .sticky-nav a.active {
+            background: #E8ECF2;
+            color: #2C4A6E;
+        }
+        .sticky-nav a.nav-star {
+            width: 28px;
+            height: 28px;
+            padding: 0;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            flex-shrink: 0;
+            color: #fff;
+        }
+        .ns1 {
+            background: #2C4A6E;
+        }
+        .ns2 {
+            background: #3D8B7B;
+        }
+        .ns3 {
+            background: #5B6E8C;
+        }
+        .ns4 {
+            background: #8B4A5E;
+        }
+        .container {
+            max-width: 1050px;
+            margin: 0 auto;
+            padding: 14px 18px 50px;
+        }
+        .section-title {
+            text-align: center;
+            margin: 40px 0 18px;
+        }
+        .section-title h2 {
+            font-size: 1.45rem;
+            font-weight: 700;
+            letter-spacing: -0.005em;
+            margin-bottom: 4px;
+            color: #3D2E1E;
+        }
+        .section-title p {
+            color: #6B5A42;
+            font-size: 0.84rem;
+        }
+        .section-divider {
+            width: 48px;
+            height: 3px;
+            border-radius: 2px;
+            margin: 8px auto 0;
+            background: linear-gradient(90deg, #2C4A6E, #3D8B7B, #8B4A5E);
+        }
+        .value-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+            margin-bottom: 18px;
+        }
+        .value-mini {
+            background: #fff;
+            border: 1px solid #F0E4D0;
+            border-radius: var(--radius);
+            padding: 16px 12px;
+            text-align: center;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+        }
+        .value-mini:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+        .value-mini .icon-big {
+            font-size: 2rem;
+            display: block;
+            margin-bottom: 6px;
+        }
+        .value-mini h4 {
+            font-size: 0.84rem;
+            font-weight: 700;
+            color: #3D2E1E;
+            margin-bottom: 2px;
+        }
+        .value-mini p {
+            font-size: 0.72rem;
+            color: #6B5A42;
+            line-height: 1.4;
+        }
+        .level-card {
+            background: #fff;
+            border-radius: var(--radius-lg);
+            margin-bottom: 18px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            border: 1px solid #F0E4D0;
+            transition: var(--transition);
+        }
+        .level-card:hover {
+            box-shadow: var(--shadow-lg);
+        }
+        .level-header {
+            padding: 18px 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            user-select: none;
+        }
+        .level-num {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1.1rem;
+            color: #fff;
+            flex-shrink: 0;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.10);
+        }
+        .ln1 {
+            background: #2C4A6E;
+        }
+        .ln2 {
+            background: #3D8B7B;
+        }
+        .ln3 {
+            background: #5B6E8C;
+        }
+        .ln4 {
+            background: #8B4A5E;
+        }
+        .level-header-text h3 {
+            font-size: 1rem;
+            font-weight: 700;
+            line-height: 1.3;
+            color: #3D2E1E;
+        }
+        .level-header-text .level-sub {
+            font-size: 0.74rem;
+            color: #6B5A42;
+        }
+        .level-badge {
+            margin-left: auto;
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 12px;
+            flex-shrink: 0;
+            letter-spacing: 0.03em;
+        }
+        .badge-navy {
+            background: #F2F5F9;
+            color: #2C4A6E;
+        }
+        .badge-teal {
+            background: #F0F8F6;
+            color: #3D8B7B;
+        }
+        .badge-slate {
+            background: #F5F7FA;
+            color: #5B6E8C;
+        }
+        .badge-burgundy {
+            background: #FDF5F7;
+            color: #8B4A5E;
+        }
+        .level-arrow {
+            font-size: 1rem;
+            transition: var(--transition);
+            color: #6B5A42;
+            flex-shrink: 0;
+            margin-left: 2px;
+        }
+        .level-card.open .level-arrow {
+            transform: rotate(180deg);
+        }
+        .level-body {
+            display: none;
+            padding: 0 20px 20px;
+            border-top: 1px solid #F0E4D0;
+            padding-top: 16px;
+            animation: fadeSlideIn 0.3s ease;
+        }
+        .level-card.open .level-body {
+            display: block;
+        }
+        @keyframes fadeSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-5px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .task-box {
+            background: #FFFDF9;
+            border: 1px dashed #E0D4C8;
+            border-radius: var(--radius-sm);
+            padding: 14px 16px;
+            margin-bottom: 12px;
+            font-size: 0.84rem;
+            line-height: 1.8;
+        }
+        .task-box .check-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            padding: 2px 0;
+        }
+        .task-box .check-box {
+            width: 18px;
+            height: 18px;
+            border: 2px solid #C0D0E4;
+            border-radius: 4px;
+            flex-shrink: 0;
+            margin-top: 3px;
+            background: #fff;
+        }
+        .highlight-card {
+            border-radius: var(--radius-sm);
+            padding: 12px 16px;
+            margin: 10px 0;
+            font-size: 0.82rem;
+            color: #5C4020;
+            line-height: 1.65;
+        }
+        .highlight-navy {
+            background: #F2F5F9;
+            border-left: 4px solid #2C4A6E;
+        }
+        .highlight-teal {
+            background: #F0F8F6;
+            border-left: 4px solid #3D8B7B;
+        }
+        .highlight-slate {
+            background: #F5F7FA;
+            border-left: 4px solid #5B6E8C;
+        }
+        .highlight-burgundy {
+            background: #FDF5F7;
+            border-left: 4px solid #8B4A5E;
+        }
+        .highlight-gold {
+            background: #FFF9EB;
+            border-left: 4px solid #E8A840;
+        }
+        .mini-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.78rem;
+            margin: 10px 0;
+            border-radius: var(--radius-sm);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+        }
+        .mini-table th {
+            background: #F2F5F9;
+            padding: 10px 8px;
+            text-align: center;
+            font-weight: 700;
+            font-size: 0.72rem;
+            color: #2C4A6E;
+            letter-spacing: 0.03em;
+            border-bottom: 2px solid #C0D0E4;
+        }
+        .mini-table td {
+            padding: 8px;
+            text-align: center;
+            border-bottom: 1px solid #F0EBE2;
+            color: #3D2E1E;
+            font-size: 0.76rem;
+        }
+        .mini-table tr:last-child td {
+            border-bottom: none;
+        }
+        .star-cell {
+            color: #E8A840;
+            font-size: 0.9rem;
+        }
+        .tag-sm {
+            display: inline-block;
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 3px 9px;
+            border-radius: 10px;
+            margin: 2px;
+            letter-spacing: 0.02em;
+            background: #E8ECF2;
+            color: #2C4A6E;
+        }
+        .tag-sm.teal {
+            background: #E0F0EC;
+            color: #3D8B7B;
+        }
+        .tag-sm.slate {
+            background: #EDF0F5;
+            color: #5B6E8C;
+        }
+        .tag-sm.burgundy {
+            background: #FBE8EC;
+            color: #8B4A5E;
+        }
+        .incentive-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 12px;
+        }
+        .incentive-card {
+            background: #fff;
+            border: 1px solid #F0E4D0;
+            border-radius: var(--radius);
+            padding: 18px 14px;
+            text-align: center;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+        }
+        .incentive-card:hover {
+            box-shadow: var(--shadow);
+            transform: translateY(-2px);
+        }
+        .incentive-card .medal-icon {
+            font-size: 2.6rem;
+            display: block;
+            margin-bottom: 6px;
+        }
+        .incentive-card h5 {
+            font-weight: 700;
+            font-size: 0.84rem;
+            color: #3D2E1E;
+            margin-bottom: 4px;
+        }
+        .incentive-card p {
+            font-size: 0.72rem;
+            color: #6B5A42;
+            line-height: 1.5;
+        }
+        .tool-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 12px;
+        }
+        .tool-card {
+            background: #fff;
+            border: 1px solid #F0E4D0;
+            border-radius: var(--radius);
+            padding: 16px;
+            box-shadow: var(--shadow-sm);
+        }
+        .tool-card h5 {
+            font-weight: 700;
+            font-size: 0.85rem;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: #3D2E1E;
+        }
+        .tool-card ul {
+            list-style: none;
+            padding: 0;
+        }
+        .tool-card ul li {
+            font-size: 0.78rem;
+            color: #6B5A42;
+            padding: 2px 0 2px 16px;
+            position: relative;
+            line-height: 1.55;
+        }
+        .tool-card ul li::before {
+            content: '📎';
+            position: absolute;
+            left: 0;
+            font-size: 0.6rem;
+            top: 4px;
+        }
+        .footer-cta {
+            text-align: center;
+            padding: 38px 20px;
+            background: linear-gradient(160deg, #F2F5F9, #FFFDF9, #F0F8F6);
+            border-radius: var(--radius-xl);
+            margin-top: 28px;
+            border: 2px dashed #C0D0E4;
+        }
+        .footer-cta .big-emoji {
+            font-size: 3rem;
+            display: block;
+            margin-bottom: 8px;
+        }
+        .footer-cta h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+            color: #3D2E1E;
+        }
+        .footer-cta p {
+            color: #6B5A42;
+            font-size: 0.9rem;
+            line-height: 1.7;
+            font-weight: 500;
+        }
+        .footer-cta .quote {
+            font-style: italic;
+            font-size: 1rem;
+            color: #2C4A6E;
+            font-weight: 700;
+            margin-top: 6px;
+        }
+        .scroll-top {
+            position: fixed;
+            bottom: 22px;
+            right: 22px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #fff;
+            border: 2px solid #C0D0E4;
+            box-shadow: var(--shadow);
+            cursor: pointer;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 99;
+            transition: var(--transition);
+            opacity: 0;
+            pointer-events: none;
+            text-decoration: none;
+            color: #2C4A6E;
+        }
+        .scroll-top.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .scroll-top:hover {
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-2px);
+            background: #F2F5F9;
+        }
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 1.55rem;
+            }
+            .hero-subtitle {
+                font-size: 0.84rem;
+            }
+            .level-header {
+                flex-wrap: wrap;
+                gap: 6px;
+                padding: 14px;
+            }
+            .level-badge {
+                margin-left: 0;
+            }
+            .level-body {
+                padding: 0 14px 16px;
+                padding-top: 12px;
+            }
+            .value-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .incentive-grid,
+            .tool-grid {
+                grid-template-columns: 1fr;
+            }
+            .container {
+                padding: 8px 10px 36px;
+            }
+        }
+        @media (max-width: 480px) {
+            .hero {
+                padding: 30px 10px 24px;
+            }
+            .hero h1 {
+                font-size: 1.25rem;
+            }
+            .value-grid {
+                grid-template-columns: 1fr;
+            }
+            .hero::before,
+            .hero::after,
+            .sparkle {
+                display: none;
+            }
+            .sticky-nav a {
+                font-size: 0.66rem;
+                padding: 5px 7px;
+            }
+            .mini-table {
+                font-size: 0.65rem;
+            }
+            .mini-table th,
+            .mini-table td {
+                padding: 5px 4px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="hero">
+        <span class="sparkle">🔢</span>
+        <span class="sparkle">🧩</span>
+        <span class="sparkle">🔍</span>
+        <div class="hero-content">
+            <span class="hero-badge">🕵️ 数独小侦探训练营</span>
+            <h1>我的思维超能力 <span class="gradient-text">修炼手册</span></h1>
+            <p class="hero-subtitle">嘿，小侦探！你的大脑里有一个<strong>“破案指挥部”</strong>——<br>它能帮你发现线索、推理真相、找出答案！</p>
+            <div class="hero-tagline">
+                🔢 4宫格 · 6宫格 · 9宫格 · 🎨 思维创造家
+            </div>
+        </div>
+    </header>
+
+    <nav class="sticky-nav" id="stickyNav">
+        <div class="sticky-nav-inner">
+            <a href="#stage1" class="nav-star ns1">1</a>
+            <a href="#stage2" class="nav-star ns2">2</a>
+            <a href="#stage3" class="nav-star ns3">3</a>
+            <a href="#stage4" class="nav-star ns4">4</a>
+            <a href="#incentives">激励系统</a>
+            <a href="#toolkit-sec">工具包</a>
+            <a href="#footer-cta">侦探寄语</a>
+        </div>
+    </nav>
+
+    <main class="container">
+
+        <div class="section-title">
+            <h2>🎮 欢迎来到数独小侦探训练营！</h2>
+            <p>这个超能力叫 —— <strong>逻辑思维力</strong>！有了它，数学题变得越来越简单！</p>
+            <div class="section-divider"></div>
+        </div>
+        <div class="value-grid">
+            <div class="value-mini"><span class="icon-big">🔍</span><h4>找到关键线索</h4><p>复杂信息中快速定位</p></div>
+            <div class="value-mini"><span class="icon-big">🧩</span><h4>难题不慌乱</h4><p>一步步推理出答案</p></div>
+            <div class="value-mini"><span class="icon-big">📐</span><h4>数学变简单</h4><p>应用题一看就懂</p></div>
+            <div class="value-mini"><span class="icon-big">🎯</span><h4>检查出错误</h4><p>不再粗心丢分</p></div>
+        </div>
+        <p style="text-align:center;font-size:0.95rem;color:#2C4A6E;font-weight:700;margin-bottom:8px;">✨ 现在，让我们开启四级侦探超能力修炼吧！✨</p>
+
+        <!-- 第一级 -->
+        <div class="level-card open" id="stage1">
+            <div class="level-header" onclick="toggleLevel(this)">
+                <div class="level-num ln1">1</div>
+                <div class="level-header-text">
+                    <h3>📖 第一级：4宫格小侦探</h3>
+                    <span class="level-sub">第1-2个月 · 认识规则建立兴趣</span>
+                </div>
+                <span class="level-badge badge-navy">4宫格小侦探</span>
+                <span class="level-arrow">▼</span>
+            </div>
+            <div class="level-body">
+                <div class="task-box">
+                    <strong>📋 今日任务清单</strong>
+                    <div class="check-item"><span class="check-box"></span> 认识数独规则：每行、每列、每个小房子数字不重复</div>
+                    <div class="check-item"><span class="check-box"></span> 和爸妈玩“数字对战”：一人放一个数字，看谁先发现冲突</div>
+                    <div class="check-item"><span class="check-box"></span> 独立完成一题4宫格（只缺4个数字）</div>
+                    <div class="check-item"><span class="check-box"></span> 完成后击掌庆祝，在日历上贴侦探徽章</div>
+                    <div class="check-item"><span class="check-box"></span> 集满7枚徽章，晋升“4宫格小侦探”</div>
+                </div>
+                <div class="highlight-card highlight-navy">
+                    <strong>🕵️ 规则大发现</strong><br>
+                    数独有三条规则：<strong>行规则</strong>（每横排1-4各出现一次）、<strong>列规则</strong>（每竖排1-4各出现一次）、<strong>宫规则</strong>（每个粗线小房子2×2里1-4各出现一次）。<br>
+                    用棋子摆一摆，故意放一个重复的数字——你会发现它们<strong>“打架”</strong>了！
+                </div>
+                <table class="mini-table">
+                    <thead><tr><th>日期</th><th>谁先发现冲突</th><th>我赢了几次</th><th>获得星星</th></tr></thead>
+                    <tbody>
+                        <tr><td></td><td>我 / 爸妈</td><td>____次</td><td class="star-cell">⭐</td></tr>
+                        <tr><td></td><td>我 / 爸妈</td><td>____次</td><td class="star-cell">⭐</td></tr>
+                    </tbody>
+                </table>
+                <p style="font-size:0.78rem;color:#6B5A42;">赢不赢不重要，重要的是你发现了<strong>“数字不能打架”</strong>的秘密！</p>
+                <table class="mini-table">
+                    <thead><tr><th>日期</th><th>题目难度</th><th>完成时间</th><th>我的侦探评分</th></tr></thead>
+                    <tbody>
+                        <tr><td></td><td>缺4个</td><td>____分钟</td><td>🔍🔍🔍</td></tr>
+                        <tr><td></td><td>缺6个</td><td>____分钟</td><td>🔍🔍🔍🔍</td></tr>
+                        <tr><td></td><td>缺8个</td><td>____分钟</td><td>🔍🔍🔍🔍🔍</td></tr>
+                    </tbody>
+                </table>
+                <p style="font-size:0.78rem;color:#6B5A42;">难度越高、时间越短，你的侦探等级就越高！</p>
+                <p style="font-weight:700;color:#2C4A6E;text-align:center;font-size:0.88rem;">🎁 连续7天完成数独 → “4宫格小侦探”徽章 → 晋升第二级！</p>
+            </div>
+        </div>
+
+        <!-- 第二级 -->
+        <div class="level-card" id="stage2">
+            <div class="level-header" onclick="toggleLevel(this)">
+                <div class="level-num ln2">2</div>
+                <div class="level-header-text">
+                    <h3>📖 第二级：6宫格策略师</h3>
+                    <span class="level-sub">第3-5个月 · 掌握策略独立解题</span>
+                </div>
+                <span class="level-badge badge-teal">6宫格策略师</span>
+                <span class="level-arrow">▼</span>
+            </div>
+            <div class="level-body">
+                <div class="task-box">
+                    <strong>📋 今日任务清单</strong>
+                    <div class="check-item"><span class="check-box"></span> 学习“唯一数法”：一个格子只有一种可能，就填它</div>
+                    <div class="check-item"><span class="check-box"></span> 学习“排除法”：把不可能的数字划掉，剩下的就是答案</div>
+                    <div class="check-item"><span class="check-box"></span> 边做边说出想法：“我看这一行已经有1、2、3，所以这里只能是4”</div>
+                    <div class="check-item"><span class="check-box"></span> 在解题记录纸上写下关键推理步骤</div>
+                    <div class="check-item"><span class="check-box"></span> 周末和爸妈比赛，看谁解得快</div>
+                </div>
+                <div class="highlight-card highlight-teal">
+                    <strong>🃏 我的策略卡牌</strong><br>
+                    收集策略卡牌，每学会一种就涂色一张：<br>
+                    唯一数法 🃏✅ ____次 | 排除法 🃏✅ ____次 | 区块法 🃏⬜ ____次<br>
+                    集齐3张基础卡牌，你就是<strong>“策略收集师”</strong>！
+                </div>
+                <div class="highlight-card highlight-teal">
+                    <strong>🗣️ 出声思考录音卡</strong><br>
+                    我推理的关键一步：“第2行已经有1、2、3，所以这里填4”<br>
+                    我推理的关键一步：“这一列缺5和6，但这一宫有5了，所以填6”<br>
+                    录下来回听，你会发现自己的推理<strong>越来越清晰</strong>！
+                </div>
+                <table class="mini-table">
+                    <thead><tr><th>日期</th><th>题目难度</th><th>我的用时</th><th>比上次快/慢</th></tr></thead>
+                    <tbody>
+                        <tr><td></td><td>6宫格简单</td><td>____</td><td>——</td></tr>
+                        <tr><td></td><td>6宫格简单</td><td>____</td><td>⬆️快了！</td></tr>
+                        <tr><td></td><td>6宫格中等</td><td>____</td><td>🏆新难度！</td></tr>
+                    </tbody>
+                </table>
+                <p style="font-size:0.78rem;color:#6B5A42;">每快一次，给自己的<strong>“速度能量条”</strong>涂一格！</p>
+                <p style="font-weight:700;color:#3D8B7B;text-align:center;font-size:0.88rem;">🎁 掌握3种策略解题时间明显缩短 → “6宫格策略师”徽章 → 晋升第三级！</p>
+            </div>
+        </div>
+
+        <!-- 第三级 -->
+        <div class="level-card" id="stage3">
+            <div class="level-header" onclick="toggleLevel(this)">
+                <div class="level-num ln3">3</div>
+                <div class="level-header-text">
+                    <h3>📖 第三级：9宫格高手</h3>
+                    <span class="level-sub">第6-9个月 · 高级策略迁移应用</span>
+                </div>
+                <span class="level-badge badge-slate">9宫格高手</span>
+                <span class="level-arrow">▼</span>
+            </div>
+            <div class="level-body">
+                <div class="task-box">
+                    <strong>📋 今日任务清单</strong>
+                    <div class="check-item"><span class="check-box"></span> 挑战标准9宫格，从简单难度开始</div>
+                    <div class="check-item"><span class="check-box"></span> 使用“思维地图”：用不同颜色标已知数、候选数、确定数</div>
+                    <div class="check-item"><span class="check-box"></span> 学习高级策略：数对法、X-Wing法（每两周学一种）</div>
+                    <div class="check-item"><span class="check-box"></span> 尝试不同类型的逻辑游戏：图形推理、数字谜题、文字逻辑</div>
+                    <div class="check-item"><span class="check-box"></span> 建立“我的策略宝箱”，收集所有用过的策略卡</div>
+                </div>
+                <div class="highlight-card highlight-slate">
+                    <strong>🗺️ 我的思维地图</strong><br>
+                    用颜色标记：🟢已知数字 🟡候选数字 🔴确定数字 🔵验证检查<br>
+                    日期 | 题目 | 用了什么颜色标记 | 最关键的推理<br>
+                    画出你的思维路径，让<strong>“看不见的思考”变成“看得见的地图”</strong>！
+                </div>
+                <div class="highlight-card highlight-slate">
+                    <strong>🧰 我的策略宝箱</strong><br>
+                    策略名称 | 学会时间 | 使用效果😊😐😢 | 我的心得<br>
+                    数对法 | | | <br>
+                    X-Wing法 | | | <br>
+                    唯一矩形法 | | | <br>
+                    每加入一种新策略，宝箱就重一分，你的思维武器库就更强大！
+                </div>
+                <div class="highlight-card highlight-slate">
+                    <strong>🎯 数学作业变化大发现</strong><br>
+                    计算题：以前容易算错 → 现在会一步步检查<br>
+                    应用题：以前看不懂题 → 现在会画图分析条件<br>
+                    几何题：以前想不出 → 现在会用空间推理<br>
+                    记录下你的变化，这是你成长的证据！
+                </div>
+                <p style="font-weight:700;color:#5B6E8C;text-align:center;font-size:0.88rem;">🎁 掌握6种以上策略完成50道9宫格 → “9宫格高手”徽章 → 晋升第四级！</p>
+            </div>
+        </div>
+
+        <!-- 第四级 -->
+        <div class="level-card" id="stage4">
+            <div class="level-header" onclick="toggleLevel(this)">
+                <div class="level-num ln4">4</div>
+                <div class="level-header-text">
+                    <h3>📖 第四级：思维创造家</h3>
+                    <span class="level-sub">第10-12个月 · 从做到教创造输出</span>
+                </div>
+                <span class="level-badge badge-burgundy">钻石思维大师</span>
+                <span class="level-arrow">▼</span>
+            </div>
+            <div class="level-body">
+                <div class="highlight-card highlight-burgundy">
+                    <strong>🎨 项目1：数独设计师</strong><br>
+                    用我提供的模板设计一道属于自己的数独题！我的题目是几宫格？____ 给了多少个已知数字？____ 有什么特点？（对称/有趣/有陷阱）____<br>
+                    设计完成后让爸妈来挑战！如果他们做不出来，你就是<strong>“出题大师”</strong>！
+                </div>
+                <div class="highlight-card highlight-burgundy">
+                    <strong>📖 项目2：策略手册制作人</strong><br>
+                    整理一年来学到的所有策略制作《我的思维策略手册》：封面自己设计、内页每个策略一页（名称+例题+心得）、封底写下对自己思维能力的评价。<br>
+                    这本手册是<strong>你一年的智慧结晶</strong>！
+                </div>
+                <div class="highlight-card highlight-burgundy">
+                    <strong>🎓 项目3：数独小老师</strong><br>
+                    选最拿手的策略准备5分钟小课教给爸妈或好朋友。我教的策略：____ 准备的例题：____ 教学道具：____ “学生”反馈：____<br>
+                    录下教学视频，你就是<strong>“数独小老师”</strong>！
+                </div>
+                <div class="highlight-card highlight-burgundy">
+                    <strong>🔮 项目4：生活侦探挑战</strong><br>
+                    用数独思维解决一个真实问题（选一个）：□规划一周学习时间表 □设计房间物品摆放 □帮家里分配家务<br>
+                    记录你的分析过程和最终方案！
+                </div>
+                <p style="font-weight:700;color:#8B4A5E;text-align:center;font-size:0.9rem;">👑 完成以上项目 → 🏅钻石数独思维大师勋章 + 📜“逻辑思维小专家”证书 + 🌟入选“数独小侦探名人堂”</p>
+            </div>
+        </div>
+
+        <!-- 激励系统 -->
+        <section id="incentives">
+            <div class="section-title">
+                <h2>🎁 学生端激励系统总览</h2>
+                <p>每一点思维成长都值得庆祝！</p>
+                <div class="section-divider"></div>
+            </div>
+            <div class="incentive-grid">
+                <div class="incentive-card"><span class="medal-icon">⚡</span><h5>即时反馈</h5><p>每日完成数独→“侦探能量”贴纸<br>掌握新策略→“策略星”<br>打破速度纪录→“闪电星”</p></div>
+                <div class="incentive-card"><span class="medal-icon">🎯</span><h5>短期目标</h5><p>每周集满5张贴纸→周末“家庭游戏选择权”<br>每月完成级别目标→获得级别徽章（实物）</p></div>
+                <div class="incentive-card"><span class="medal-icon">🏆</span><h5>长期成就</h5><p>🥉铜牌4宫格小侦探（第一级完成）<br>🥈银牌6宫格策略师（第二级完成）<br>🥇金牌9宫格高手（第三级完成）<br>💎钻石思维创造家（第四级完成）</p></div>
+            </div>
+        </section>
+
+        <!-- 工具包 -->
+        <section id="toolkit-sec">
+            <div class="section-title">
+                <h2>🛠️ 学生端工具包清单</h2>
+                <p>实体材料 + 数字/打印材料，全部简单易得</p>
+                <div class="section-divider"></div>
+            </div>
+            <div class="tool-grid">
+                <div class="tool-card">
+                    <h5>📦 实体材料</h5>
+                    <ul>
+                        <li>数独练习册（4/6/9宫格分级）</li>
+                        <li>数字棋子/磁贴（可移动）</li>
+                        <li>策略卡牌（6张核心策略）</li>
+                        <li>思维地图模板（可擦写）</li>
+                        <li>解题记录本</li>
+                        <li>级别徽章（4枚）</li>
+                        <li>年度奖牌</li>
+                    </ul>
+                </div>
+                <div class="tool-card">
+                    <h5>💻 数字/打印材料（家长协助）</h5>
+                    <ul>
+                        <li>数独题库PDF（分级）</li>
+                        <li>策略学习视频</li>
+                        <li>图形推理/数字谜题卡片</li>
+                        <li>《我的思维策略手册》模板</li>
+                        <li>数独题目设计模板</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- 结尾寄语 -->
+        <div class="footer-cta" id="footer-cta">
+            <span class="big-emoji">🔍</span>
+            <h3>记住，数独小侦探：</h3>
+            <p>每一个数字背后都有一条线索，每一次推理都在锻炼你的大脑肌肉。<br>从4宫格到9宫格，从模仿到创造，你正在成为真正的思维高手！</p>
+            <p class="quote">“侦探不是最聪明的人，而是最会思考的人。”</p>
+        </div>
+
+    </main>
+
+    <a href="#" class="scroll-top" id="scrollTop" title="回到顶部">↑</a>
+
+    <script>
+        function toggleLevel(header) { header.parentElement.classList.toggle('open'); }
+        const scrollTopBtn = document.getElementById('scrollTop');
+        window.addEventListener('scroll', () => { if (window.scrollY > 500) { scrollTopBtn.classList.add('visible'); } else { scrollTopBtn.classList.remove('visible'); } const sections = document.querySelectorAll('section[id], .level-card[id]'); const navLinks = document.querySelectorAll('.sticky-nav a'); let currentId = ''; sections.forEach(section => { const rect = section.getBoundingClientRect(); if (rect.top <= 140) { currentId = section.id; } }); navLinks.forEach(link => { link.classList.remove('active'); if (link.getAttribute('href') === '#' + currentId) { link.classList.add('active'); } }); });
+        document.querySelectorAll('.sticky-nav a[href^="#"]').forEach(link => { link.addEventListener('click', function(e) { e.preventDefault(); const target = document.querySelector(this.getAttribute('href')); if (target) { const navHeight = document.querySelector('.sticky-nav').offsetHeight; const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - navHeight - 8; window.scrollTo({ top: targetPosition, behavior: 'smooth' }); } }); });
+        scrollTopBtn.addEventListener('click', function(e) { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); });
+        document.addEventListener('DOMContentLoaded', () => { const firstCard = document.getElementById('stage1'); if (firstCard && !firstCard.classList.contains('open')) { firstCard.classList.add('open'); } });
+    </script>
+</body>
+</html>

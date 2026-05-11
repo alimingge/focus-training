@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>韧性小战士 · 我的超能力修炼手册 | 学生端</title>
+    <style>
+        :root {
+            --hero-red: #E0533D;
+            --hero-orange: #F0804A;
+            --hero-gold: #F4B642;
+            --hero-teal: #3D9B9B;
+            --hero-purple: #8B5EA7;
+            --hero-green: #5EAF7B;
+            --bg: #FFFDF9;
+            --card-bg: #FFFFFF;
+            --text: #3D2E1E;
+            --text-light: #6B5A42;
+            --border: #F0E4D0;
+            --shadow-sm: 0 1px 4px rgba(60, 30, 10, 0.05);
+            --shadow: 0 4px 18px rgba(60, 30, 10, 0.07);
+            --shadow-lg: 0 10px 30px rgba(60, 30, 10, 0.10);
+            --radius-sm: 10px;
+            --radius: 16px;
+            --radius-lg: 22px;
+            --radius-xl: 28px;
+            --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Sans SC', 'KaiTi', 'STKaiti', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+            scroll-behavior: smooth;
+            font-size: 15px;
+            background-image: radial-gradient(circle, rgba(240, 128, 74, 0.03) 1px, transparent 1px), radial-gradient(circle, rgba(61, 155, 155, 0.03) 1px, transparent 1px);
+            background-size: 36px 36px, 48px 48px;
+            background-position: 0 0, 24px 24px;
+        }
+        .hero {
+            background: linear-gradient(160deg, #FFF5EB 0%, #FFFDF9 20%, #FFF9F2 40%, #F8F4FF 65%, #FFFDF9 80%, #F0FAF5 100%);
+            padding: 48px 20px 38px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 1px solid #F0E4D0;
+        }
+        .hero::before {
+            content: '⚡';
+            position: absolute;
+            top: 30px;
+            left: 8%;
+            font-size: 2.2rem;
+            animation: floatIcon 3.5s ease-in-out infinite;
+            pointer-events: none;
+        }
+        .hero::after {
+            content: '🛡️';
+            position: absolute;
+            top: 50px;
+            right: 10%;
+            font-size: 2rem;
+            animation: floatIcon 3s ease-in-out 0.7s infinite;
+            pointer-events: none;
+        }
+        @keyframes floatIcon {
+            0%,
+            100% {
+                transform: translateY(0) scale(1);
+            }
+            50% {
+                transform: translateY(-14px) scale(1.12);
+            }
+        }
+        .sparkle {
+            position: absolute;
+            pointer-events: none;
+            font-size: 1rem;
+            animation: sparklePop 2.5s ease-in-out infinite;
+        }
+        .sparkle:nth-child(1) {
+            top: 70px;
+            left: 25%;
+            animation-delay: 0s;
+        }
+        .sparkle:nth-child(2) {
+            top: 30px;
+            right: 22%;
+            animation-delay: 1s;
+        }
+        .sparkle:nth-child(3) {
+            bottom: 40px;
+            left: 35%;
+            animation-delay: 1.8s;
+        }
+        @keyframes sparklePop {
+            0%,
+            100% {
+                opacity: 0.2;
+                transform: scale(0.7);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.4);
+            }
+        }
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 780px;
+            margin: 0 auto;
+        }
+        .hero-badge {
+            display: inline-block;
+            background: #fff;
+            color: #E0533D;
+            font-size: 0.85rem;
+            font-weight: 700;
+            padding: 6px 20px;
+            border-radius: 24px;
+            letter-spacing: 0.04em;
+            margin-bottom: 14px;
+            box-shadow: var(--shadow-sm);
+            border: 2px dashed #F0C8B8;
+        }
+        .hero h1 {
+            font-size: 2.4rem;
+            font-weight: 800;
+            letter-spacing: -0.01em;
+            color: #3D2E1E;
+            margin-bottom: 8px;
+            line-height: 1.3;
+        }
+        .hero h1 .gradient-text {
+            background: linear-gradient(135deg, #E0533D, #F4B642, #3D9B9B, #8B5EA7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .hero-subtitle {
+            font-size: 1rem;
+            color: #6B5A42;
+            font-weight: 400;
+            margin-bottom: 8px;
+            line-height: 1.6;
+        }
+        .hero-tagline {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #fff;
+            padding: 10px 22px;
+            border-radius: 26px;
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: #3D2E1E;
+            box-shadow: var(--shadow);
+            border: 1px solid #F0E4D0;
+        }
+
+        .sticky-nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(255, 253, 249, 0.9);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid #F0E4D0;
+            padding: 0 10px;
+            overflow-x: auto;
+            white-space: nowrap;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        .sticky-nav::-webkit-scrollbar {
+            display: none;
+        }
+        .sticky-nav-inner {
+            max-width: 1050px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 2px;
+            padding: 7px 0;
+        }
+        .sticky-nav a {
+            display: inline-block;
+            text-decoration: none;
+            font-size: 0.76rem;
+            font-weight: 600;
+            color: #6B5A42;
+            padding: 6px 12px;
+            border-radius: 18px;
+            transition: var(--transition);
+            flex-shrink: 0;
+            letter-spacing: 0.02em;
+        }
+        .sticky-nav a:hover,
+        .sticky-nav a.active {
+            background: #FFF0E0;
+            color: #E0533D;
+        }
+        .sticky-nav a.nav-star {
+            width: 28px;
+            height: 28px;
+            padding: 0;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            flex-shrink: 0;
+            color: #fff;
+        }
+        .ns1 {
+            background: #F0804A;
+        }
+        .ns2 {
+            background: #F4B642;
+        }
+        .ns3 {
+            background: #3D9B9B;
+        }
+        .ns4 {
+            background: #8B5EA7;
+        }
+
+        .container {
+            max-width: 1050px;
+            margin: 0 auto;
+            padding: 14px 18px 50px;
+        }
+        .section-title {
+            text-align: center;
+            margin: 40px 0 18px;
+        }
+        .section-title h2 {
+            font-size: 1.45rem;
+            font-weight: 700;
+            letter-spacing: -0.005em;
+            margin-bottom: 4px;
+            color: #3D2E1E;
+        }
+        .section-title p {
+            color: #6B5A42;
+            font-size: 0.84rem;
+        }
+        .section-divider {
+            width: 48px;
+            height: 3px;
+            border-radius: 2px;
+            margin: 8px auto 0;
+            background: linear-gradient(90deg, #F4B642, #E0533D, #8B5EA7);
+        }
+
+        .value-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+            margin-bottom: 18px;
+        }
+        .value-mini {
+            background: #fff;
+            border: 1px solid #F0E4D0;
+            border-radius: var(--radius);
+            padding: 16px 12px;
+            text-align: center;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+        }
+        .value-mini:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+        .value-mini .icon-big {
+            font-size: 2rem;
+            display: block;
+            margin-bottom: 6px;
+        }
+        .value-mini h4 {
+            font-size: 0.84rem;
+            font-weight: 700;
+            color: #3D2E1E;
+            margin-bottom: 2px;
+        }
+        .value-mini p {
+            font-size: 0.72rem;
+            color: #6B5A42;
+            line-height: 1.4;
+        }
+
+        .level-card {
+            background: #fff;
+            border-radius: var(--radius-lg);
+            margin-bottom: 18px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            border: 1px solid #F0E4D0;
+            transition: var(--transition);
+        }
+        .level-card:hover {
+            box-shadow: var(--shadow-lg);
+        }
+        .level-header {
+            padding: 18px 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            user-select: none;
+        }
+        .level-num {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1.1rem;
+            color: #fff;
+            flex-shrink: 0;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.10);
+        }
+        .ln1 {
+            background: #F0804A;
+        }
+        .ln2 {
+            background: #F4B642;
+        }
+        .ln3 {
+            background: #3D9B9B;
+        }
+        .ln4 {
+            background: #8B5EA7;
+        }
+        .level-header-text h3 {
+            font-size: 1rem;
+            font-weight: 700;
+            line-height: 1.3;
+            color: #3D2E1E;
+        }
+        .level-header-text .level-sub {
+            font-size: 0.74rem;
+            color: #6B5A42;
+        }
+        .level-badge {
+            margin-left: auto;
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 12px;
+            flex-shrink: 0;
+            letter-spacing: 0.03em;
+        }
+        .badge-orange {
+            background: #FFF5EB;
+            color: #F0804A;
+        }
+        .badge-gold {
+            background: #FFF9EB;
+            color: #C8941E;
+        }
+        .badge-teal {
+            background: #F0F8F7;
+            color: #3D9B9B;
+        }
+        .badge-purple {
+            background: #F8F4FA;
+            color: #8B5EA7;
+        }
+        .level-arrow {
+            font-size: 1rem;
+            transition: var(--transition);
+            color: #6B5A42;
+            flex-shrink: 0;
+            margin-left: 2px;
+        }
+        .level-card.open .level-arrow {
+            transform: rotate(180deg);
+        }
+        .level-body {
+            display: none;
+            padding: 0 20px 20px;
+            border-top: 1px solid #F0E4D0;
+            padding-top: 16px;
+            animation: fadeSlideIn 0.3s ease;
+        }
+        .level-card.open .level-body {
+            display: block;
+        }
+        @keyframes fadeSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-5px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .task-box {
+            background: #FFFDF9;
+            border: 1px dashed #F0D8C0;
+            border-radius: var(--radius-sm);
+            padding: 14px 16px;
+            margin-bottom: 12px;
+            font-size: 0.84rem;
+            line-height: 1.8;
+        }
+        .task-box .check-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            padding: 2px 0;
+        }
+        .task-box .check-box {
+            width: 18px;
+            height: 18px;
+            border: 2px solid #E0C8A8;
+            border-radius: 4px;
+            flex-shrink: 0;
+            margin-top: 3px;
+            background: #fff;
+        }
+        .highlight-card {
+            border-radius: var(--radius-sm);
+            padding: 12px 16px;
+            margin: 10px 0;
+            font-size: 0.82rem;
+            color: #5C4020;
+            line-height: 1.65;
+        }
+        .highlight-orange {
+            background: #FFF5EB;
+            border-left: 4px solid #F0804A;
+        }
+        .highlight-gold {
+            background: #FFF9EB;
+            border-left: 4px solid #F4B642;
+        }
+        .highlight-teal {
+            background: #F0F8F7;
+            border-left: 4px solid #3D9B9B;
+        }
+        .highlight-purple {
+            background: #F8F4FA;
+            border-left: 4px solid #8B5EA7;
+        }
+        .highlight-green {
+            background: #F0FAF5;
+            border-left: 4px solid #5EAF7B;
+        }
+        .mini-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.78rem;
+            margin: 10px 0;
+            border-radius: var(--radius-sm);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+        }
+        .mini-table th {
+            background: #FFF5EB;
+            padding: 10px 8px;
+            text-align: center;
+            font-weight: 700;
+            font-size: 0.72rem;
+            color: #5C3D1E;
+            letter-spacing: 0.03em;
+            border-bottom: 2px solid #F0D8C0;
+        }
+        .mini-table td {
+            padding: 8px;
+            text-align: center;
+            border-bottom: 1px solid #F8EDDE;
+            color: #3D2E1E;
+            font-size: 0.76rem;
+        }
+        .mini-table tr:last-child td {
+            border-bottom: none;
+        }
+        .star-cell {
+            color: #F4B642;
+            font-size: 0.9rem;
+        }
+        .tag-sm {
+            display: inline-block;
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 3px 9px;
+            border-radius: 10px;
+            margin: 2px;
+            letter-spacing: 0.02em;
+            background: #FFF0E0;
+            color: #E0533D;
+        }
+        .tag-sm.gold {
+            background: #FFF9EB;
+            color: #C8941E;
+        }
+        .tag-sm.teal {
+            background: #F0F8F7;
+            color: #3D9B9B;
+        }
+        .tag-sm.purple {
+            background: #F8F4FA;
+            color: #8B5EA7;
+        }
+
+        .incentive-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 12px;
+        }
+        .incentive-card {
+            background: #fff;
+            border: 1px solid #F0E4D0;
+            border-radius: var(--radius);
+            padding: 18px 14px;
+            text-align: center;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+        }
+        .incentive-card:hover {
+            box-shadow: var(--shadow);
+            transform: translateY(-2px);
+        }
+        .incentive-card .medal-icon {
+            font-size: 2.6rem;
+            display: block;
+            margin-bottom: 6px;
+        }
+        .incentive-card h5 {
+            font-weight: 700;
+            font-size: 0.84rem;
+            color: #3D2E1E;
+            margin-bottom: 4px;
+        }
+        .incentive-card p {
+            font-size: 0.72rem;
+            color: #6B5A42;
+            line-height: 1.5;
+        }
+
+        .tool-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 12px;
+        }
+        .tool-card {
+            background: #fff;
+            border: 1px solid #F0E4D0;
+            border-radius: var(--radius);
+            padding: 16px;
+            box-shadow: var(--shadow-sm);
+        }
+        .tool-card h5 {
+            font-weight: 700;
+            font-size: 0.85rem;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: #3D2E1E;
+        }
+        .tool-card ul {
+            list-style: none;
+            padding: 0;
+        }
+        .tool-card ul li {
+            font-size: 0.78rem;
+            color: #6B5A42;
+            padding: 2px 0 2px 16px;
+            position: relative;
+            line-height: 1.55;
+        }
+        .tool-card ul li::before {
+            content: '📎';
+            position: absolute;
+            left: 0;
+            font-size: 0.6rem;
+            top: 4px;
+        }
+
+        .footer-cta {
+            text-align: center;
+            padding: 38px 20px;
+            background: linear-gradient(160deg, #FFF5EB, #FFFDF9, #F8F4FF);
+            border-radius: var(--radius-xl);
+            margin-top: 28px;
+            border: 2px dashed #F0D8C0;
+        }
+        .footer-cta .big-emoji {
+            font-size: 3rem;
+            display: block;
+            margin-bottom: 8px;
+        }
+        .footer-cta h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+            color: #3D2E1E;
+        }
+        .footer-cta p {
+            color: #6B5A42;
+            font-size: 0.9rem;
+            line-height: 1.7;
+            font-weight: 500;
+        }
+        .footer-cta .quote {
+            font-style: italic;
+            font-size: 1rem;
+            color: #E0533D;
+            font-weight: 700;
+            margin-top: 6px;
+        }
+
+        .scroll-top {
+            position: fixed;
+            bottom: 22px;
+            right: 22px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #fff;
+            border: 2px solid #F0D8C0;
+            box-shadow: var(--shadow);
+            cursor: pointer;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 99;
+            transition: var(--transition);
+            opacity: 0;
+            pointer-events: none;
+            text-decoration: none;
+            color: #E0533D;
+        }
+        .scroll-top.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .scroll-top:hover {
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-2px);
+            background: #FFF5EB;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 1.55rem;
+            }
+            .hero-subtitle {
+                font-size: 0.84rem;
+            }
+            .level-header {
+                flex-wrap: wrap;
+                gap: 6px;
+                padding: 14px;
+            }
+            .level-badge {
+                margin-left: 0;
+            }
+            .level-body {
+                padding: 0 14px 16px;
+                padding-top: 12px;
+            }
+            .value-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .incentive-grid,
+            .tool-grid {
+                grid-template-columns: 1fr;
+            }
+            .container {
+                padding: 8px 10px 36px;
+            }
+        }
+        @media (max-width: 480px) {
+            .hero {
+                padding: 30px 10px 24px;
+            }
+            .hero h1 {
+                font-size: 1.25rem;
+            }
+            .value-grid {
+                grid-template-columns: 1fr;
+            }
+            .hero::before,
+            .hero::after,
+            .sparkle {
+                display: none;
+            }
+            .sticky-nav a {
+                font-size: 0.66rem;
+                padding: 5px 7px;
+            }
+            .mini-table {
+                font-size: 0.65rem;
+            }
+            .mini-table th,
+            .mini-table td {
+                padding: 5px 4px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="hero">
+        <span class="sparkle">💪</span>
+        <span class="sparkle">⭐</span>
+        <span class="sparkle">🔥</span>
+        <div class="hero-content">
+            <span class="hero-badge">🦸 韧性小战士训练营</span>
+            <h1>我的超能力 <span class="gradient-text">修炼手册</span></h1>
+            <p class="hero-subtitle">嘿，小勇士！每次你遇到困难又想办法解决的时候，<br>你的大脑就在长出一块新的<strong>“超能力肌肉”</strong>！</p>
+            <div class="hero-tagline">
+                😤 摔倒更快爬起来 · 💪 难题不轻易放弃 · 🧠 从错误中学本领 · 😎 越来越自信
+            </div>
+        </div>
+    </header>
+
+    <nav class="sticky-nav" id="stickyNav">
+        <div class="sticky-nav-inner">
+            <a href="#stage1" class="nav-star ns1">1</a>
+            <a href="#stage2" class="nav-star ns2">2</a>
+            <a href="#stage3" class="nav-star ns3">3</a>
+            <a href="#stage4" class="nav-star ns4">4</a>
+            <a href="#incentives">激励系统</a>
+            <a href="#toolkit-sec">工具包</a>
+            <a href="#footer-cta">战士寄语</a>
+        </div>
+    </nav>
+
+    <main class="container">
+
+        <div class="section-title">
+            <h2>🎮 欢迎来到韧性小战士训练营！</h2>
+            <p>这个超能力叫 —— <strong>韧性</strong>！有了它，你会越来越强大！</p>
+            <div class="section-divider"></div>
+        </div>
+        <div class="value-grid">
+            <div class="value-mini"><span class="icon-big">😤</span><h4>摔倒更快爬起来</h4><p>情绪恢复力超强</p></div>
+            <div class="value-mini"><span class="icon-big">💪</span><h4>难题不轻易放弃</h4><p>坚持力持续增长</p></div>
+            <div class="value-mini"><span class="icon-big">🧠</span><h4>从错误中学本领</h4><p>每个错误都是老师</p></div>
+            <div class="value-mini"><span class="icon-big">😎</span><h4>变得越来越自信</h4><p>成为更好的自己</p></div>
+        </div>
+        <p style="text-align:center;font-size:0.95rem;color:#E0533D;font-weight:700;margin-bottom:8px;">✨ 现在，让我们开始修炼吧！✨</p>
+
+        <!-- 第一阶段 -->
+        <div class="level-card open" id="stage1">
+            <div class="level-header" onclick="toggleLevel(this)">
+                <div class="level-num ln1">1</div>
+                <div class="level-header-text">
+                    <h3>📖 第一阶段：认识我的“困难小怪兽”</h3>
+                    <span class="level-sub">第1-2个月 · 让挫折被看见</span>
+                </div>
+                <span class="level-badge badge-orange">情绪小侦探</span>
+                <span class="level-arrow">▼</span>
+            </div>
+            <div class="level-body">
+                <div class="task-box">
+                    <strong>📋 今日任务清单</strong>
+                    <div class="check-item"><span class="check-box"></span> 早晨：选一张“今日能量动物卡”</div>
+                    <div class="check-item"><span class="check-box"></span> 训练时：如果遇到困难，在“困难温度计”上贴颜色</div>
+                    <div class="check-item"><span class="check-box"></span> 晚上：和爸爸妈妈聊一聊“今天最难的时刻”</div>
+                    <div class="check-item"><span class="check-box"></span> 睡前：获得一枚“勇敢面对”贴纸</div>
+                </div>
+                <div class="highlight-card highlight-orange">
+                    <strong>🎭 我的情绪温度计</strong><br>
+                    每次训练时，如果觉得难，就贴一个颜色：<br>
+                    🔥 <strong>红色：</strong>太难了！我要爆炸了！<br>
+                    💛 <strong>黄色：</strong>有点难，但我还在坚持<br>
+                    💚 <strong>绿色：</strong>我能搞定！<br>
+                    贴在日历上，看看一周有多少红黄绿。
+                </div>
+                <div class="highlight-card highlight-orange">
+                    <strong>📝 我的“困难小怪兽”图鉴</strong><br>
+                    画一画你遇到的“困难小怪兽”：它长什么样？（歪歪扭扭的字？怎么都记不住的口诀？）它出现的时候，你是什么感觉？给它起个名字吧！
+                </div>
+                <p style="font-weight:700;color:#F0804A;text-align:center;font-size:0.88rem;">🎁 完成一周记录 → “情绪小侦探”徽章 → 集满4枚晋升下一级！</p>
+            </div>
+        </div>
+
+        <!-- 第二阶段 -->
+        <div class="level-card" id="stage2">
+            <div class="level-header" onclick="toggleLevel(this)">
+                <div class="level-num ln2">2</div>
+                <div class="level-header-text">
+                    <h3>📖 第二阶段：我的大脑肌肉健身房</h3>
+                    <span class="level-sub">第3-5个月 · 让挫折被重构</span>
+                </div>
+                <span class="level-badge badge-gold">成长思维家</span>
+                <span class="level-arrow">▼</span>
+            </div>
+            <div class="level-body">
+                <div class="task-box">
+                    <strong>📋 今日任务清单</strong>
+                    <div class="check-item"><span class="check-box"></span> 早晨：对着镜子说“今天我准备让大脑肌肉变强壮！”</div>
+                    <div class="check-item"><span class="check-box"></span> 训练时：如果说了“我不行”，马上在后面加“还没”</div>
+                    <div class="check-item"><span class="check-box"></span> 晚上：找一个今天的“错误宝藏”——错误教会了你什么？</div>
+                    <div class="check-item"><span class="check-box"></span> 周末：听一个“名人失败故事”，发现他们和你一样</div>
+                </div>
+                <div class="highlight-card highlight-gold">
+                    <strong>💪 “还没”魔法贴</strong><br>
+                    当你想说“我做不到”的时候——等等！拿出“还没”贴纸，贴在句子后面！<br>
+                    “我写不好...<strong>还没</strong>！”“我记不住...<strong>还没</strong>！”<br>
+                    每用一次，就在“还没”能量条上涂一格。涂满10格，解锁神秘奖励！
+                </div>
+                <table class="mini-table">
+                    <thead><tr><th>日期</th><th>我犯的错误</th><th>这个错误教会了我</th></tr></thead>
+                    <tbody>
+                        <tr><td>___月___日</td><td></td><td></td></tr>
+                        <tr><td>___月___日</td><td></td><td></td></tr>
+                        <tr><td>___月___日</td><td></td><td class="star-cell">⭐</td></tr>
+                    </tbody>
+                </table>
+                <p style="font-size:0.78rem;color:#6B5A42;">每发现一个“错误宝藏”，就给自己画一颗⭐！</p>
+                <div class="highlight-card highlight-gold">
+                    <strong>📚 名人失败故事会</strong><br>
+                    爱因斯坦小时候被认为是“笨小孩” · 乔丹曾被校篮球队淘汰 · J.K.罗琳的书稿被拒绝了12次<br>
+                    听完画一画：他们失败的时候，和你像不像？
+                </div>
+                <p style="font-weight:700;color:#C8941E;text-align:center;font-size:0.88rem;">🎁 “还没”能量条涂满 → “成长思维家”徽章 · 集满10个错误宝藏 → “错误猎人”证书</p>
+            </div>
+        </div>
+
+        <!-- 第三阶段 -->
+        <div class="level-card" id="stage3">
+            <div class="level-header" onclick="toggleLevel(this)">
+                <div class="level-num ln3">3</div>
+                <div class="level-header-text">
+                    <h3>📖 第三阶段：我的策略武器库</h3>
+                    <span class="level-sub">第6-9个月 · 让挫折有方法</span>
+                </div>
+                <span class="level-badge badge-teal">策略大师</span>
+                <span class="level-arrow">▼</span>
+            </div>
+            <div class="level-body">
+                <div class="task-box">
+                    <strong>📋 今日任务清单</strong>
+                    <div class="check-item"><span class="check-box"></span> 遇到困难时：拿出“问题解决地图”，一步步想方法</div>
+                    <div class="check-item"><span class="check-box"></span> 想到好方法：写在卡片上，放进“策略百宝箱”</div>
+                    <div class="check-item"><span class="check-box"></span> 需要帮助时：练习“求助三句话”</div>
+                    <div class="check-item"><span class="check-box"></span> 周末：挑战一个“坚持任务”，记录坚持了多久</div>
+                </div>
+                <div class="highlight-card highlight-teal">
+                    <strong>🗺️ 问题解决地图</strong><br>
+                    ① 侦察敌情：困难是什么？② 召集武器：可以试试哪些方法？③ 选一个出击 ④ 战后总结：好用吗？😊😐😢
+                </div>
+                <div class="highlight-card highlight-teal">
+                    <strong>🧰 我的策略百宝箱</strong><br>
+                    找一个小盒子，每发现一个好方法就写在卡片上放进去！<br>
+                    卡片格式：【困难】___ 【我用了】___ 【效果】😊😐😢
+                </div>
+                <div class="highlight-card highlight-teal">
+                    <strong>🆘 求助三句话</strong><br>
+                    “我的问题是...” “我已经试过...” “我需要你帮我...” <br>
+                    每成功求助一次，给自己记一功！
+                </div>
+                <div class="highlight-card highlight-teal">
+                    <strong>⏱️ 耐力大挑战</strong><br>
+                    周末选一个任务：连续拍球/连续朗读/整理书包。记录“坚持纪录”，下次挑战打破它！
+                </div>
+                <p style="font-weight:700;color:#3D9B9B;text-align:center;font-size:0.88rem;">🎁 百宝箱5张卡 → “策略大师” · 成功求助3次 → “沟通勇士” · 打破纪录 → “耐力之星”</p>
+            </div>
+        </div>
+
+        <!-- 第四阶段 -->
+        <div class="level-card" id="stage4">
+            <div class="level-header" onclick="toggleLevel(this)">
+                <div class="level-num ln4">4</div>
+                <div class="level-header-text">
+                    <h3>📖 第四阶段：韧性小领袖</h3>
+                    <span class="level-sub">第10-12个月 · 让韧性成本能</span>
+                </div>
+                <span class="level-badge badge-purple">钻石领袖</span>
+                <span class="level-arrow">▼</span>
+            </div>
+            <div class="level-body">
+                <div class="highlight-card highlight-purple">
+                    <strong>🎨 项目1：我的韧性故事书</strong><br>
+                    找3-5张训练照片或作品，回忆困难→怎么做的→谁帮助了你→学到了什么。做一本小书！这是你的专属英雄故事！
+                </div>
+                <div class="highlight-card highlight-purple">
+                    <strong>🏆 项目2：全家韧性大挑战</strong><br>
+                    妈妈挑战：___ 爸爸挑战：___ 我的挑战：___ <br>
+                    每周日分享进展，你当“韧性记录员”！
+                </div>
+                <div class="highlight-card highlight-purple">
+                    <strong>🎓 项目3：我是小教练</strong><br>
+                    选一个你学到的“对付困难的方法”，教给爸爸妈妈或好朋友。录小视频，有机会登上“小教练荣誉墙”！
+                </div>
+                <div class="highlight-card highlight-purple">
+                    <strong>🚀 项目4：我的韧性应急包</strong><br>
+                    下学期可能遇到什么新挑战？把应对方法写在卡片上装进“应急包”。遇到困难时，打开它！
+                </div>
+                <p style="font-weight:700;color:#8B5EA7;text-align:center;font-size:0.9rem;">👑 完成4个项目 → 🏅钻石韧性小领袖勋章 + 📜亲笔签名证书 + 🌟入选“韧性小战士名人堂”</p>
+            </div>
+        </div>
+
+        <!-- 激励系统 -->
+        <section id="incentives">
+            <div class="section-title">
+                <h2>🎁 学生端激励系统总览</h2>
+                <p>每一点进步都值得被庆祝！</p>
+                <div class="section-divider"></div>
+            </div>
+            <div class="incentive-grid">
+                <div class="incentive-card"><span class="medal-icon">⚡</span><h5>即时反馈</h5><p>每日完成任务→“韧性能量”贴纸<br>使用“还没”魔法→涂能量条<br>发现错误宝藏→得星星</p></div>
+                <div class="incentive-card"><span class="medal-icon">🎯</span><h5>短期目标</h5><p>每周集满5张贴纸→周末小奖励<br>每月完成阶段目标→获得阶段徽章（实物）</p></div>
+                <div class="incentive-card"><span class="medal-icon">🏆</span><h5>长期成就</h5><p>🥉铜牌韧性小兵（3个月）<br>🥈银牌成长勇士（6个月）<br>🥇金牌策略大师（9个月）<br>💎钻石韧性领袖（12个月）</p></div>
+            </div>
+        </section>
+
+        <!-- 工具包 -->
+        <section id="toolkit-sec">
+            <div class="section-title">
+                <h2>🛠️ 学生端工具包清单</h2>
+                <p>实体材料 + 数字/打印材料，全部简单易得</p>
+                <div class="section-divider"></div>
+            </div>
+            <div class="tool-grid">
+                <div class="tool-card">
+                    <h5>📦 实体材料</h5>
+                    <ul>
+                        <li>情绪温度计贴纸板</li>
+                        <li>“还没”能量条涂色卡</li>
+                        <li>错误宝藏挖掘卡（30张）</li>
+                        <li>问题解决地图（可擦写）</li>
+                        <li>策略卡片（空白，30张）</li>
+                        <li>韧性小书制作材料包</li>
+                        <li>阶段徽章（4枚）</li>
+                        <li>年度奖牌</li>
+                    </ul>
+                </div>
+                <div class="tool-card">
+                    <h5>💻 数字/打印材料（家长协助）</h5>
+                    <ul>
+                        <li>每日任务清单（可打印）</li>
+                        <li>名人失败故事小册子</li>
+                        <li>“求助三句话”提示卡</li>
+                        <li>耐力挑战记录表</li>
+                        <li>韧性应急包模板</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- 结尾寄语 -->
+        <div class="footer-cta" id="footer-cta">
+            <span class="big-emoji">🦸</span>
+            <h3>记住，小勇士：</h3>
+            <p>每一次跌倒，都是大地在教你如何更强地站起来。</p>
+            <p class="quote">“你的超能力，正在每一次‘再来一次’中生长！”</p>
+        </div>
+
+    </main>
+
+    <a href="#" class="scroll-top" id="scrollTop" title="回到顶部">↑</a>
+
+    <script>
+        function toggleLevel(header) {
+            header.parentElement.classList.toggle('open');
+        }
+        const scrollTopBtn = document.getElementById('scrollTop');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 500) {
+                scrollTopBtn.classList.add('visible');
+            } else {
+                scrollTopBtn.classList.remove('visible');
+            }
+            const sections = document.querySelectorAll('section[id], .level-card[id]');
+            const navLinks = document.querySelectorAll('.sticky-nav a');
+            let currentId = '';
+            sections.forEach(section => {
+                const rect = section.getBoundingClientRect();
+                if (rect.top <= 140) { currentId = section.id; }
+            });
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + currentId) { link.classList.add('active'); }
+            });
+        });
+        document.querySelectorAll('.sticky-nav a[href^="#"]').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const navHeight = document.querySelector('.sticky-nav').offsetHeight;
+                    const targetPosition = target.getBoundingClientRect().top + window.pageYOffset -
+                        navHeight - 8;
+                    window.scrollTo({ top: targetPosition, behavior: 'smooth' });
+                }
+            });
+        });
+        scrollTopBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+        document.addEventListener('DOMContentLoaded', () => {
+            const firstCard = document.getElementById('stage1');
+            if (firstCard && !firstCard.classList.contains('open')) { firstCard.classList.add('open'); }
+        });
+    </script>
+</body>
+</html>

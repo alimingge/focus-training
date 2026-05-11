@@ -1,0 +1,965 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>感统训练 · 家庭版 | 四阶身体智慧系统</title>
+    <style>
+        :root {
+            --body-terra: #C06B4A;
+            --body-terra-light: #FFF5F0;
+            --body-olive: #8B9A5B;
+            --body-olive-light: #F7F9F2;
+            --body-sky: #5B8BA0;
+            --body-sky-light: #F2F7FA;
+            --body-amber: #D4953A;
+            --body-amber-light: #FFFDF7;
+            --body-sage: #6B8A6F;
+            --body-sage-light: #F4F8F3;
+            --text: #2E2620;
+            --text-light: #5C4F45;
+            --text-lighter: #8C7E6F;
+            --bg: #FDFBF8;
+            --card-bg: #FFFFFF;
+            --border: #E6DDD0;
+            --shadow-sm: 0 1px 4px rgba(50, 30, 10, 0.04);
+            --shadow: 0 4px 18px rgba(50, 30, 10, 0.06);
+            --shadow-lg: 0 10px 30px rgba(50, 30, 10, 0.10);
+            --radius-sm: 10px;
+            --radius: 16px;
+            --radius-lg: 22px;
+            --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Sans SC', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.75;
+            -webkit-font-smoothing: antialiased;
+            scroll-behavior: smooth;
+            font-size: 15px;
+            background-image: radial-gradient(circle, rgba(192, 107, 74, 0.02) 1px, transparent 1px), radial-gradient(circle, rgba(91, 139, 160, 0.02) 1px, transparent 1px);
+            background-size: 32px 32px, 44px 44px;
+            background-position: 0 0, 22px 22px;
+        }
+        .hero {
+            background: linear-gradient(165deg, #FFF5F0 0%, #FDFBF8 20%, #F7F9F2 40%, #FDFBF8 60%, #F2F7FA 80%, #FDFBF8 100%);
+            padding: 50px 20px 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 1px solid #E6DDD0;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -100px;
+            right: -70px;
+            width: 340px;
+            height: 340px;
+            background: radial-gradient(circle, rgba(192, 107, 74, 0.05) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -80px;
+            left: -60px;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(139, 154, 91, 0.04) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 760px;
+            margin: 0 auto;
+        }
+        .hero-badge {
+            display: inline-block;
+            background: #fff;
+            color: #C06B4A;
+            font-size: 0.82rem;
+            font-weight: 700;
+            padding: 6px 20px;
+            border-radius: 22px;
+            letter-spacing: 0.04em;
+            margin-bottom: 16px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid #F0D8C8;
+        }
+        .hero h1 {
+            font-size: 2.3rem;
+            font-weight: 800;
+            letter-spacing: -0.015em;
+            color: #2E2620;
+            margin-bottom: 8px;
+            line-height: 1.3;
+        }
+        .hero h1 span {
+            background: linear-gradient(135deg, #C06B4A, #8B9A5B, #5B8BA0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .hero-subtitle {
+            font-size: 0.95rem;
+            color: #5C4F45;
+            font-weight: 400;
+            margin-bottom: 8px;
+            line-height: 1.6;
+        }
+        .hero-tagline {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #fff;
+            padding: 9px 22px;
+            border-radius: 24px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #2E2620;
+            box-shadow: var(--shadow);
+            border: 1px solid #E6DDD0;
+        }
+        .sticky-nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(253, 251, 248, 0.9);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid #E6DDD0;
+            padding: 0 10px;
+            overflow-x: auto;
+            white-space: nowrap;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        .sticky-nav::-webkit-scrollbar {
+            display: none;
+        }
+        .sticky-nav-inner {
+            max-width: 1080px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 2px;
+            padding: 7px 0;
+        }
+        .sticky-nav a {
+            display: inline-block;
+            text-decoration: none;
+            font-size: 0.74rem;
+            font-weight: 500;
+            color: #5C4F45;
+            padding: 6px 11px;
+            border-radius: 16px;
+            transition: var(--transition);
+            flex-shrink: 0;
+            letter-spacing: 0.02em;
+        }
+        .sticky-nav a:hover,
+        .sticky-nav a.active {
+            background: #F0E4D5;
+            color: #C06B4A;
+            font-weight: 600;
+        }
+        .sticky-nav a.nav-dot {
+            width: 28px;
+            height: 28px;
+            padding: 0;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.7rem;
+            color: #fff;
+            flex-shrink: 0;
+        }
+        .nd1 {
+            background: #C06B4A;
+        }
+        .nd2 {
+            background: #8B9A5B;
+        }
+        .nd3 {
+            background: #5B8BA0;
+        }
+        .nd4 {
+            background: #D4953A;
+        }
+        .container {
+            max-width: 1080px;
+            margin: 0 auto;
+            padding: 14px 16px 50px;
+        }
+        .section-title {
+            text-align: center;
+            margin: 44px 0 18px;
+        }
+        .section-title h2 {
+            font-size: 1.45rem;
+            font-weight: 700;
+            letter-spacing: -0.006em;
+            margin-bottom: 4px;
+            color: #2E2620;
+        }
+        .section-title p {
+            color: #8C7E6F;
+            font-size: 0.84rem;
+        }
+        .section-divider {
+            width: 48px;
+            height: 3px;
+            border-radius: 2px;
+            margin: 8px auto 0;
+            background: linear-gradient(90deg, #C06B4A, #8B9A5B, #5B8BA0);
+        }
+        .stage-card {
+            background: #fff;
+            border-radius: var(--radius-lg);
+            margin-bottom: 18px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            border: 1px solid #E6DDD0;
+            transition: var(--transition);
+        }
+        .stage-card:hover {
+            box-shadow: var(--shadow-lg);
+        }
+        .stage-header {
+            padding: 18px 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            user-select: none;
+        }
+        .stage-num {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1.1rem;
+            color: #fff;
+            flex-shrink: 0;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+        }
+        .sn1 {
+            background: #C06B4A;
+        }
+        .sn2 {
+            background: #8B9A5B;
+        }
+        .sn3 {
+            background: #5B8BA0;
+        }
+        .sn4 {
+            background: #D4953A;
+        }
+        .stage-header-text h3 {
+            font-size: 1rem;
+            font-weight: 700;
+            line-height: 1.3;
+            color: #2E2620;
+        }
+        .stage-header-text .stage-sub {
+            font-size: 0.74rem;
+            color: #8C7E6F;
+        }
+        .stage-meta {
+            margin-left: auto;
+            text-align: right;
+            flex-shrink: 0;
+            font-size: 0.72rem;
+            color: #8C7E6F;
+            line-height: 1.4;
+        }
+        .stage-arrow {
+            font-size: 1rem;
+            transition: var(--transition);
+            color: #8C7E6F;
+            flex-shrink: 0;
+            margin-left: 2px;
+        }
+        .stage-card.open .stage-arrow {
+            transform: rotate(180deg);
+        }
+        .stage-body {
+            display: none;
+            padding: 0 20px 20px;
+            border-top: 1px solid #E6DDD0;
+            padding-top: 16px;
+            animation: fadeSlideIn 0.3s ease;
+        }
+        .stage-card.open .stage-body {
+            display: block;
+        }
+        @keyframes fadeSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-5px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .stage-two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+        }
+        @media (max-width: 680px) {
+            .stage-two-col {
+                grid-template-columns: 1fr;
+            }
+        }
+        .stage-col {
+            border-radius: var(--radius-sm);
+            padding: 16px;
+            border: 1px solid #E6DDD0;
+            background: #FEFCFA;
+        }
+        .stage-col.parent-do {
+            border-left: 4px solid #6B8A6F;
+            background: #F9FBF7;
+        }
+        .stage-col.guide-need {
+            border-left: 4px solid #C48B3A;
+            background: #FFFDF8;
+        }
+        .stage-col h5 {
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #2E2620;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .stage-col ul {
+            list-style: none;
+            padding: 0;
+        }
+        .stage-col ul li {
+            font-size: 0.8rem;
+            color: #5C4F45;
+            padding: 3px 0 3px 16px;
+            position: relative;
+            line-height: 1.6;
+        }
+        .stage-col ul li::before {
+            content: '•';
+            position: absolute;
+            left: 1px;
+            color: #BFB8A8;
+            font-weight: 700;
+        }
+        .highlight-box {
+            border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+            padding: 10px 14px;
+            margin: 8px 0;
+            font-size: 0.78rem;
+            color: #5C4F45;
+            line-height: 1.6;
+        }
+        .highlight-terra {
+            background: #FFF5F0;
+            border-left: 3px solid #C06B4A;
+        }
+        .highlight-olive {
+            background: #F7F9F2;
+            border-left: 3px solid #8B9A5B;
+        }
+        .highlight-sky {
+            background: #F2F7FA;
+            border-left: 3px solid #5B8BA0;
+        }
+        .highlight-amber {
+            background: #FFFDF8;
+            border-left: 3px solid #C48B3A;
+        }
+        .tag-xs {
+            display: inline-block;
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 3px 9px;
+            border-radius: 10px;
+            margin: 2px;
+            letter-spacing: 0.02em;
+            background: #F0E4D5;
+            color: #C06B4A;
+        }
+        .tag-xs.olive {
+            background: #EEF0E5;
+            color: #8B9A5B;
+        }
+        .tag-xs.sky {
+            background: #E8F0F5;
+            color: #5B8BA0;
+        }
+        .tag-xs.amber {
+            background: #FFF8EF;
+            color: #C8941E;
+        }
+        .path-table-wrap {
+            overflow-x: auto;
+            margin: 14px 0;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-sm);
+            border: 1px solid #E6DDD0;
+            background: #fff;
+        }
+        .path-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.76rem;
+            min-width: 650px;
+        }
+        .path-table th {
+            background: #FFF5F0;
+            padding: 10px 8px;
+            text-align: center;
+            font-weight: 700;
+            font-size: 0.72rem;
+            color: #C06B4A;
+            letter-spacing: 0.03em;
+            border-bottom: 2px solid #F0D8C8;
+        }
+        .path-table td {
+            padding: 8px;
+            text-align: center;
+            border-bottom: 1px solid #F0EBE2;
+            color: #3D3226;
+            font-size: 0.74rem;
+            vertical-align: middle;
+        }
+        .path-table tr:last-child td {
+            border-bottom: none;
+        }
+        .stage-dot-cell {
+            display: inline-block;
+            width: 28px;
+            height: 28px;
+            line-height: 28px;
+            border-radius: 50%;
+            color: #fff;
+            font-weight: 700;
+            font-size: 0.75rem;
+            text-align: center;
+        }
+        .scene-card {
+            background: #fff;
+            border: 1px solid #E6DDD0;
+            border-radius: var(--radius);
+            margin-bottom: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+        }
+        .scene-header {
+            padding: 14px 18px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.86rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            user-select: none;
+            background: #FDFBF8;
+            transition: var(--transition);
+        }
+        .scene-header:hover {
+            background: #FFF5F0;
+        }
+        .scene-arrow {
+            transition: var(--transition);
+            font-size: 0.85rem;
+            color: #8C7E6F;
+        }
+        .scene-card.open .scene-arrow {
+            transform: rotate(180deg);
+        }
+        .scene-body {
+            display: none;
+            padding: 0 18px 14px;
+            border-top: 1px solid #E6DDD0;
+            padding-top: 12px;
+            font-size: 0.8rem;
+            color: #5C4F45;
+            line-height: 1.65;
+            animation: fadeSlideIn 0.3s ease;
+        }
+        .scene-card.open .scene-body {
+            display: block;
+        }
+        .checklist-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 12px;
+        }
+        .checklist-card {
+            background: #fff;
+            border: 1px solid #E6DDD0;
+            border-radius: var(--radius);
+            padding: 16px;
+            box-shadow: var(--shadow-sm);
+        }
+        .checklist-card h5 {
+            font-weight: 700;
+            font-size: 0.85rem;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: #2E2620;
+        }
+        .checklist-card ul {
+            list-style: none;
+            padding: 0;
+        }
+        .checklist-card ul li {
+            font-size: 0.78rem;
+            color: #5C4F45;
+            padding: 2px 0 2px 16px;
+            position: relative;
+            line-height: 1.55;
+        }
+        .checklist-card ul li::before {
+            content: '☐';
+            position: absolute;
+            left: 0;
+            color: #BFB8A8;
+            font-size: 0.7rem;
+            top: 3px;
+        }
+        .tool-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 12px;
+        }
+        .tool-card {
+            background: #fff;
+            border: 1px solid #E6DDD0;
+            border-radius: var(--radius);
+            padding: 16px;
+            box-shadow: var(--shadow-sm);
+        }
+        .tool-card h5 {
+            font-weight: 700;
+            font-size: 0.85rem;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .tool-card ul {
+            list-style: none;
+            padding: 0;
+        }
+        .tool-card ul li {
+            font-size: 0.78rem;
+            color: #5C4F45;
+            padding: 2px 0 2px 16px;
+            position: relative;
+            line-height: 1.55;
+        }
+        .tool-card ul li::before {
+            content: '📎';
+            position: absolute;
+            left: 0;
+            font-size: 0.6rem;
+            top: 4px;
+        }
+        .cost-badge {
+            display: inline-block;
+            background: #E0F0EF;
+            color: #3D8B7B;
+            font-size: 0.65rem;
+            font-weight: 600;
+            padding: 2px 8px;
+            border-radius: 10px;
+            margin-left: 4px;
+        }
+        .footer-cta {
+            text-align: center;
+            padding: 36px 20px;
+            background: linear-gradient(160deg, #FFF5F0, #FDFBF8, #F7F9F2);
+            border-radius: var(--radius-lg);
+            margin-top: 28px;
+            border: 1px solid #E6DDD0;
+        }
+        .footer-cta h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+            color: #2E2620;
+        }
+        .footer-cta p {
+            color: #8C7E6F;
+            margin-bottom: 4px;
+            font-size: 0.82rem;
+            line-height: 1.6;
+        }
+        .scroll-top {
+            position: fixed;
+            bottom: 22px;
+            right: 22px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #fff;
+            border: 1px solid #E6DDD0;
+            box-shadow: var(--shadow);
+            cursor: pointer;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 99;
+            transition: var(--transition);
+            opacity: 0;
+            pointer-events: none;
+            text-decoration: none;
+            color: #C06B4A;
+        }
+        .scroll-top.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .scroll-top:hover {
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-2px);
+        }
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 1.3rem;
+            }
+            .hero-subtitle {
+                font-size: 0.8rem;
+            }
+            .stage-header {
+                flex-wrap: wrap;
+                gap: 6px;
+                padding: 14px;
+            }
+            .stage-meta {
+                margin-left: 0;
+                text-align: left;
+                width: 100%;
+            }
+            .stage-body {
+                padding: 0 14px 16px;
+                padding-top: 12px;
+            }
+            .stage-two-col {
+                grid-template-columns: 1fr;
+            }
+            .container {
+                padding: 8px 8px 36px;
+            }
+            .sticky-nav a {
+                font-size: 0.65rem;
+                padding: 5px 6px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="hero">
+        <div class="hero-content">
+            <span class="hero-badge">🤸 家庭版 · 四阶身体智慧</span>
+            <h1>感统训练 <span>家庭培养系统</span></h1>
+            <p class="hero-subtitle">家长执行安全游戏，我们提供专业诊断与个性化方案<br>从“安全探索”到“能力建设”到“整合应用”到“自主优化”</p>
+            <div class="hero-tagline">
+                🤚 触觉初探 · 🧠 前庭强化 · 💪 本体深化 · 🎯 整合应用
+            </div>
+        </div>
+    </header>
+
+    <nav class="sticky-nav" id="stickyNav">
+        <div class="sticky-nav-inner">
+            <a href="#stage1" class="nav-dot nd1">1</a>
+            <a href="#stage2" class="nav-dot nd2">2</a>
+            <a href="#stage3" class="nav-dot nd3">3</a>
+            <a href="#stage4" class="nav-dot nd4">4</a>
+            <a href="#path">进阶路径</a>
+            <a href="#scenes">常见问题</a>
+            <a href="#checklist">核对清单</a>
+            <a href="#toolkit">工具包</a>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div class="section-title">
+            <h2>📊 四阶家庭操作体系</h2>
+            <p>每阶清晰区分“家长能做的”与“需要我指导的”，边界明确</p>
+            <div class="section-divider"></div>
+        </div>
+
+        <!-- 第一阶 -->
+        <div class="stage-card open" id="stage1">
+            <div class="stage-header" onclick="toggleStage(this)">
+                <div class="stage-num sn1">1</div>
+                <div class="stage-header-text">
+                    <h3>安全探索期 · 让身体敢动</h3>
+                    <span class="stage-sub">从“抗拒接触”到“愿意尝试”</span>
+                </div>
+                <div class="stage-meta">第1-2个月<br>每日15分钟</div>
+                <span class="stage-arrow">▼</span>
+            </div>
+            <div class="stage-body">
+                <div class="stage-two-col">
+                    <div class="stage-col parent-do">
+                        <h5>✅ 家长能做的（简单操作）</h5>
+                        <ul>
+                            <li><strong>准备环境（5分钟）：</strong>清空2米×2米空地铺上瑜伽垫或厚地毯，准备3个枕头、1条毯子，确保四周无尖锐桌角可用防撞条</li>
+                            <li><strong>触觉初体验（5分钟）：</strong>“毛毛虫爬”——用软毛刷轻刷孩子手臂后背（孩子同意下）；“豆袋暖暖”——用豆袋轻轻放在孩子手心脚心。关键：孩子说停就停，只说“舒服吗？”不说“要勇敢”</li>
+                            <li><strong>前庭小尝试（5分钟）：</strong>“不倒翁”——孩子盘腿坐家长轻推后背前后摇像不倒翁；“小飞机”——孩子俯卧家长托腹部轻轻抬起保持10秒。安全：动作要慢，头晕立即停止</li>
+                            <li><strong>本体觉唤醒（5分钟）：</strong>“大力士推墙”——双手推墙数10秒放松；“身体地图”——快速指身体部位（“左耳朵”“右膝盖”）</li>
+                            <li><strong>记录：</strong>孩子最喜欢哪个，最不喜欢哪个</li>
+                        </ul>
+                    </div>
+                    <div class="stage-col guide-need">
+                        <h5>🎓 需要我指导的（核心价值）</h5>
+                        <div class="highlight-box highlight-amber">
+                            <strong>✅ 安全风险评估：</strong>提供“家庭安全自检表”——孩子有晕车晕船史吗？恐高或怕悬空吗？对某些触摸特别抗拒吗？平衡明显比同龄人差吗？根据风险等级提供个性化安全方案。
+                        </div>
+                        <div class="highlight-box highlight-amber">
+                            <strong>✅ 耐受度渐进方案：</strong>触觉敏感分级干预（一级很抗拒→从看别人摸开始用羽毛远距离接触；二级有点抗拒→从孩子喜欢的材质开始；三级基本接受→尝试3种不同材质）。前庭耐受建立（从直线运动开始3天后尝试极慢旋转1周后尝试短暂倒置）。
+                        </div>
+                        <div class="highlight-box highlight-amber">
+                            <strong>✅ 反应类型判断：</strong>通过家长记录判断孩子属于寻求型（主动要转圈要按压→需充足输入）、回避型（躲闪抗拒→需温和脱敏）、混合型（某些寻求某些回避→需个性化组合）。提供对应训练策略。
+                        </div>
+                    </div>
+                </div>
+                <p style="font-size:0.76rem;color:#8C7E6F;margin-top:8px;">📦 <strong>工具包：</strong>软毛刷（可用化妆刷代替） · 豆袋（袜子装米缝制） · 瑜伽垫或厚地毯 · 防撞条（保护家具角）</p>
+            </div>
+        </div>
+
+        <!-- 第二阶 -->
+        <div class="stage-card" id="stage2">
+            <div class="stage-header" onclick="toggleStage(this)">
+                <div class="stage-num sn2">2</div>
+                <div class="stage-header-text">
+                    <h3>能力建设期 · 让身体会动</h3>
+                    <span class="stage-sub">从“基础接触”到“能力提升”</span>
+                </div>
+                <div class="stage-meta">第3-5个月<br>每日20分钟</div>
+                <span class="stage-arrow">▼</span>
+            </div>
+            <div class="stage-body">
+                <div class="stage-two-col">
+                    <div class="stage-col parent-do">
+                        <h5>✅ 家长能做的（简单操作）</h5>
+                        <ul>
+                            <li><strong>工具升级（10分钟准备）：</strong>平衡垫（可用枕头阵代替：4个枕头摆直线）、触觉球（网球或按摩球）、小沙包（旧袜子装沙子200-500克）</li>
+                            <li><strong>前庭强化（7分钟）：</strong>“旋转小超人”——安全转椅正反各5圈；“小滑板”——俯卧在滑板或硬纸板上用手滑行；“倒立小勇士”——靠墙倒立家长扶腿10秒开始</li>
+                            <li><strong>本体觉深化（7分钟）：</strong>“负重行走”——背书包装2本书走直线；“盲眼寻宝”——蒙眼通过摸找指定物品如遥控器；“力量控制”——推不同重量的门从轻到重</li>
+                            <li><strong>触觉分化（6分钟）：</strong>“触觉猜猜猜”——盲摸识别5种材质（棉麻塑料金属木头）；“沙中寻宝”——在沙盘或米盆中找出指定物品；“温度之旅”——体验不同温度的水袋（温热常温凉）</li>
+                            <li><strong>进步追踪：</strong>每周测量单脚站立时间、记录旋转耐受圈数、评估触觉接受种类</li>
+                        </ul>
+                    </div>
+                    <div class="stage-col guide-need">
+                        <h5>🎓 需要我指导的（核心价值）</h5>
+                        <div class="highlight-box highlight-amber">
+                            <strong>✅ 能力短板诊断：</strong>提供“三系统能力自测包”——前庭测试（单脚站立几秒、直线行走多远不歪、旋转恢复多久不晕）；本体测试（重量辨别、闭眼指鼻、姿势模仿）；触觉测试（材质识别、两点辨别、触觉定位）。生成“感统能力雷达图”识别最弱环节。
+                        </div>
+                        <div class="highlight-box highlight-amber">
+                            <strong>✅ 个性化训练配比：</strong>根据雷达图提供——前庭弱：50%前庭+30%本体+20%触觉；本体弱：30%前庭+50%本体+20%触觉；触觉弱：20%前庭+30%本体+50%触觉；均衡型：各33%均衡分配。每月根据进步调整配比。
+                        </div>
+                        <div class="highlight-box highlight-amber">
+                            <strong>✅ 家庭工具DIY指导：</strong>平衡训练工具DIY（枕头平衡木、自制平衡板、室内吊床）；触觉训练工具DIY（触觉箱、豆袋套装、刷疗工具）；本体训练工具DIY（负重背心、阻力带、触觉路径）。
+                        </div>
+                    </div>
+                </div>
+                <p style="font-size:0.76rem;color:#8C7E6F;margin-top:8px;">📦 <strong>工具包：</strong>平衡垫（或厚枕头4个） · 触觉球（网球按摩球） · 小沙包（自制） · 安全转椅（或旋转办公椅）</p>
+            </div>
+        </div>
+
+        <!-- 第三阶 -->
+        <div class="stage-card" id="stage3">
+            <div class="stage-header" onclick="toggleStage(this)">
+                <div class="stage-num sn3">3</div>
+                <div class="stage-header-text">
+                    <h3>整合应用期 · 让身体协调动</h3>
+                    <span class="stage-sub">从“单一训练”到“多通道整合”</span>
+                </div>
+                <div class="stage-meta">第6-9个月<br>每周5次×20分钟</div>
+                <span class="stage-arrow">▼</span>
+            </div>
+            <div class="stage-body">
+                <div class="stage-two-col">
+                    <div class="stage-col parent-do">
+                        <h5>✅ 家长能做的（简单操作）</h5>
+                        <ul>
+                            <li><strong>引入复杂任务：</strong>球类（小皮球或气球）、眼罩、节奏音乐（手机播放）、障碍物（枕头椅子）</li>
+                            <li><strong>周一视觉-前庭整合：</strong>“接球平衡”——单脚站立接抛球从大球到小球；“追踪跳跃”——边跳边用眼睛追踪移动物体</li>
+                            <li><strong>周二听觉-本体整合：</strong>“听令行动”——听复杂指令执行动作（听到3拍左肩听到5蹲下）；“节奏模仿”——跟着音乐节奏做不同力度动作</li>
+                            <li><strong>周三触觉-动作整合：</strong>“盲径行走”——蒙眼走过不同材质路径；“触觉记忆”——摸过物品后凭记忆画出或描述</li>
+                            <li><strong>周四双侧协调：</strong>“交叉拍膝”——左手拍右膝右手拍左膝；“大象转圈”——弯腰手臂下垂转圈画8字</li>
+                            <li><strong>周五综合挑战：</strong>“感统障碍赛”——设置3个关卡；“家庭奥运会”——全家参与记录成绩</li>
+                        </ul>
+                    </div>
+                    <div class="stage-col guide-need">
+                        <h5>🎓 需要我指导的（核心价值）</h5>
+                        <div class="highlight-box highlight-amber">
+                            <strong>✅ 多通道整合训练：</strong>视听动三通道整合游戏设计——一级边听指令边做动作→二级边看示范边听指令边做→三级在干扰环境中完成三通道任务。空间-时间整合训练（接球从直接抛接到预测轨迹接球）；身体两侧协调进阶（同侧→对侧→交叉动作）。
+                        </div>
+                        <div class="highlight-box highlight-amber">
+                            <strong>✅ 学习迁移系统设计：</strong>坐姿改善四步法（前庭激活→本体提醒→触觉提示→视觉参照）；书写能力提升方案（手部本体觉训练→视觉追踪→双侧协调）；注意力集中训练（前庭激活操→本体输入法→触觉调节器）。提供“学习前准备清单”。
+                        </div>
+                        <div class="highlight-box highlight-amber">
+                            <strong>✅ 动态评估与调整：</strong>每月进行“功能表现评估”——收集老师课堂观察反馈（提供问卷模板）、分析作业书写质量（拍照提交我分析）、记录日常行为变化（坐姿、小动作、情绪）。根据评估调整下月训练重点。
+                        </div>
+                    </div>
+                </div>
+                <p style="font-size:0.76rem;color:#8C7E6F;margin-top:8px;">📦 <strong>工具包：</strong>各种材质布料（棉麻丝绸毛绒等） · 眼罩 · 节奏乐器（沙锤铃鼓或自制） · 障碍物套装（可折叠隧道锥桶）</p>
+            </div>
+        </div>
+
+        <!-- 第四阶 -->
+        <div class="stage-card" id="stage4">
+            <div class="stage-header" onclick="toggleStage(this)">
+                <div class="stage-num sn4">4</div>
+                <div class="stage-header-text">
+                    <h3>自主优化期 · 让身体智慧动</h3>
+                    <span class="stage-sub">从“被动训练”到“主动掌控”</span>
+                </div>
+                <div class="stage-meta">第10-12个月<br>每月一个项目</div>
+                <span class="stage-arrow">▼</span>
+            </div>
+            <div class="stage-body">
+                <div class="stage-two-col">
+                    <div class="stage-col parent-do">
+                        <h5>✅ 家长能做的（简单操作）</h5>
+                        <ul>
+                            <li><strong>项目1：设计家庭感统游戏（2周）——</strong>观察家人需求（如爸爸腰疼妈妈肩颈紧），设计针对性感统游戏，组织周末家庭游戏夜</li>
+                            <li><strong>项目2：制作感统训练指南（2周）——</strong>整理一年来最有效的10个训练，拍照、写说明、画示意图，装订成《我家感统秘籍》</li>
+                            <li><strong>项目3：感统小教练（2周）——</strong>选择一个简单游戏教家人或朋友，准备5分钟教学（怎么说怎么做），录制教学视频（可选）</li>
+                            <li><strong>项目4：生活感统优化师（2周）——</strong>发现家中感统不友好的地方（如椅子太高光线刺眼），提出改进方案并实施，记录改变前后的感受</li>
+                        </ul>
+                    </div>
+                    <div class="stage-col guide-need">
+                        <h5>🎓 需要我指导的（核心价值）</h5>
+                        <div class="highlight-box highlight-amber">
+                            <strong>✅ 神经可塑性深度开发：</strong>高阶平衡训练方案（动态不稳定平面接球、多任务平衡、抗干扰平衡）；精细本体觉训练方案（微小力度控制、精细动作协调双手同时画不同图形）；触觉辨别高级训练（微细差别识别、复杂触觉模式记忆、触觉-情感连接）。
+                        </div>
+                        <div class="highlight-box highlight-amber">
+                            <strong>✅ 元身体认知培养：</strong>身体状态监控训练（识别紧张耸肩信号、判断感统需求、选择调节方法）。提供“身体信号卡片”和“调节方法菜单”。自我调节策略系统（学习前激活、学习中维持、疲劳后恢复）。
+                        </div>
+                        <div class="highlight-box highlight-amber">
+                            <strong>✅ 终身感统健康体系：</strong>发展阶段预测与准备（青春期身体快速生长时的感统支持方案）；专项能力发展建议（运动特长、艺术表达、专业技能）；家庭感统文化建设（代际传递、健康模式、社区推广）。
+                        </div>
+                    </div>
+                </div>
+                <p style="font-size:0.76rem;color:#8C7E6F;margin-top:8px;">📦 <strong>工具包：</strong>项目制作材料（卡纸彩笔胶水） · 成长档案册 · 展示板 · 教学道具</p>
+            </div>
+        </div>
+
+        <!-- 进阶路径图 -->
+        <section id="path">
+            <div class="section-title">
+                <h2>📈 四阶进阶路径图</h2>
+                <p>升级标准清晰，家长可自行判断</p>
+                <div class="section-divider"></div>
+            </div>
+            <div class="path-table-wrap">
+                <table class="path-table">
+                    <thead><tr><th>阶段</th><th>核心目标</th><th>升级标准（家长可判断）</th><th>建议时间</th></tr></thead>
+                    <tbody>
+                        <tr><td><span class="stage-dot-cell" style="background:#C06B4A;">1</span></td><td>建立安全感</td><td>能接受所有基础触觉和前庭刺激；无强烈抗拒；主动要求玩游戏</td><td>1-2个月</td></tr>
+                        <tr><td><span class="stage-dot-cell" style="background:#8B9A5B;">2</span></td><td>提升基础能力</td><td>单脚站立超过10秒；能旋转5圈不晕；能识别3种以上材质</td><td>3-5个月</td></tr>
+                        <tr><td><span class="stage-dot-cell" style="background:#5B8BA0;">3</span></td><td>实现整合应用</td><td>能完成多通道整合游戏；坐姿明显改善；书写质量提升</td><td>6-9个月</td></tr>
+                        <tr><td><span class="stage-dot-cell" style="background:#D4953A;">4</span></td><td>自主优化管理</td><td>能设计感统游戏；能教别人；能根据状态自我调节</td><td>10-12个月</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- 常见问题 -->
+        <section id="scenes">
+            <div class="section-title">
+                <h2>🧩 家庭常见问题解决方案</h2>
+                <p>三个高频困境，家长能做的 + 需要我指导的</p>
+                <div class="section-divider"></div>
+            </div>
+            <div class="scene-card">
+                <div class="scene-header" onclick="toggleScene(this)">😢 问题一：“孩子一碰就哭，怎么办？” <span class="scene-arrow">▼</span></div>
+                <div class="scene-body"><strong>✅ 家长能做的：</strong>立即停止不强迫；从看开始（家长自己先做让孩子观察）；从远开始（用羽毛在远处轻轻拂过）；从孩子控制开始（让孩子自己拿工具碰家长）。<br><strong>🎓 需要我指导的：</strong>触觉敏感深度评估；分级脱敏具体方案；替代性输入方法（如视觉替代触觉）。</div>
+            </div>
+            <div class="scene-card">
+                <div class="scene-header" onclick="toggleScene(this)">🪑 问题二：“练了很久，坐姿还是不好” <span class="scene-arrow">▼</span></div>
+                <div class="scene-body"><strong>✅ 家长能做的：</strong>检查训练是否对症（可能本体觉不足但只练了前庭）；增加日常提醒频率（温柔提醒不指责）；改善坐姿环境（椅子高度、脚部支撑）。<br><strong>🎓 需要我指导的：</strong>坐姿问题根源分析（前庭？本体？视觉？）；针对性强化训练方案；环境改造具体建议。</div>
+            </div>
+            <div class="scene-card">
+                <div class="scene-header" onclick="toggleScene(this)">🏠 问题三：“家里太小，没地方练” <span class="scene-arrow">▼</span></div>
+                <div class="scene-body"><strong>✅ 家长能做的：</strong>利用垂直空间（墙面门框）；选择小空间活动（床上运动椅子运动）；利用零散时间（洗漱时看电视时）。<br><strong>🎓 需要我指导的：</strong>小户型感统训练方案；多功能家具改造建议；碎片时间训练组合。</div>
+            </div>
+        </section>
+
+        <!-- 月度核对清单 -->
+        <section id="checklist">
+            <div class="section-title">
+                <h2>📋 家长月度核对清单</h2>
+                <p>每月最后一天花15分钟</p>
+                <div class="section-divider"></div>
+            </div>
+            <div class="checklist-grid">
+                <div class="checklist-card"><h5>📊 成果整理</h5><ul><li>整理本月训练照片</li><li>对比能力测试数据</li><li>记录孩子最喜欢的游戏</li><li>标记孩子突破的里程碑</li></ul></div>
+                <div class="checklist-card"><h5>📈 数据统计</h5><ul><li>单脚站立时间变化</li><li>旋转耐受圈数</li><li>触觉接受种类增加</li><li>坐姿改善情况</li></ul></div>
+                <div class="checklist-card"><h5>🔍 问题梳理</h5><ul><li>本月最大困难是什么？</li><li>哪种游戏最有效？</li><li>需要厉老师帮助的具体问题？</li></ul></div>
+                <div class="checklist-card"><h5>🎯 下月规划</h5><ul><li>是否进阶？</li><li>需要什么新工具？</li><li>设定一个感统训练小目标</li></ul></div>
+            </div>
+        </section>
+
+        <!-- 工具包总览 -->
+        <section id="toolkit">
+            <div class="section-title">
+                <h2>🛠️ 家庭工具包总览</h2>
+                <p>物理工具成本低于150元，数字资源全部由我提供</p>
+                <div class="section-divider"></div>
+            </div>
+            <div class="tool-grid">
+                <div class="tool-card"><h5>📦 物理工具 <span class="cost-badge">&lt;150元</span></h5><ul><li>第一阶：瑜伽垫+软毛刷+自制豆袋+防撞条（约30元）</li><li>第二阶：平衡垫/厚枕头+触觉球+小沙包+安全转椅（约40元）</li><li>第三阶：各种材质布料+眼罩+节奏乐器+障碍物套装（约50元）</li><li>第四阶：项目制作材料+成长档案册+展示板+教学道具（约30元）</li></ul></div>
+                <div class="tool-card"><h5>💻 数字资源（我提供）</h5><ul><li>打印材料库：安全自检表、能力评估表、训练记录模板、项目指南</li><li>视频音频资源：各游戏示范视频、安全要点讲解、节奏训练音乐、放松引导音频</li><li>评估分析工具：在线能力测试、进步追踪图表生成器、个性化报告模板</li></ul></div>
+            </div>
+        </section>
+
+        <!-- 价值承诺 -->
+        <div class="footer-cta">
+            <h3>💎 最终给家长的价值承诺</h3>
+            <p><strong>简单操作承诺：</strong>您只需要每天清出一块小空地，准备家中常有的物品，按照我们设计的四步流程陪孩子玩15-25分钟。每一步都有明确的安全提示，每个游戏都经过安全测试。</p>
+            <p><strong>专业价值承诺：</strong>但想要真正改善孩子的身体基础，解决坐不住、写不好、易分心的问题——您需要我们的专业风险评估、个性化能力诊断、精准训练配方和安全监控指导。</p>
+            <p><strong>成果可视承诺：</strong>每月您都会看到可测量的进步：从身体敢动到协调动，从抗拒接触到主动探索。每季度都有能力认证和功能改善证据。</p>
+            <p style="font-weight:600;color:#C06B4A;margin-top:8px;">🤸 从“身体抗拒”到“身体自信”，这是送给孩子一生的身体智慧礼物。</p>
+        </div>
+    </main>
+
+    <a href="#" class="scroll-top" id="scrollTop" title="回到顶部">↑</a>
+
+    <script>
+        function toggleStage(header) { header.parentElement.classList.toggle('open'); }
+        function toggleScene(header) { header.parentElement.classList.toggle('open'); }
+        const scrollTopBtn = document.getElementById('scrollTop');
+        window.addEventListener('scroll', () => { if (window.scrollY > 500) { scrollTopBtn.classList.add('visible'); } else { scrollTopBtn.classList.remove('visible'); } const sections = document.querySelectorAll('section[id], .stage-card[id]'); const navLinks = document.querySelectorAll('.sticky-nav a'); let currentId = ''; sections.forEach(section => { const rect = section.getBoundingClientRect(); if (rect.top <= 140) { currentId = section.id; } }); navLinks.forEach(link => { link.classList.remove('active'); if (link.getAttribute('href') === '#' + currentId) { link.classList.add('active'); } }); });
+        document.querySelectorAll('.sticky-nav a[href^="#"]').forEach(link => { link.addEventListener('click', function(e) { e.preventDefault(); const target = document.querySelector(this.getAttribute('href')); if (target) { const navHeight = document.querySelector('.sticky-nav').offsetHeight; const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - navHeight - 8; window.scrollTo({ top: targetPosition, behavior: 'smooth' }); } }); });
+        scrollTopBtn.addEventListener('click', function(e) { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); });
+        document.addEventListener('DOMContentLoaded', () => { const firstCard = document.getElementById('stage1'); if (firstCard && !firstCard.classList.contains('open')) { firstCard.classList.add('open'); } });
+    </script>
+</body>
+</html>

@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>厉老师专注力特训体系 · 运营推广中心</title>
+    <style>
+        :root {
+            --brand-blue: #3B6FA0;
+            --brand-blue-light: #F2F6FA;
+            --brand-gold: #C48B3A;
+            --brand-gold-light: #FFFBF2;
+            --brand-teal: #3D8B7B;
+            --brand-teal-light: #F2F9F7;
+            --brand-plum: #7B5EA7;
+            --brand-plum-light: #F8F4FA;
+            --brand-coral: #E07088;
+            --brand-coral-light: #FFF5F7;
+            --text: #2E2620;
+            --text-light: #5C4F45;
+            --text-lighter: #8C7E6F;
+            --bg: #FDFBF8;
+            --card-bg: #FFFFFF;
+            --border: #E0D8C8;
+            --shadow-sm: 0 1px 4px rgba(50, 30, 10, 0.04);
+            --shadow: 0 4px 20px rgba(50, 30, 10, 0.07);
+            --shadow-lg: 0 12px 36px rgba(50, 30, 10, 0.10);
+            --radius-sm: 10px;
+            --radius: 16px;
+            --radius-lg: 22px;
+            --radius-xl: 28px;
+            --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Sans SC', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+            scroll-behavior: smooth;
+            font-size: 15px;
+            background-image: radial-gradient(circle, rgba(59, 111, 160, 0.02) 1px, transparent 1px), radial-gradient(circle, rgba(196, 139, 58, 0.02) 1px, transparent 1px);
+            background-size: 36px 36px, 48px 48px;
+            background-position: 0 0, 24px 24px;
+        }
+
+        /* HERO */
+        .hero {
+            background: linear-gradient(165deg, #F2F6FA 0%, #FDFBF8 20%, #FFFBF2 40%, #FDFBF8 60%, #F8F4FA 80%, #FDFBF8 100%);
+            padding: 60px 20px 50px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 1px solid var(--border);
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -120px;
+            right: -80px;
+            width: 420px;
+            height: 420px;
+            background: radial-gradient(circle, rgba(196, 139, 58, 0.08) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -100px;
+            left: -70px;
+            width: 360px;
+            height: 360px;
+            background: radial-gradient(circle, rgba(123, 94, 167, 0.06) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 880px;
+            margin: 0 auto;
+        }
+        .hero-badge {
+            display: inline-block;
+            background: #fff;
+            color: #C48B3A;
+            font-size: 0.85rem;
+            font-weight: 700;
+            padding: 6px 22px;
+            border-radius: 24px;
+            letter-spacing: 0.06em;
+            margin-bottom: 18px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid #F0E0C8;
+        }
+        .hero h1 {
+            font-size: 2.8rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            color: #2E2620;
+            margin-bottom: 12px;
+            line-height: 1.25;
+        }
+        .hero h1 .gradient-text {
+            background: linear-gradient(135deg, #3B6FA0, #C48B3A, #7B5EA7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .hero-subtitle {
+            font-size: 1.08rem;
+            color: #5C4F45;
+            font-weight: 400;
+            margin-bottom: 14px;
+            line-height: 1.7;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .hero-cta-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .btn-primary {
+            display: inline-block;
+            background: linear-gradient(135deg, #C48B3A, #8B5A2B);
+            color: #fff;
+            font-weight: 700;
+            font-size: 0.95rem;
+            padding: 13px 32px;
+            border-radius: 28px;
+            text-decoration: none;
+            letter-spacing: 0.03em;
+            transition: var(--transition);
+            box-shadow: 0 6px 22px rgba(196, 139, 58, 0.30);
+            border: none;
+            cursor: pointer;
+        }
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(196, 139, 58, 0.40);
+        }
+        .btn-outline {
+            display: inline-block;
+            background: #fff;
+            color: #3B6FA0;
+            font-weight: 600;
+            font-size: 0.9rem;
+            padding: 12px 28px;
+            border-radius: 28px;
+            text-decoration: none;
+            letter-spacing: 0.03em;
+            transition: var(--transition);
+            border: 2px solid #3B6FA0;
+            cursor: pointer;
+        }
+        .btn-outline:hover {
+            background: #F2F6FA;
+            transform: translateY(-2px);
+        }
+
+        /* STICKY NAV */
+        .sticky-nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(253, 251, 248, 0.92);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border-bottom: 1px solid var(--border);
+            padding: 0 10px;
+            overflow-x: auto;
+            white-space: nowrap;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        .sticky-nav::-webkit-scrollbar {
+            display: none;
+        }
+        .sticky-nav-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 2px;
+            padding: 8px 0;
+        }
+        .sticky-nav a {
+            display: inline-block;
+            text-decoration: none;
+            font-size: 0.78rem;
+            font-weight: 500;
+            color: #5C4F45;
+            padding: 7px 14px;
+            border-radius: 18px;
+            transition: var(--transition);
+            flex-shrink: 0;
+            letter-spacing: 0.02em;
+        }
+        .sticky-nav a:hover,
+        .sticky-nav a.active {
+            background: #F5ECD8;
+            color: #C48B3A;
+            font-weight: 600;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 18px 20px 50px;
+        }
+
+        .section-title {
+            text-align: center;
+            margin: 48px 0 22px;
+        }
+        .section-title h2 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            margin-bottom: 6px;
+            color: #2E2620;
+        }
+        .section-title p {
+            color: #8C7E6F;
+            font-size: 0.9rem;
+        }
+        .section-divider {
+            width: 50px;
+            height: 3px;
+            border-radius: 2px;
+            margin: 8px auto 0;
+            background: linear-gradient(90deg, #C48B3A, #3B6FA0, #7B5EA7);
+        }
+
+        /* HIGH-IMPACT STATS */
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 30px;
+        }
+        .stat-card {
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 22px 18px;
+            text-align: center;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+        }
+        .stat-card:hover {
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-3px);
+            border-color: #C48B3A;
+        }
+        .stat-number {
+            font-size: 2.4rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #C48B3A, #8B5A2B);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.2;
+        }
+        .stat-card p {
+            font-size: 0.82rem;
+            color: var(--text-light);
+            margin-top: 4px;
+        }
+
+        /* PAIN POINTS */
+        .pain-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 14px;
+            margin-bottom: 30px;
+        }
+        .pain-card {
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 20px;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            border-left: 4px solid #E07088;
+        }
+        .pain-card:hover {
+            box-shadow: var(--shadow);
+            transform: translateY(-2px);
+        }
+        .pain-card h4 {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: #2E2620;
+            margin-bottom: 6px;
+        }
+        .pain-card p {
+            font-size: 0.78rem;
+            color: #5C4F45;
+            line-height: 1.55;
+        }
+
+        /* VALUE PROPOSITION */
+        .value-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 18px;
+            margin-bottom: 30px;
+        }
+        .value-card {
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 24px 20px;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            text-align: center;
+        }
+        .value-card:hover {
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-4px);
+        }
+        .value-card .icon-lg {
+            font-size: 2.8rem;
+            display: block;
+            margin-bottom: 10px;
+        }
+        .value-card h4 {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #2E2620;
+            margin-bottom: 6px;
+        }
+        .value-card p {
+            font-size: 0.8rem;
+            color: #5C4F45;
+            line-height: 1.55;
+        }
+
+        /* MODULES TABLE */
+        .table-wrap {
+            overflow-x: auto;
+            margin: 20px 0;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border);
+            background: #fff;
+        }
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.78rem;
+            min-width: 750px;
+        }
+        .data-table th {
+            background: #F8F3EB;
+            padding: 12px 10px;
+            text-align: center;
+            font-weight: 700;
+            font-size: 0.74rem;
+            color: #5C3D1E;
+            letter-spacing: 0.03em;
+            border-bottom: 2px solid #E0D5C0;
+        }
+        .data-table td {
+            padding: 10px;
+            text-align: center;
+            border-bottom: 1px solid #F0EBE2;
+            color: #3D3226;
+            font-size: 0.76rem;
+            vertical-align: middle;
+        }
+        .data-table tr:last-child td {
+            border-bottom: none;
+        }
+        .pillar-tag {
+            display: inline-block;
+            font-weight: 600;
+            font-size: 0.66rem;
+            padding: 3px 9px;
+            border-radius: 10px;
+            letter-spacing: 0.03em;
+        }
+        .pillar1 {
+            background: #E8F0F5;
+            color: #3B6FA0;
+        }
+        .pillar2 {
+            background: #FFF0E8;
+            color: #C06B4A;
+        }
+        .pillar3 {
+            background: #E8F0ED;
+            color: #3D8B7B;
+        }
+        .pillar4 {
+            background: #F0EAF5;
+            color: #7B5EA7;
+        }
+        .pillar5 {
+            background: #FFF8EF;
+            color: #C48B3A;
+        }
+
+        /* WHY US */
+        .why-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 16px;
+            margin-bottom: 30px;
+        }
+        .why-card {
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 22px 20px;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            text-align: center;
+        }
+        .why-card:hover {
+            box-shadow: var(--shadow);
+            transform: translateY(-3px);
+        }
+        .why-card .why-icon {
+            font-size: 2.2rem;
+            display: block;
+            margin-bottom: 8px;
+        }
+        .why-card h4 {
+            font-size: 0.88rem;
+            font-weight: 700;
+            color: #2E2620;
+            margin-bottom: 4px;
+        }
+        .why-card p {
+            font-size: 0.76rem;
+            color: #5C4F45;
+            line-height: 1.5;
+        }
+
+        /* TESTIMONIAL */
+        .testimonial-card {
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 28px 24px;
+            box-shadow: var(--shadow-sm);
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 30px;
+        }
+        .testimonial-card .quote-icon {
+            font-size: 3rem;
+            color: #C48B3A;
+            opacity: 0.4;
+            line-height: 1;
+        }
+        .testimonial-card p {
+            font-size: 0.9rem;
+            color: #5C4F45;
+            line-height: 1.7;
+            font-style: italic;
+            margin: 8px 0 12px;
+        }
+        .testimonial-card .author {
+            font-weight: 700;
+            color: #2E2620;
+            font-size: 0.85rem;
+        }
+
+        /* FAQ */
+        .faq-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 12px;
+            margin-bottom: 30px;
+        }
+        .faq-item {
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 18px;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+        }
+        .faq-item:hover {
+            box-shadow: var(--shadow);
+        }
+        .faq-item h5 {
+            font-weight: 700;
+            font-size: 0.84rem;
+            color: #2E2620;
+            margin-bottom: 4px;
+        }
+        .faq-item p {
+            font-size: 0.76rem;
+            color: #5C4F45;
+            line-height: 1.55;
+        }
+
+        /* FOOTER CTA */
+        .footer-cta {
+            text-align: center;
+            padding: 44px 24px;
+            background: linear-gradient(160deg, #FFFBF2, #FDFBF8, #F8F4FA);
+            border-radius: var(--radius-xl);
+            margin-top: 28px;
+            border: 2px dashed #F0E0C8;
+        }
+        .footer-cta h3 {
+            font-size: 1.45rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #2E2620;
+        }
+        .footer-cta p {
+            color: #8C7E6F;
+            margin-bottom: 16px;
+            font-size: 0.88rem;
+            line-height: 1.6;
+        }
+
+        .scroll-top {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: #fff;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+            cursor: pointer;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 99;
+            transition: var(--transition);
+            opacity: 0;
+            pointer-events: none;
+            text-decoration: none;
+            color: #C48B3A;
+        }
+        .scroll-top.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .scroll-top:hover {
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-3px);
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+            .hero-subtitle {
+                font-size: 0.9rem;
+            }
+            .container {
+                padding: 10px 12px 40px;
+            }
+            .stats-row {
+                grid-template-columns: 1fr 1fr;
+            }
+            .pain-grid,
+            .value-grid,
+            .why-grid,
+            .faq-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 1.4rem;
+            }
+            .hero {
+                padding: 36px 14px 30px;
+            }
+            .btn-primary,
+            .btn-outline {
+                padding: 10px 22px;
+                font-size: 0.82rem;
+            }
+            .data-table {
+                font-size: 0.65rem;
+                min-width: 550px;
+            }
+            .data-table th,
+            .data-table td {
+                padding: 6px 4px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ==================== HERO ==================== -->
+    <header class="hero">
+        <div class="hero-content">
+            <span class="hero-badge">🏆 厉老师专注力特训体系 · 三端协同全人成长</span>
+            <h1>从“坐不住”到<span class="gradient-text">专注小达人</span></h1>
+            <p class="hero-subtitle">一套让家长<strong>一看就会、一做就对</strong>，但想做好还需要我们指导的<br>四阶渐进式家庭专注力培养系统 · 20个模块覆盖全人成长</p>
+            <div class="hero-cta-row">
+                <a href="#" class="btn-primary" onclick="alert('欢迎了解厉老师专注力特训体系！\n\n获取完整课程介绍与最新招生信息，请加微信peixue8咨询。');return false;">📩 获取完整课程方案</a>
+                <a href="#modules" class="btn-outline">📊 查看20个核心模块</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- ==================== STICKY NAV ==================== -->
+    <nav class="sticky-nav" id="stickyNav">
+        <div class="sticky-nav-inner">
+            <a href="#stats">核心数据</a>
+            <a href="#pain">家长痛点</a>
+            <a href="#value">独特价值</a>
+            <a href="#modules">模块体系</a>
+            <a href="#why">为什么选我们</a>
+            <a href="#testimonial">家长反馈</a>
+            <a href="#faq">常见问题</a>
+            <a href="#footer-cta">立即咨询</a>
+        </div>
+    </nav>
+
+    <!-- ==================== MAIN CONTENT ==================== -->
+    <main class="container">
+
+        <!-- ===== 核心数据 ===== -->
+        <section id="stats">
+            <div class="section-title">
+                <h2>📊 为什么这套体系有效？</h2>
+                <p>基于1000+家庭实践数据，专注力训练的科学保障</p>
+                <div class="section-divider"></div>
+            </div>
+            <div class="stats-row">
+                <div class="stat-card">
+                    <div class="stat-number">20</div>
+                    <p>个核心训练模块<br>覆盖学习力·心智·习惯·生存力</p>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">12</div>
+                    <p>个月全景规划<br>四阶段递进式成长路径</p>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">3</div>
+                    <p>端协同架构<br>教师指导·家长操作·学生执行</p>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">80%</div>
+                    <p>家长可独立操作<br>20%关键节点需要专业指导</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== 家长痛点 ===== -->
+        <section id="pain">
+            <div class="section-title">
+                <h2>😟 您是否正在经历这些？</h2>
+                <p>这些场景，90%的家长都曾深陷其中</p>
+                <div class="section-divider"></div>
+            </div>
+            <div class="pain-grid">
+                <div class="pain-card">
+                    <h4>“孩子坐不住，写作业磨蹭到很晚”</h4>
+                    <p>催、盯、吼，每天作业变成家庭战争。您试过各种方法，效果总是不持久。</p>
+                </div>
+                <div class="pain-card">
+                    <h4>“报了培训班，效果不明显”</h4>
+                    <p>一周一次的训练，回到家就打回原形。您需要一套<strong>在家就能执行</strong>的系统方案。</p>
+                </div>
+                <div class="pain-card">
+                    <h4>“看了很多育儿文章，还是不会做”</h4>
+                    <p>理论都知道，但面对真实场景时——孩子发脾气、不想学、走神——您还是不知道怎么办。</p>
+                </div>
+                <div class="pain-card">
+                    <h4>“担心自己不会教，耽误了孩子”</h4>
+                    <p>您不是教育专家，面对专注力这种专业问题，您需要有人帮您诊断、设计、指导。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== 独特价值 ===== -->
+        <section id="value">
+            <div class="section-title">
+                <h2>💡 我们的解决方案：让家长“一眼就懂，一用就会”</h2>
+                <p>不是让您成为专家，而是让您成为“家庭教练”</p>
+                <div class="section-divider"></div>
+            </div>
+            <div class="value-grid">
+                <div class="value-card">
+                    <span class="icon-lg">📋</span>
+                    <h4>操作极简</h4>
+                    <p>每日固定流程，3-4个步骤，工具易得。家长端80%内容可独立完成，不需要任何专业知识。</p>
+                </div>
+                <div class="value-card">
+                    <span class="icon-lg">🎯</span>
+                    <h4>边界清晰</h4>
+                    <p>每阶明确区分“家长能做的”与“需要我指导的”。您只做简单的，专业判断交给我们。</p>
+                </div>
+                <div class="value-card">
+                    <span class="icon-lg">📈</span>
+                    <h4>价值可视</h4>
+                    <p>每月都有可展示的进步成果——速度记录、作品对比、能力雷达图。让成长看得见。</p>
+                </div>
+                <div class="value-card">
+                    <span class="icon-lg">🧠</span>
+                    <h4>专业壁垒</h4>
+                    <p>科学理论支撑、个性化诊断算法、不可复制的专家指导——市面上极少将心理韧性、元认知系统化纳入的课程。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== 模块体系 ===== -->
+        <section id="modules">
+            <div class="section-title">
+                <h2>📚 20个核心模块 · 四大支柱 + 生理支持</h2>
+                <p>从基础能力到高阶素养，覆盖全人成长的完整体系</p>
+                <div class="section-divider"></div>
+            </div>
+            <div class="table-wrap">
+                <table class="data-table">
+                    <thead>
+                        <tr><th>编号</th><th>模块名称</th><th>所属支柱</th><th>引入时间</th><th>核心价值</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>01</td><td>朗读力成长系统</td><td><span class="pillar-tag pillar1">智慧学习力</span></td><td>第1周</td><td>眼口脑协调发展</td></tr>
+                        <tr><td>02</td><td>专注力运动生态系统</td><td><span class="pillar-tag pillar1">智慧学习力</span></td><td>第1周</td><td>身体训练大脑</td></tr>
+                        <tr><td>03</td><td>神经通路雕刻系统（控笔）</td><td><span class="pillar-tag pillar1">智慧学习力</span></td><td>第2周</td><td>精细动作塑造神经网络</td></tr>
+                        <tr><td>04</td><td>逻辑思维预演系统（数独）</td><td><span class="pillar-tag pillar1">智慧学习力</span></td><td>第3个月</td><td>系统性思维培养</td></tr>
+                        <tr><td>05</td><td>数感与计算思维（口诀）</td><td><span class="pillar-tag pillar1">智慧学习力</span></td><td>第2个月</td><td>建立高速提取通道</td></tr>
+                        <tr><td>06</td><td>多感官记忆系统</td><td><span class="pillar-tag pillar1">智慧学习力</span></td><td>第3个月</td><td>三重感官通道整合</td></tr>
+                        <tr><td>07</td><td>感觉统合基础训练</td><td><span class="pillar-tag pillar2">强健心智体魄</span></td><td>第1个月</td><td>前庭·本体·触觉整合</td></tr>
+                        <tr><td>08</td><td>视觉功能专项训练</td><td><span class="pillar-tag pillar2">强健心智体魄</span></td><td>第4个月</td><td>视觉输入处理三通路</td></tr>
+                        <tr><td>09</td><td>情绪智力发展系统</td><td><span class="pillar-tag pillar2">强健心智体魄</span></td><td>渗透性</td><td>情绪识别→表达→调节</td></tr>
+                        <tr><td>10</td><td>抗挫折与心理韧性</td><td><span class="pillar-tag pillar2">强健心智体魄</span></td><td>第5个月</td><td>成长型思维·失败重构</td></tr>
+                        <tr><td>11</td><td>时间感知与节律培养</td><td><span class="pillar-tag pillar3">卓越行为习惯</span></td><td>渗透性</td><td>内在时间节律建立</td></tr>
+                        <tr><td>12</td><td>生理节律与大脑波优化</td><td><span class="pillar-tag pillar3">卓越行为习惯</span></td><td>渗透性</td><td>生物钟校准</td></tr>
+                        <tr><td>13</td><td>家庭贡献者计划（家务）</td><td><span class="pillar-tag pillar3">卓越行为习惯</span></td><td>第1个月</td><td>责任驱动内驱力</td></tr>
+                        <tr><td>14</td><td>高效能学习习惯</td><td><span class="pillar-tag pillar3">卓越行为习惯</span></td><td>第3个月</td><td>预习·听课·复习闭环</td></tr>
+                        <tr><td>15</td><td>内在动机自主驱动</td><td><span class="pillar-tag pillar4">未来生存力</span></td><td>渗透性</td><td>自主感·胜任感·归属感</td></tr>
+                        <tr><td>16</td><td>自主娱乐管理系统</td><td><span class="pillar-tag pillar4">未来生存力</span></td><td>第2个月</td><td>心流体验，创造者思维</td></tr>
+                        <tr><td>17</td><td>元认知与学习策略</td><td><span class="pillar-tag pillar4">未来生存力</span></td><td>第6个月</td><td>学会如何学习</td></tr>
+                        <tr><td>18</td><td>社交协作与创造性解决问题</td><td><span class="pillar-tag pillar4">未来生存力</span></td><td>第7个月</td><td>倾听专注·共情关注</td></tr>
+                        <tr><td>19</td><td>营养睡眠生理基础</td><td><span class="pillar-tag pillar5">生理支持</span></td><td>第1个月</td><td>大脑营养·睡眠修复</td></tr>
+                        <tr><td>20</td><td>肠道-脑轴健康支持</td><td><span class="pillar-tag pillar5">生理支持</span></td><td>第2个月</td><td>肠脑连接·情绪生理</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- ===== 为什么选我们 ===== -->
+        <section id="why">
+            <div class="section-title">
+                <h2>🏅 为什么选择厉老师专注力特训体系？</h2>
+                <p>六大核心优势，构建不可复制的课程壁垒</p>
+                <div class="section-divider"></div>
+            </div>
+            <div class="why-grid">
+                <div class="why-card">
+                    <span class="why-icon">🔬</span>
+                    <h4>科学理论支撑</h4>
+                    <p>成长型思维·神经可塑性·CBT认知行为疗法·心理韧性保护因子模型——每个模块都有扎实的学术根基</p>
+                </div>
+                <div class="why-card">
+                    <span class="why-icon">📐</span>
+                    <h4>四阶渐进体系</h4>
+                    <p>每个模块都遵循“基础→精准→效率→智慧”的成长规律，让孩子在最近发展区持续进步</p>
+                </div>
+                <div class="why-card">
+                    <span class="why-icon">👨‍🏫</span>
+                    <h4>三端协同架构</h4>
+                    <p>教师端诊断指导·家长端操作执行·学生端游戏闯关——三方各司其职，形成完整闭环</p>
+                </div>
+                <div class="why-card">
+                    <span class="why-icon">📊</span>
+                    <h4>价值可视化系统</h4>
+                    <p>月度成果四维度展示·季度里程碑认证·年度成长档案——让每一点进步都被看见</p>
+                </div>
+                <div class="why-card">
+                    <span class="why-icon">🤖</span>
+                    <h4>个性化诊断算法</h4>
+                    <p>挫折类型识别引擎·策略推荐系统·韧性发展预测模型——精准定位每个孩子的独特需求</p>
+                </div>
+                <div class="why-card">
+                    <span class="why-icon">🌟</span>
+                    <h4>全人成长生态</h4>
+                    <p>不仅是专注力训练，更是学习力·心智体魄·行为习惯·未来生存力的全面培养</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== 家长反馈 ===== -->
+        <section id="testimonial">
+            <div class="section-title">
+                <h2>💬 来自家长的真实反馈</h2>
+                <p>一年陪伴，见证孩子的蜕变</p>
+                <div class="section-divider"></div>
+            </div>
+            <div class="testimonial-card">
+                <span class="quote-icon">"</span>
+                <p>"以前每天作业都是战场，催十遍才坐到书桌前。跟着厉老师的系统做了三个月，现在铃一响孩子自己就坐到学习位了。更重要的是，我自己也从'人肉闹钟'变成了'环境设计师'，亲子关系好了太多。"</p>
+                <span class="author">—— 一位完成12个月训练的家长</span>
+            </div>
+        </section>
+
+        <!-- ===== 常见问题 ===== -->
+        <section id="faq">
+            <div class="section-title">
+                <h2>❓ 您可能关心的几个问题</h2>
+                <p>快速解答最常见的疑虑</p>
+                <div class="section-divider"></div>
+            </div>
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <h5>这套体系适合多大的孩子？</h5>
+                    <p>主要针对5-12岁儿童，根据不同年龄段设计差异化任务难度。核心训练模块有分龄版本。</p>
+                </div>
+                <div class="faq-item">
+                    <h5>每天需要花多少时间？</h5>
+                    <p>核心训练每日15-30分钟，渗透性模块贯穿全天但不增加额外负担。周末有2-3小时深度项目时间。</p>
+                </div>
+                <div class="faq-item">
+                    <h5>家长需要具备专业知识吗？</h5>
+                    <p>不需要。所有操作都有清晰指引，80%的内容家长一看就会。关键20%需要专业判断的部分，由我们提供诊断和指导。</p>
+                </div>
+                <div class="faq-item">
+                    <h5>如果孩子不配合怎么办？</h5>
+                    <p>每个模块都配备了“抗拒应对方案”，从降低难度到游戏化到角色扮演，三级策略确保孩子愿意参与。</p>
+                </div>
+                <div class="faq-item">
+                    <h5>效果怎么评估？</h5>
+                    <p>每月有月度成果四维度展示，每季度有里程碑认证，年度有完整的成长力认证报告和勋章。</p>
+                </div>
+                <div class="faq-item">
+                    <h5>课程结束后能力会退化吗？</h5>
+                    <p>我们提供“能力防退化指南”和最小维持方案，同时校友会持续提供资源支持。12个月的训练已经将能力内化为习惯。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== FOOTER CTA ===== -->
+        <div class="footer-cta" id="footer-cta">
+            <h3>🚀 准备好让孩子开启专注力成长之旅了吗？</h3>
+            <p>从“坐不住”到“专注小达人”，从“催盯吼”到“家庭教练”<br>20个模块·12个月全景规划·三端协同·四阶渐进</p>
+            <a href="#" class="btn-primary" onclick="alert('感谢您的关注！\n\n获取完整课程方案与最新招生信息，请加微信peixue8咨询。\n\n厉老师专注力特训体系——让每一点进步都被看见。');return false;">📩 获取完整课程方案</a>
+        </div>
+
+    </main>
+
+    <!-- ==================== SCROLL TOP ==================== -->
+    <a href="#" class="scroll-top" id="scrollTop" title="回到顶部">↑</a>
+
+    <script>
+        const scrollTopBtn = document.getElementById('scrollTop');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 600) { scrollTopBtn.classList.add('visible'); } else { scrollTopBtn.classList
+                    .remove('visible'); }
+            const sections = document.querySelectorAll('section[id]');
+            const navLinks = document.querySelectorAll('.sticky-nav a');
+            let currentId = '';
+            sections.forEach(section => { const rect = section.getBoundingClientRect(); if (rect.top <= 150) { currentId =
+                        section.id; } });
+            navLinks.forEach(link => { link.classList.remove('active'); if (link.getAttribute('href') === '#' +
+                    currentId) { link.classList.add('active'); } });
+        });
+        document.querySelectorAll('.sticky-nav a[href^="#"]').forEach(link => { link.addEventListener('click',
+            function(e) { e.preventDefault(); const target = document.querySelector(this.getAttribute('href')); if (
+                    target) { const navHeight = document.querySelector('.sticky-nav').offsetHeight; const
+                    targetPosition = target.getBoundingClientRect().top + window.pageYOffset - navHeight - 10; window
+                    .scrollTo({ top: targetPosition, behavior: 'smooth' }); } }); });
+        scrollTopBtn.addEventListener('click', function(e) { e.preventDefault();
+            window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    </script>
+</body>
+</html>

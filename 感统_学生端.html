@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>身体小勇士 · 我的感统超能力修炼手册 | 学生端</title>
+    <style>
+        :root {
+            --body-terra: #C06B4A;
+            --body-terra-light: #FFF5F0;
+            --body-olive: #8B9A5B;
+            --body-olive-light: #F7F9F2;
+            --body-sky: #5B8BA0;
+            --body-sky-light: #F2F7FA;
+            --body-amber: #E8A840;
+            --body-amber-light: #FFF9EB;
+            --body-coral: #E07088;
+            --body-coral-light: #FFF5F7;
+            --bg: #FFFDF9;
+            --card-bg: #FFFFFF;
+            --text: #3D2E1E;
+            --text-light: #6B5A42;
+            --border: #F0E4D0;
+            --shadow-sm: 0 1px 4px rgba(60, 30, 10, 0.05);
+            --shadow: 0 4px 18px rgba(60, 30, 10, 0.07);
+            --shadow-lg: 0 10px 30px rgba(60, 30, 10, 0.10);
+            --radius-sm: 10px;
+            --radius: 16px;
+            --radius-lg: 22px;
+            --radius-xl: 28px;
+            --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Sans SC', 'KaiTi', 'STKaiti', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+            scroll-behavior: smooth;
+            font-size: 15px;
+            background-image: radial-gradient(circle, rgba(192, 107, 74, 0.025) 1px, transparent 1px), radial-gradient(circle, rgba(91, 139, 160, 0.025) 1px, transparent 1px);
+            background-size: 34px 34px, 46px 46px;
+            background-position: 0 0, 23px 23px;
+        }
+        .hero {
+            background: linear-gradient(160deg, #FFF5F0 0%, #FFFDF9 18%, #F7F9F2 38%, #FFFDF9 58%, #F2F7FA 78%, #FFFDF9 100%);
+            padding: 48px 20px 38px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 1px solid #F0E4D0;
+        }
+        .hero::before {
+            content: '🤸';
+            position: absolute;
+            top: 28px;
+            left: 8%;
+            font-size: 2.2rem;
+            animation: floatIcon 3.5s ease-in-out infinite;
+            pointer-events: none;
+        }
+        .hero::after {
+            content: '💪';
+            position: absolute;
+            top: 48px;
+            right: 10%;
+            font-size: 2rem;
+            animation: floatIcon 3s ease-in-out 0.7s infinite;
+            pointer-events: none;
+        }
+        @keyframes floatIcon {
+            0%,
+            100% {
+                transform: translateY(0) scale(1);
+            }
+            50% {
+                transform: translateY(-14px) scale(1.12);
+            }
+        }
+        .sparkle {
+            position: absolute;
+            pointer-events: none;
+            font-size: 1rem;
+            animation: sparklePop 2.5s ease-in-out infinite;
+        }
+        .sparkle:nth-child(1) {
+            top: 65px;
+            left: 25%;
+            animation-delay: 0s;
+        }
+        .sparkle:nth-child(2) {
+            top: 28px;
+            right: 22%;
+            animation-delay: 1s;
+        }
+        .sparkle:nth-child(3) {
+            bottom: 38px;
+            left: 34%;
+            animation-delay: 1.8s;
+        }
+        @keyframes sparklePop {
+            0%,
+            100% {
+                opacity: 0.2;
+                transform: scale(0.7);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.4);
+            }
+        }
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 780px;
+            margin: 0 auto;
+        }
+        .hero-badge {
+            display: inline-block;
+            background: #fff;
+            color: #C06B4A;
+            font-size: 0.85rem;
+            font-weight: 700;
+            padding: 6px 20px;
+            border-radius: 24px;
+            letter-spacing: 0.04em;
+            margin-bottom: 14px;
+            box-shadow: var(--shadow-sm);
+            border: 2px dashed #F0C8B8;
+        }
+        .hero h1 {
+            font-size: 2.4rem;
+            font-weight: 800;
+            letter-spacing: -0.01em;
+            color: #3D2E1E;
+            margin-bottom: 8px;
+            line-height: 1.3;
+        }
+        .hero h1 .gradient-text {
+            background: linear-gradient(135deg, #C06B4A, #8B9A5B, #5B8BA0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .hero-subtitle {
+            font-size: 1rem;
+            color: #6B5A42;
+            font-weight: 400;
+            margin-bottom: 8px;
+            line-height: 1.6;
+        }
+        .hero-tagline {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #fff;
+            padding: 10px 22px;
+            border-radius: 26px;
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: #3D2E1E;
+            box-shadow: var(--shadow);
+            border: 1px solid #F0E4D0;
+        }
+        .sticky-nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(255, 253, 249, 0.9);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid #F0E4D0;
+            padding: 0 10px;
+            overflow-x: auto;
+            white-space: nowrap;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        .sticky-nav::-webkit-scrollbar {
+            display: none;
+        }
+        .sticky-nav-inner {
+            max-width: 1050px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 2px;
+            padding: 7px 0;
+        }
+        .sticky-nav a {
+            display: inline-block;
+            text-decoration: none;
+            font-size: 0.76rem;
+            font-weight: 600;
+            color: #6B5A42;
+            padding: 6px 12px;
+            border-radius: 18px;
+            transition: var(--transition);
+            flex-shrink: 0;
+            letter-spacing: 0.02em;
+        }
+        .sticky-nav a:hover,
+        .sticky-nav a.active {
+            background: #FFF0E8;
+            color: #C06B4A;
+        }
+        .sticky-nav a.nav-star {
+            width: 28px;
+            height: 28px;
+            padding: 0;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            flex-shrink: 0;
+            color: #fff;
+        }
+        .ns1 {
+            background: #C06B4A;
+        }
+        .ns2 {
+            background: #8B9A5B;
+        }
+        .ns3 {
+            background: #5B8BA0;
+        }
+        .ns4 {
+            background: #E8A840;
+        }
+        .container {
+            max-width: 1050px;
+            margin: 0 auto;
+            padding: 14px 18px 50px;
+        }
+        .section-title {
+            text-align: center;
+            margin: 40px 0 18px;
+        }
+        .section-title h2 {
+            font-size: 1.45rem;
+            font-weight: 700;
+            letter-spacing: -0.005em;
+            margin-bottom: 4px;
+            color: #3D2E1E;
+        }
+        .section-title p {
+            color: #6B5A42;
+            font-size: 0.84rem;
+        }
+        .section-divider {
+            width: 48px;
+            height: 3px;
+            border-radius: 2px;
+            margin: 8px auto 0;
+            background: linear-gradient(90deg, #C06B4A, #8B9A5B, #5B8BA0);
+        }
+        .value-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+            margin-bottom: 18px;
+        }
+        .value-mini {
+            background: #fff;
+            border: 1px solid #F0E4D0;
+            border-radius: var(--radius);
+            padding: 16px 12px;
+            text-align: center;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+        }
+        .value-mini:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+        .value-mini .icon-big {
+            font-size: 2rem;
+            display: block;
+            margin-bottom: 6px;
+        }
+        .value-mini h4 {
+            font-size: 0.84rem;
+            font-weight: 700;
+            color: #3D2E1E;
+            margin-bottom: 2px;
+        }
+        .value-mini p {
+            font-size: 0.72rem;
+            color: #6B5A42;
+            line-height: 1.4;
+        }
+        .level-card {
+            background: #fff;
+            border-radius: var(--radius-lg);
+            margin-bottom: 18px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            border: 1px solid #F0E4D0;
+            transition: var(--transition);
+        }
+        .level-card:hover {
+            box-shadow: var(--shadow-lg);
+        }
+        .level-header {
+            padding: 18px 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            user-select: none;
+        }
+        .level-num {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1.1rem;
+            color: #fff;
+            flex-shrink: 0;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.10);
+        }
+        .ln1 {
+            background: #C06B4A;
+        }
+        .ln2 {
+            background: #8B9A5B;
+        }
+        .ln3 {
+            background: #5B8BA0;
+        }
+        .ln4 {
+            background: #E8A840;
+        }
+        .level-header-text h3 {
+            font-size: 1rem;
+            font-weight: 700;
+            line-height: 1.3;
+            color: #3D2E1E;
+        }
+        .level-header-text .level-sub {
+            font-size: 0.74rem;
+            color: #6B5A42;
+        }
+        .level-badge {
+            margin-left: auto;
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 12px;
+            flex-shrink: 0;
+            letter-spacing: 0.03em;
+        }
+        .badge-terra {
+            background: #FFF5F0;
+            color: #C06B4A;
+        }
+        .badge-olive {
+            background: #F7F9F2;
+            color: #8B9A5B;
+        }
+        .badge-sky {
+            background: #F2F7FA;
+            color: #5B8BA0;
+        }
+        .badge-amber {
+            background: #FFF9EB;
+            color: #C8941E;
+        }
+        .level-arrow {
+            font-size: 1rem;
+            transition: var(--transition);
+            color: #6B5A42;
+            flex-shrink: 0;
+            margin-left: 2px;
+        }
+        .level-card.open .level-arrow {
+            transform: rotate(180deg);
+        }
+        .level-body {
+            display: none;
+            padding: 0 20px 20px;
+            border-top: 1px solid #F0E4D0;
+            padding-top: 16px;
+            animation: fadeSlideIn 0.3s ease;
+        }
+        .level-card.open .level-body {
+            display: block;
+        }
+        @keyframes fadeSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-5px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .task-box {
+            background: #FFFDF9;
+            border: 1px dashed #E0D4C8;
+            border-radius: var(--radius-sm);
+            padding: 14px 16px;
+            margin-bottom: 12px;
+            font-size: 0.84rem;
+            line-height: 1.8;
+        }
+        .task-box .check-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            padding: 2px 0;
+        }
+        .task-box .check-box {
+            width: 18px;
+            height: 18px;
+            border: 2px solid #F0C8B0;
+            border-radius: 4px;
+            flex-shrink: 0;
+            margin-top: 3px;
+            background: #fff;
+        }
+        .highlight-card {
+            border-radius: var(--radius-sm);
+            padding: 12px 16px;
+            margin: 10px 0;
+            font-size: 0.82rem;
+            color: #5C4020;
+            line-height: 1.65;
+        }
+        .highlight-terra {
+            background: #FFF5F0;
+            border-left: 4px solid #C06B4A;
+        }
+        .highlight-olive {
+            background: #F7F9F2;
+            border-left: 4px solid #8B9A5B;
+        }
+        .highlight-sky {
+            background: #F2F7FA;
+            border-left: 4px solid #5B8BA0;
+        }
+        .highlight-amber {
+            background: #FFF9EB;
+            border-left: 4px solid #E8A840;
+        }
+        .highlight-gold {
+            background: #FFF9EB;
+            border-left: 4px solid #F4B642;
+        }
+        .mini-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.78rem;
+            margin: 10px 0;
+            border-radius: var(--radius-sm);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+        }
+        .mini-table th {
+            background: #FFF5F0;
+            padding: 10px 8px;
+            text-align: center;
+            font-weight: 700;
+            font-size: 0.72rem;
+            color: #C06B4A;
+            letter-spacing: 0.03em;
+            border-bottom: 2px solid #F0C8B0;
+        }
+        .mini-table td {
+            padding: 8px;
+            text-align: center;
+            border-bottom: 1px solid #F0EBE2;
+            color: #3D2E1E;
+            font-size: 0.76rem;
+        }
+        .mini-table tr:last-child td {
+            border-bottom: none;
+        }
+        .star-cell {
+            color: #E8A840;
+            font-size: 0.9rem;
+        }
+        .tag-sm {
+            display: inline-block;
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 3px 9px;
+            border-radius: 10px;
+            margin: 2px;
+            letter-spacing: 0.02em;
+            background: #FFF0E8;
+            color: #C06B4A;
+        }
+        .tag-sm.olive {
+            background: #EEF0E5;
+            color: #8B9A5B;
+        }
+        .tag-sm.sky {
+            background: #E8F2F7;
+            color: #5B8BA0;
+        }
+        .tag-sm.amber {
+            background: #FFF8EF;
+            color: #C8941E;
+        }
+        .incentive-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 12px;
+        }
+        .incentive-card {
+            background: #fff;
+            border: 1px solid #F0E4D0;
+            border-radius: var(--radius);
+            padding: 18px 14px;
+            text-align: center;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+        }
+        .incentive-card:hover {
+            box-shadow: var(--shadow);
+            transform: translateY(-2px);
+        }
+        .incentive-card .medal-icon {
+            font-size: 2.6rem;
+            display: block;
+            margin-bottom: 6px;
+        }
+        .incentive-card h5 {
+            font-weight: 700;
+            font-size: 0.84rem;
+            color: #3D2E1E;
+            margin-bottom: 4px;
+        }
+        .incentive-card p {
+            font-size: 0.72rem;
+            color: #6B5A42;
+            line-height: 1.5;
+        }
+        .tool-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 12px;
+        }
+        .tool-card {
+            background: #fff;
+            border: 1px solid #F0E4D0;
+            border-radius: var(--radius);
+            padding: 16px;
+            box-shadow: var(--shadow-sm);
+        }
+        .tool-card h5 {
+            font-weight: 700;
+            font-size: 0.85rem;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: #3D2E1E;
+        }
+        .tool-card ul {
+            list-style: none;
+            padding: 0;
+        }
+        .tool-card ul li {
+            font-size: 0.78rem;
+            color: #6B5A42;
+            padding: 2px 0 2px 16px;
+            position: relative;
+            line-height: 1.55;
+        }
+        .tool-card ul li::before {
+            content: '📎';
+            position: absolute;
+            left: 0;
+            font-size: 0.6rem;
+            top: 4px;
+        }
+        .footer-cta {
+            text-align: center;
+            padding: 38px 20px;
+            background: linear-gradient(160deg, #FFF5F0, #FFFDF9, #F7F9F2);
+            border-radius: var(--radius-xl);
+            margin-top: 28px;
+            border: 2px dashed #F0C8B0;
+        }
+        .footer-cta .big-emoji {
+            font-size: 3rem;
+            display: block;
+            margin-bottom: 8px;
+        }
+        .footer-cta h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+            color: #3D2E1E;
+        }
+        .footer-cta p {
+            color: #6B5A42;
+            font-size: 0.9rem;
+            line-height: 1.7;
+            font-weight: 500;
+        }
+        .footer-cta .quote {
+            font-style: italic;
+            font-size: 1rem;
+            color: #C06B4A;
+            font-weight: 700;
+            margin-top: 6px;
+        }
+        .scroll-top {
+            position: fixed;
+            bottom: 22px;
+            right: 22px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #fff;
+            border: 2px solid #F0C8B0;
+            box-shadow: var(--shadow);
+            cursor: pointer;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 99;
+            transition: var(--transition);
+            opacity: 0;
+            pointer-events: none;
+            text-decoration: none;
+            color: #C06B4A;
+        }
+        .scroll-top.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .scroll-top:hover {
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-2px);
+            background: #FFF5F0;
+        }
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 1.55rem;
+            }
+            .hero-subtitle {
+                font-size: 0.84rem;
+            }
+            .level-header {
+                flex-wrap: wrap;
+                gap: 6px;
+                padding: 14px;
+            }
+            .level-badge {
+                margin-left: 0;
+            }
+            .level-body {
+                padding: 0 14px 16px;
+                padding-top: 12px;
+            }
+            .value-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .incentive-grid,
+            .tool-grid {
+                grid-template-columns: 1fr;
+            }
+            .container {
+                padding: 8px 10px 36px;
+            }
+        }
+        @media (max-width: 480px) {
+            .hero {
+                padding: 30px 10px 24px;
+            }
+            .hero h1 {
+                font-size: 1.25rem;
+            }
+            .value-grid {
+                grid-template-columns: 1fr;
+            }
+            .hero::before,
+            .hero::after,
+            .sparkle {
+                display: none;
+            }
+            .sticky-nav a {
+                font-size: 0.66rem;
+                padding: 5px 7px;
+            }
+            .mini-table {
+                font-size: 0.65rem;
+            }
+            .mini-table th,
+            .mini-table td {
+                padding: 5px 4px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="hero">
+        <span class="sparkle">🤸</span>
+        <span class="sparkle">💪</span>
+        <span class="sparkle">⚡</span>
+        <div class="hero-content">
+            <span class="hero-badge">🤸 身体小勇士训练营</span>
+            <h1>我的感统超能力 <span class="gradient-text">修炼手册</span></h1>
+            <p class="hero-subtitle">嘿，小勇士！你的身体里藏着三个<strong>"超能力开关"</strong>——<br>平衡大师、力量大师、触觉大师。当它们都打开，你就能坐得住、写得稳、学得进！</p>
+            <div class="hero-tagline">
+                🧠 前庭觉醒 · 💪 本体力量 · 🤚 触觉灵敏 · 🎯 协调达人
+            </div>
+        </div>
+    </header>
+
+    <nav class="sticky-nav" id="stickyNav">
+        <div class="sticky-nav-inner">
+            <a href="#stage1" class="nav-star ns1">1</a>
+            <a href="#stage2" class="nav-star ns2">2</a>
+            <a href="#stage3" class="nav-star ns3">3</a>
+            <a href="#stage4" class="nav-star ns4">4</a>
+            <a href="#incentives">激励系统</a>
+            <a href="#toolkit-sec">工具包</a>
+            <a href="#footer-cta">小勇士寄语</a>
+        </div>
+    </nav>
+
+    <main class="container">
+
+        <div class="section-title">
+            <h2>🎮 欢迎来到身体小勇士训练营！</h2>
+            <p>这个超能力叫 —— <strong>身体智慧</strong>！让身体和大脑成为最佳搭档！</p>
+            <div class="section-divider"></div>
+        </div>
+        <div class="value-grid">
+            <div class="value-mini"><span class="icon-big">🪑</span><h4>上课坐得直</h4><p>不再被提醒"坐好"</p></div>
+            <div class="value-mini"><span class="icon-big">✍️</span><h4>写字手不酸</h4><p>字迹越来越工整</p></div>
+            <div class="value-mini"><span class="icon-big">😊</span><h4>不怕被人碰</h4><p>和小伙伴玩得更开心</p></div>
+            <div class="value-mini"><span class="icon-big">⚡</span><h4>身体协调</h4><p>运动能力超强</p></div>
+        </div>
+        <p style="text-align:center;font-size:0.95rem;color:#C06B4A;font-weight:700;margin-bottom:8px;">✨ 现在，让我们开启四阶身体超能力修炼吧！✨</p>
+
+        <!-- 第一阶 -->
+        <div class="level-card open" id="stage1">
+            <div class="level-header" onclick="toggleLevel(this)">
+                <div class="level-num ln1">1</div>
+                <div class="level-header-text">
+                    <h3>📖 第一阶：身体小觉醒</h3>
+                    <span class="level-sub">第1-2个月 · 让身体敢动</span>
+                </div>
+                <span class="level-badge badge-terra">身体小觉醒</span>
+                <span class="level-arrow">▼</span>
+            </div>
+            <div class="level-body">
+                <div class="task-box">
+                    <strong>📋 今日任务清单</strong>
+                    <div class="check-item"><span class="check-box"></span> 毛毛虫爬：用软毛刷轻轻刷手臂（舒服就继续，不舒服就说停）</div>
+                    <div class="check-item"><span class="check-box"></span> 不倒翁：盘腿坐，让爸妈轻轻推你前后摇</div>
+                    <div class="check-item"><span class="check-box"></span> 小飞机：趴着，让爸妈托起你的肚子，像飞机一样飞</div>
+                    <div class="check-item"><span class="check-box"></span> 大力士推墙：双手用力推墙，数10秒</div>
+                    <div class="check-item"><span class="check-box"></span> 身体地图：爸妈说身体部位，你快速指出来</div>
+                    <div class="check-item"><span class="check-box"></span> 完成所有游戏，获得"身体小觉醒"徽章</div>
+                </div>
+                <table class="mini-table">
+                    <thead><tr><th>日期</th><th>玩了什么游戏</th><th>我的感觉😊😐😢</th><th>想再玩吗</th></tr></thead>
+                    <tbody>
+                        <tr><td></td><td>毛毛虫爬</td><td>😊痒痒的</td><td>✅</td></tr>
+                        <tr><td></td><td>不倒翁</td><td>😊好玩</td><td>✅</td></tr>
+                        <tr><td></td><td>小飞机</td><td>😐有点怕</td><td>再试试</td></tr>
+                        <tr><td></td><td>推墙</td><td>😊有力量</td><td>✅</td></tr>
+                    </tbody>
+                </table>
+                <p style="font-size:0.78rem;color:#6B5A42;">告诉爸妈你<strong>最喜欢哪个</strong>，最不喜欢哪个！</p>
+                <div class="highlight-card highlight-terra">
+                    <strong>🗺️ 我的身体地图</strong><br>
+                    爸妈说部位你快速指：左耳朵👈 右膝盖🦵 后背中间🔙 肚子🤰<br>
+                    越来越快？你的<strong>身体地图</strong>越来越清晰！
+                </div>
+                <p style="font-weight:700;color:#C06B4A;text-align:center;font-size:0.88rem;">🎁 完成所有游戏不抗拒 → "身体小觉醒"徽章 → 晋升第二阶！</p>
+            </div>
+        </div>
+
+        <!-- 第二阶 -->
+        <div class="level-card" id="stage2">
+            <div class="level-header" onclick="toggleLevel(this)">
+                <div class="level-num ln2">2</div>
+                <div class="level-header-text">
+                    <h3>📖 第二阶：感统小勇士</h3>
+                    <span class="level-sub">第3-5个月 · 让身体会动</span>
+                </div>
+                <span class="level-badge badge-olive">感统小勇士</span>
+                <span class="level-arrow">▼</span>
+            </div>
+            <div class="level-body">
+                <div class="task-box">
+                    <strong>📋 今日任务清单</strong>
+                    <div class="check-item"><span class="check-box"></span> 旋转小超人：坐转椅慢转，正反各5圈</div>
+                    <div class="check-item"><span class="check-box"></span> 小滑板冒险：趴滑板上用手滑行</div>
+                    <div class="check-item"><span class="check-box"></span> 倒立小勇士：靠墙倒立，爸妈保护，坚持10秒</div>
+                    <div class="check-item"><span class="check-box"></span> 负重小战士：背书包（装2本书）走直线</div>
+                    <div class="check-item"><span class="check-box"></span> 盲眼寻宝：蒙眼摸出指定物品</div>
+                    <div class="check-item"><span class="check-box"></span> 触觉猜猜猜：闭眼摸材质，猜是什么</div>
+                </div>
+                <table class="mini-table">
+                    <thead><tr><th>挑战项目</th><th>我的纪录</th><th>目标</th><th>达成了吗</th></tr></thead>
+                    <tbody>
+                        <tr><td>单脚站立</td><td>左___秒/右___秒</td><td>10秒</td><td>□</td></tr>
+                        <tr><td>旋转小超人</td><td>___圈不晕</td><td>5圈</td><td>□</td></tr>
+                        <tr><td>倒立坚持</td><td>___秒</td><td>10秒</td><td>□</td></tr>
+                        <tr><td>触觉猜猜</td><td>猜对___种</td><td>3种</td><td>□</td></tr>
+                    </tbody>
+                </table>
+                <p style="font-size:0.78rem;color:#6B5A42;">每周挑战一次，看自己的<strong>进步</strong>！</p>
+                <div class="highlight-card highlight-olive">
+                    <strong>🔍 触觉猜猜乐</strong><br>
+                    蒙上眼睛摸一摸猜猜是什么：棉花→软软的✅ 砂纸→粗糙的✅ 金属勺→凉凉的✅<br>
+                    小手越来越灵敏，你就是<strong>"触觉侦探"</strong>！
+                </div>
+                <p style="font-weight:700;color:#8B9A5B;text-align:center;font-size:0.88rem;">🎁 完成5项以上挑战 → "感统小勇士"徽章 → 晋升第三阶！</p>
+            </div>
+        </div>
+
+        <!-- 第三阶 -->
+        <div class="level-card" id="stage3">
+            <div class="level-header" onclick="toggleLevel(this)">
+                <div class="level-num ln3">3</div>
+                <div class="level-header-text">
+                    <h3>📖 第三阶：协调小达人</h3>
+                    <span class="level-sub">第6-9个月 · 让身体协调动</span>
+                </div>
+                <span class="level-badge badge-sky">协调小达人</span>
+                <span class="level-arrow">▼</span>
+            </div>
+            <div class="level-body">
+                <div class="task-box">
+                    <strong>📋 今日任务清单</strong>
+                    <div class="check-item"><span class="check-box"></span> 接球平衡：单脚站立接爸妈抛来的球</div>
+                    <div class="check-item"><span class="check-box"></span> 听令行动：听复杂指令做动作</div>
+                    <div class="check-item"><span class="check-box"></span> 盲径行走：蒙眼走过不同材质的路</div>
+                    <div class="check-item"><span class="check-box"></span> 交叉拍膝：左手拍右膝，右手拍左膝</div>
+                    <div class="check-item"><span class="check-box"></span> 感统障碍赛：完成前庭-本体-触觉三关</div>
+                    <div class="check-item"><span class="check-box"></span> 家庭奥运会：和全家一起比赛</div>
+                </div>
+                <div class="highlight-card highlight-sky">
+                    <strong>🎯 感统障碍赛闯关</strong><br>
+                    第一关平衡桥：走过枕头平衡木→____秒🏅<br>
+                    第二关负重行：背书包绕过障碍→____秒🏅<br>
+                    第三关触觉箱：蒙眼摸出指定物品→____秒🏅<br>
+                    三关全部通关，你就是<strong>"感统障碍王"</strong>！
+                </div>
+                <div class="highlight-card highlight-sky">
+                    <strong>📸 我的技能展示墙</strong><br>
+                    把掌握的新技能拍照贴墙上：□单脚站立接球 □交叉拍膝 □蒙眼走直线 □听指令做动作 □其他____<br>
+                    每掌握一项贴一颗⭐！
+                </div>
+                <p style="font-weight:700;color:#5B8BA0;text-align:center;font-size:0.88rem;">🎁 完成所有整合挑战 → "协调小达人"徽章 → 晋升第四阶！</p>
+            </div>
+        </div>
+
+        <!-- 第四阶 -->
+        <div class="level-card" id="stage4">
+            <div class="level-header" onclick="toggleLevel(this)">
+                <div class="level-num ln4">4</div>
+                <div class="level-header-text">
+                    <h3>📖 第四阶：身体小专家</h3>
+                    <span class="level-sub">第10-12个月 · 让身体智慧动</span>
+                </div>
+                <span class="level-badge badge-amber">钻石小专家</span>
+                <span class="level-arrow">▼</span>
+            </div>
+            <div class="level-body">
+                <div class="highlight-card highlight-amber">
+                    <strong>🎨 项目1：游戏发明家</strong><br>
+                    设计一个感统游戏：游戏名称____ 需要材料____ 怎么玩____ 训练哪个超能力□平衡□力量□触觉<br>
+                    邀请全家试玩，你就是<strong>"游戏发明家"</strong>！
+                </div>
+                <div class="highlight-card highlight-amber">
+                    <strong>📖 项目2：感统秘籍制作人</strong><br>
+                    整理你最拿手的5个感统游戏做成一本《我的感统秘籍》：每个游戏配照片或图画、写出游戏步骤、写出这个游戏让你哪里变厉害了。
+                </div>
+                <div class="highlight-card highlight-amber">
+                    <strong>🎓 项目3：感统小教练</strong><br>
+                    选一个最拿手的游戏教给家人或朋友：我教的是____ 怎么讲解____ 怎么示范____ "学生"学会了吗____<br>
+                    录下教学视频，你就是<strong>"感统小教练"</strong>！
+                </div>
+                <div class="highlight-card highlight-amber">
+                    <strong>🏠 项目4：家庭感统设计师</strong><br>
+                    观察家里找出一个"让身体不舒服"的地方：问题____（如椅子太高脚够不到地）我的改造方案____ 改造后感觉____
+                </div>
+                <p style="font-weight:700;color:#C8941E;text-align:center;font-size:0.9rem;">👑 完成以上项目 → 🏅钻石身体小专家勋章 + 📜"身体智慧家"证书 + 🌟入选"身体小勇士名人堂"</p>
+            </div>
+        </div>
+
+        <!-- 激励系统 -->
+        <section id="incentives">
+            <div class="section-title">
+                <h2>🎁 学生端激励系统总览</h2>
+                <p>每一点身体进步都值得庆祝！</p>
+                <div class="section-divider"></div>
+            </div>
+            <div class="incentive-grid">
+                <div class="incentive-card"><span class="medal-icon">⚡</span><h5>即时反馈</h5><p>每日完成游戏→"感统能量"贴纸<br>打破个人纪录→"突破星"<br>掌握新技能→"技能星"</p></div>
+                <div class="incentive-card"><span class="medal-icon">🎯</span><h5>短期目标</h5><p>每周集满5张贴纸→周末选户外活动<br>每月完成阶段目标→获得阶段徽章（实物）</p></div>
+                <div class="incentive-card"><span class="medal-icon">🏆</span><h5>长期成就</h5><p>🥉铜牌身体小觉醒（第一阶完成）<br>🥈银牌感统小勇士（第二阶完成）<br>🥇金牌协调小达人（第三阶完成）<br>💎钻石身体小专家（第四阶完成）</p></div>
+            </div>
+        </section>
+
+        <!-- 工具包 -->
+        <section id="toolkit-sec">
+            <div class="section-title">
+                <h2>🛠️ 学生端工具包清单</h2>
+                <p>实体材料 + 数字/打印材料，全部简单易得</p>
+                <div class="section-divider"></div>
+            </div>
+            <div class="tool-grid">
+                <div class="tool-card">
+                    <h5>📦 实体材料</h5>
+                    <ul>
+                        <li>感统游戏记录本</li>
+                        <li>能力纪录榜（可擦写）</li>
+                        <li>触觉猜猜乐工具包（不同材质卡片）</li>
+                        <li>感统障碍赛通关卡</li>
+                        <li>技能展示墙贴纸</li>
+                        <li>《我的感统秘籍》制作材料</li>
+                        <li>级别徽章（4枚）</li>
+                        <li>年度奖牌</li>
+                    </ul>
+                </div>
+                <div class="tool-card">
+                    <h5>💻 数字/打印材料（家长协助）</h5>
+                    <ul>
+                        <li>感统游戏动作图示</li>
+                        <li>安全提示卡</li>
+                        <li>能力纪录模板</li>
+                        <li>游戏发明家设计卡</li>
+                        <li>家庭感统改造方案模板</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- 结尾寄语 -->
+        <div class="footer-cta" id="footer-cta">
+            <span class="big-emoji">🤸</span>
+            <h3>记住，身体小勇士：</h3>
+            <p>你的身体是你最忠实的朋友，学会和它对话，它会给你无穷的力量。<br>每一次旋转、每一次触摸、每一次用力，都是在给大脑发送"我准备好了"的信号。</p>
+            <p class="quote">"身体越协调，大脑越聪明！"</p>
+        </div>
+
+    </main>
+
+    <a href="#" class="scroll-top" id="scrollTop" title="回到顶部">↑</a>
+
+    <script>
+        function toggleLevel(header) { header.parentElement.classList.toggle('open'); }
+        const scrollTopBtn = document.getElementById('scrollTop');
+        window.addEventListener('scroll', () => { if (window.scrollY > 500) { scrollTopBtn.classList.add('visible'); } else { scrollTopBtn.classList.remove('visible'); } const sections = document.querySelectorAll('section[id], .level-card[id]'); const navLinks = document.querySelectorAll('.sticky-nav a'); let currentId = ''; sections.forEach(section => { const rect = section.getBoundingClientRect(); if (rect.top <= 140) { currentId = section.id; } }); navLinks.forEach(link => { link.classList.remove('active'); if (link.getAttribute('href') === '#' + currentId) { link.classList.add('active'); } }); });
+        document.querySelectorAll('.sticky-nav a[href^="#"]').forEach(link => { link.addEventListener('click', function(e) { e.preventDefault(); const target = document.querySelector(this.getAttribute('href')); if (target) { const navHeight = document.querySelector('.sticky-nav').offsetHeight; const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - navHeight - 8; window.scrollTo({ top: targetPosition, behavior: 'smooth' }); } }); });
+        scrollTopBtn.addEventListener('click', function(e) { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); });
+        document.addEventListener('DOMContentLoaded', () => { const firstCard = document.getElementById('stage1'); if (firstCard && !firstCard.classList.contains('open')) { firstCard.classList.add('open'); } });
+    </script>
+</body>
+</html>

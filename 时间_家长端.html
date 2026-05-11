@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>时间感知模块 · 家庭版 | 四阶时间智慧养成系统</title>
+    <style>
+        :root {
+            --time-blue: #4A7FA5;
+            --time-blue-light: #F2F7FB;
+            --time-teal: #3D8B7B;
+            --time-teal-light: #F2F9F7;
+            --time-amber: #E8A840;
+            --time-amber-light: #FFF9EB;
+            --time-coral: #E07088;
+            --time-coral-light: #FFF5F7;
+            --time-sage: #6B8A6F;
+            --time-sage-light: #F4F8F3;
+            --text: #2E2620;
+            --text-light: #5C4F45;
+            --text-lighter: #8C7E6F;
+            --bg: #FDFBF8;
+            --card-bg: #FFFFFF;
+            --border: #E6DDD0;
+            --shadow-sm: 0 1px 4px rgba(50, 30, 10, 0.04);
+            --shadow: 0 4px 18px rgba(50, 30, 10, 0.06);
+            --shadow-lg: 0 10px 30px rgba(50, 30, 10, 0.10);
+            --radius-sm: 10px;
+            --radius: 16px;
+            --radius-lg: 22px;
+            --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Sans SC', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.75;
+            -webkit-font-smoothing: antialiased;
+            scroll-behavior: smooth;
+            font-size: 15px;
+            background-image: radial-gradient(circle, rgba(74, 127, 165, 0.02) 1px, transparent 1px), radial-gradient(circle, rgba(61, 139, 123, 0.02) 1px, transparent 1px);
+            background-size: 32px 32px, 44px 44px;
+            background-position: 0 0, 22px 22px;
+        }
+        .hero {
+            background: linear-gradient(165deg, #F2F7FB 0%, #FDFBF8 20%, #F2F9F7 40%, #FDFBF8 60%, #FFF9EB 80%, #FDFBF8 100%);
+            padding: 50px 20px 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 1px solid #E6DDD0;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -100px;
+            right: -70px;
+            width: 340px;
+            height: 340px;
+            background: radial-gradient(circle, rgba(74, 127, 165, 0.05) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -80px;
+            left: -60px;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(232, 168, 64, 0.04) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 760px;
+            margin: 0 auto;
+        }
+        .hero-badge {
+            display: inline-block;
+            background: #fff;
+            color: #4A7FA5;
+            font-size: 0.82rem;
+            font-weight: 700;
+            padding: 6px 20px;
+            border-radius: 22px;
+            letter-spacing: 0.04em;
+            margin-bottom: 16px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid #D0DCE8;
+        }
+        .hero h1 {
+            font-size: 2.3rem;
+            font-weight: 800;
+            letter-spacing: -0.015em;
+            color: #2E2620;
+            margin-bottom: 8px;
+            line-height: 1.3;
+        }
+        .hero h1 span {
+            background: linear-gradient(135deg, #4A7FA5, #3D8B7B, #E8A840);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .hero-subtitle {
+            font-size: 0.95rem;
+            color: #5C4F45;
+            font-weight: 400;
+            margin-bottom: 8px;
+            line-height: 1.6;
+        }
+        .hero-tagline {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #fff;
+            padding: 9px 22px;
+            border-radius: 24px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #2E2620;
+            box-shadow: var(--shadow);
+            border: 1px solid #E6DDD0;
+        }
+        .sticky-nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(253, 251, 248, 0.9);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid #E6DDD0;
+            padding: 0 10px;
+            overflow-x: auto;
+            white-space: nowrap;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        .sticky-nav::-webkit-scrollbar {
+            display: none;
+        }
+        .sticky-nav-inner {
+            max-width: 1080px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 2px;
+            padding: 7px 0;
+        }
+        .sticky-nav a {
+            display: inline-block;
+            text-decoration: none;
+            font-size: 0.74rem;
+            font-weight: 500;
+            color: #5C4F45;
+            padding: 6px 11px;
+            border-radius: 16px;
+            transition: var(--transition);
+            flex-shrink: 0;
+            letter-spacing: 0.02em;
+        }
+        .sticky-nav a:hover,
+        .sticky-nav a.active {
+            background: #E8F0F5;
+            color: #4A7FA5;
+            font-weight: 600;
+        }
+        .sticky-nav a.nav-dot {
+            width: 28px;
+            height: 28px;
+            padding: 0;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.7rem;
+            color: #fff;
+            flex-shrink: 0;
+        }
+        .nd1 {
+            background: #4A7FA5;
+        }
+        .nd2 {
+            background: #3D8B7B;
+        }
+        .nd3 {
+            background: #E8A840;
+        }
+        .nd4 {
+            background: #E07088;
+        }
+        .container {
+            max-width: 1080px;
+            margin: 0 auto;
+            padding: 14px 16px 50px;
+        }
+        .section-title {
+            text-align: center;
+            margin: 44px 0 18px;
+        }
+        .section-title h2 {
+            font-size: 1.45rem;
+            font-weight: 700;
+            letter-spacing: -0.006em;
+            margin-bottom: 4px;
+            color: #2E2620;
+        }
+        .section-title p {
+            color: #8C7E6F;
+            font-size: 0.84rem;
+        }
+        .section-divider {
+            width: 48px;
+            height: 3px;
+            border-radius: 2px;
+            margin: 8px auto 0;
+            background: linear-gradient(90deg, #4A7FA5, #3D8B7B, #E8A840);
+        }
+        .stage-card {
+            background: #fff;
+            border-radius: var(--radius-lg);
+            margin-bottom: 18px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            border: 1px solid #E6DDD0;
+            transition: var(--transition);
+        }
+        .stage-card:hover {
+            box-shadow: var(--shadow-lg);
+        }
+        .stage-header {
+            padding: 18px 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            user-select: none;
+        }
+        .stage-num {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1.1rem;
+            color: #fff;
+            flex-shrink: 0;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+        }
+        .sn1 {
+            background: #4A7FA5;
+        }
+        .sn2 {
+            background: #3D8B7B;
+        }
+        .sn3 {
+            background: #E8A840;
+        }
+        .sn4 {
+            background: #E07088;
+        }
+        .stage-header-text h3 {
+            font-size: 1rem;
+            font-weight: 700;
+            line-height: 1.3;
+            color: #2E2620;
+        }
+        .stage-header-text .stage-sub {
+            font-size: 0.74rem;
+            color: #8C7E6F;
+        }
+        .stage-meta {
+            margin-left: auto;
+            text-align: right;
+            flex-shrink: 0;
+            font-size: 0.72rem;
+            color: #8C7E6F;
+            line-height: 1.4;
+        }
+        .stage-arrow {
+            font-size: 1rem;
+            transition: var(--transition);
+            color: #8C7E6F;
+            flex-shrink: 0;
+            margin-left: 2px;
+        }
+        .stage-card.open .stage-arrow {
+            transform: rotate(180deg);
+        }
+        .stage-body {
+            display: none;
+            padding: 0 20px 20px;
+            border-top: 1px solid #E6DDD0;
+            padding-top: 16px;
+            animation: fadeSlideIn 0.3s ease;
+        }
+        .stage-card.open .stage-body {
+            display: block;
+        }
+        @keyframes fadeSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-5px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .stage-two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+        }
+        @media (max-width: 680px) {
+            .stage-two-col {
+                grid-template-columns: 1fr;
+            }
+        }
+        .stage-col {
+            border-radius: var(--radius-sm);
+            padding: 16px;
+            border: 1px solid #E6DDD0;
+            background: #FEFCFA;
+        }
+        .stage-col.parent-do {
+            border-left: 4px solid #6B8A6F;
+            background: #F9FBF7;
+        }
+        .stage-col.guide-need {
+            border-left: 4px solid #C48B3A;
+            background: #FFFDF8;
+        }
+        .stage-col h5 {
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #2E2620;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .stage-col ul {
+            list-style: none;
+            padding: 0;
+        }
+        .stage-col ul li {
+            font-size: 0.8rem;
+            color: #5C4F45;
+            padding: 3px 0 3px 16px;
+            position: relative;
+            line-height: 1.6;
+        }
+        .stage-col ul li::before {
+            content: '•';
+            position: absolute;
+            left: 1px;
+            color: #BFB8A8;
+            font-weight: 700;
+        }
+        .highlight-box {
+            border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+            padding: 10px 14px;
+            margin: 8px 0;
+            font-size: 0.78rem;
+            color: #5C4F45;
+            line-height: 1.6;
+        }
+        .highlight-blue {
+            background: #F5F8FB;
+            border-left: 3px solid #4A7FA5;
+        }
+        .highlight-teal {
+            background: #F2F9F7;
+            border-left: 3px solid #3D8B7B;
+        }
+        .highlight-gold {
+            background: #FFFDF8;
+            border-left: 3px solid #C48B3A;
+        }
+        .highlight-coral {
+            background: #FFF5F7;
+            border-left: 3px solid #E07088;
+        }
+        .tag-xs {
+            display: inline-block;
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 3px 9px;
+            border-radius: 10px;
+            margin: 2px;
+            letter-spacing: 0.02em;
+            background: #E8F0F5;
+            color: #4A7FA5;
+        }
+        .tag-xs.teal {
+            background: #E0F0EF;
+            color: #3D8B7B;
+        }
+        .tag-xs.amber {
+            background: #FFF8EF;
+            color: #C48B3A;
+        }
+        .tag-xs.coral {
+            background: #FFE8EC;
+            color: #E07088;
+        }
+        .path-table-wrap {
+            overflow-x: auto;
+            margin: 14px 0;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-sm);
+            border: 1px solid #E6DDD0;
+            background: #fff;
+        }
+        .path-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.76rem;
+            min-width: 650px;
+        }
+        .path-table th {
+            background: #F5F8FB;
+            padding: 10px 8px;
+            text-align: center;
+            font-weight: 700;
+            font-size: 0.72rem;
+            color: #4A7FA5;
+            letter-spacing: 0.03em;
+            border-bottom: 2px solid #D0DCE8;
+        }
+        .path-table td {
+            padding: 8px;
+            text-align: center;
+            border-bottom: 1px solid #F0EBE2;
+            color: #3D3226;
+            font-size: 0.74rem;
+            vertical-align: middle;
+        }
+        .path-table tr:last-child td {
+            border-bottom: none;
+        }
+        .stage-dot-cell {
+            display: inline-block;
+            width: 28px;
+            height: 28px;
+            line-height: 28px;
+            border-radius: 50%;
+            color: #fff;
+            font-weight: 700;
+            font-size: 0.75rem;
+            text-align: center;
+        }
+        .scene-card {
+            background: #fff;
+            border: 1px solid #E6DDD0;
+            border-radius: var(--radius);
+            margin-bottom: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+        }
+        .scene-header {
+            padding: 14px 18px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.86rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            user-select: none;
+            background: #FDFBF8;
+            transition: var(--transition);
+        }
+        .scene-header:hover {
+            background: #F5F8FB;
+        }
+        .scene-arrow {
+            transition: var(--transition);
+            font-size: 0.85rem;
+            color: #8C7E6F;
+        }
+        .scene-card.open .scene-arrow {
+            transform: rotate(180deg);
+        }
+        .scene-body {
+            display: none;
+            padding: 0 18px 14px;
+            border-top: 1px solid #E6DDD0;
+            padding-top: 12px;
+            font-size: 0.8rem;
+            color: #5C4F45;
+            line-height: 1.65;
+            animation: fadeSlideIn 0.3s ease;
+        }
+        .scene-card.open .scene-body {
+            display: block;
+        }
+        .checklist-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 12px;
+        }
+        .checklist-card {
+            background: #fff;
+            border: 1px solid #E6DDD0;
+            border-radius: var(--radius);
+            padding: 16px;
+            box-shadow: var(--shadow-sm);
+        }
+        .checklist-card h5 {
+            font-weight: 700;
+            font-size: 0.85rem;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: #2E2620;
+        }
+        .checklist-card ul {
+            list-style: none;
+            padding: 0;
+        }
+        .checklist-card ul li {
+            font-size: 0.78rem;
+            color: #5C4F45;
+            padding: 2px 0 2px 16px;
+            position: relative;
+            line-height: 1.55;
+        }
+        .checklist-card ul li::before {
+            content: '☐';
+            position: absolute;
+            left: 0;
+            color: #BFB8A8;
+            font-size: 0.7rem;
+            top: 3px;
+        }
+        .tool-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 12px;
+        }
+        .tool-card {
+            background: #fff;
+            border: 1px solid #E6DDD0;
+            border-radius: var(--radius);
+            padding: 16px;
+            box-shadow: var(--shadow-sm);
+        }
+        .tool-card h5 {
+            font-weight: 700;
+            font-size: 0.85rem;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .tool-card ul {
+            list-style: none;
+            padding: 0;
+        }
+        .tool-card ul li {
+            font-size: 0.78rem;
+            color: #5C4F45;
+            padding: 2px 0 2px 16px;
+            position: relative;
+            line-height: 1.55;
+        }
+        .tool-card ul li::before {
+            content: '📎';
+            position: absolute;
+            left: 0;
+            font-size: 0.6rem;
+            top: 4px;
+        }
+        .cost-badge {
+            display: inline-block;
+            background: #E0F0EF;
+            color: #3D8B7B;
+            font-size: 0.65rem;
+            font-weight: 600;
+            padding: 2px 8px;
+            border-radius: 10px;
+            margin-left: 4px;
+        }
+        .footer-cta {
+            text-align: center;
+            padding: 36px 20px;
+            background: linear-gradient(160deg, #F5F8FB, #FDFBF8, #F2F9F7);
+            border-radius: var(--radius-lg);
+            margin-top: 28px;
+            border: 1px solid #E6DDD0;
+        }
+        .footer-cta h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+            color: #2E2620;
+        }
+        .footer-cta p {
+            color: #8C7E6F;
+            margin-bottom: 4px;
+            font-size: 0.82rem;
+            line-height: 1.6;
+        }
+        .scroll-top {
+            position: fixed;
+            bottom: 22px;
+            right: 22px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #fff;
+            border: 1px solid #E6DDD0;
+            box-shadow: var(--shadow);
+            cursor: pointer;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 99;
+            transition: var(--transition);
+            opacity: 0;
+            pointer-events: none;
+            text-decoration: none;
+            color: #4A7FA5;
+        }
+        .scroll-top.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .scroll-top:hover {
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-2px);
+        }
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 1.3rem;
+            }
+            .hero-subtitle {
+                font-size: 0.8rem;
+            }
+            .stage-header {
+                flex-wrap: wrap;
+                gap: 6px;
+                padding: 14px;
+            }
+            .stage-meta {
+                margin-left: 0;
+                text-align: left;
+                width: 100%;
+            }
+            .stage-body {
+                padding: 0 14px 16px;
+                padding-top: 12px;
+            }
+            .stage-two-col {
+                grid-template-columns: 1fr;
+            }
+            .container {
+                padding: 8px 8px 36px;
+            }
+            .sticky-nav a {
+                font-size: 0.65rem;
+                padding: 5px 6px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="hero">
+        <div class="hero-content">
+            <span class="hero-badge">⏰ 家庭版 · 四阶时间智慧</span>
+            <h1>时间感知模块 <span>家庭培养系统</span></h1>
+            <p class="hero-subtitle">家长带领孩子玩时间游戏，我们提供专业诊断与个性化指导<br>从“感受时间”到“预估时间”到“适应变化”到“掌控时间”</p>
+            <div class="hero-tagline">
+                ⌛ 身体时钟 · 🎯 任务预估 · 🌊 时间弹性 · 🧠 时间智慧
+            </div>
+        </div>
+    </header>
+
+    <nav class="sticky-nav" id="stickyNav">
+        <div class="sticky-nav-inner">
+            <a href="#stage1" class="nav-dot nd1">1</a>
+            <a href="#stage2" class="nav-dot nd2">2</a>
+            <a href="#stage3" class="nav-dot nd3">3</a>
+            <a href="#stage4" class="nav-dot nd4">4</a>
+            <a href="#path">进阶路径</a>
+            <a href="#scenes">常见问题</a>
+            <a href="#checklist">核对清单</a>
+            <a href="#toolkit">工具包</a>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div class="section-title">
+            <h2>📊 四阶家庭操作体系</h2>
+            <p>每阶清晰区分“家长能做的”与“需要我指导的”，边界明确</p>
+            <div class="section-divider"></div>
+        </div>
+
+        <!-- 第一阶 -->
+        <div class="stage-card open" id="stage1">
+            <div class="stage-header" onclick="toggleStage(this)">
+                <div class="stage-num sn1">1</div>
+                <div class="stage-header-text">
+                    <h3>身体时钟唤醒期 · 感受时间的“快”与“慢”</h3>
+                    <span class="stage-sub">建立内在时间感知基础</span>
+                </div>
+                <div class="stage-meta">第1-2个月<br>每日12分钟</div>
+                <span class="stage-arrow">▼</span>
+            </div>
+            <div class="stage-body">
+                <div class="stage-two-col">
+                    <div class="stage-col parent-do">
+                        <h5>✅ 家长能做的（简单操作）</h5>
+                        <ul>
+                            <li><strong>准备三样工具（5分钟）：</strong>三个沙漏（1分钟、3分钟、5分钟，约35元）、手机节拍器APP（免费）、红黄绿三色手环或贴纸</li>
+                            <li><strong>沙漏盲猜（3分钟）：</strong>孩子闭眼，家长翻动1分钟沙漏。孩子说“停”时睁眼看沙漏还剩多少。记录早了还是晚了差几秒</li>
+                            <li><strong>身体节奏（4分钟）：</strong>节拍器调60下/分钟像心跳，跟着拍手跺脚点头。闭眼继续拍看能跟对几拍</li>
+                            <li><strong>精力标记（3分钟）：</strong>三个手环——红（很累）、黄（一般）、绿（精力满满）。早中晚各戴一次拍照记录</li>
+                            <li><strong>时间对比游戏（2分钟）：</strong>“快乐1分钟”玩乐高，“无聊1分钟”干坐着。讨论为什么同样1分钟感觉不一样</li>
+                            <li><strong>每周小挑战：</strong>周一猜日常活动要多久、周三不用钟表靠感觉叫醒家人、周五做“时间感官瓶”</li>
+                        </ul>
+                    </div>
+                    <div class="stage-col guide-need">
+                        <h5>🎓 需要我指导的（核心价值）</h5>
+                        <div class="highlight-box highlight-gold">
+                            <strong>✅ 时间感知类型诊断：</strong>每周提交3次沙漏盲猜记录照片，我分析孩子是“高估型”还是“低估型”？误差范围多少秒？提供改进重点建议。
+                        </div>
+                        <div class="highlight-box highlight-gold">
+                            <strong>✅ 精力曲线科学解读：</strong>通过一周手环照片分析每日最佳学习时段（绿手环集中时段）、精力低谷规律（红手环出现时间）、影响精力的可能因素。提供个性化作息调整建议。
+                        </div>
+                        <div class="highlight-box highlight-gold">
+                            <strong>✅ 时间感知偏差纠正方案：</strong>高估型（总觉时间慢）→快速任务游戏；低估型（总觉时间快）→慢速专注游戏；不稳定型→节奏稳定游戏。提供10个专项训练游戏卡片。
+                        </div>
+                    </div>
+                </div>
+                <p style="font-size:0.76rem;color:#8C7E6F;margin-top:8px;">📦 <strong>工具包：</strong>三沙漏套装（1/3/5分钟约35元） · 红黄绿手环或贴纸 · 手机节拍器APP · 时间感官瓶材料（塑料瓶+水+亮片）</p>
+            </div>
+        </div>
+
+        <!-- 第二阶 -->
+        <div class="stage-card" id="stage2">
+            <div class="stage-header" onclick="toggleStage(this)">
+                <div class="stage-num sn2">2</div>
+                <div class="stage-header-text">
+                    <h3>任务时间预估期 · 猜猜要多久？</h3>
+                    <span class="stage-sub">建立任务时间估算能力</span>
+                </div>
+                <div class="stage-meta">第3-5个月<br>每日15分钟</div>
+                <span class="stage-arrow">▼</span>
+            </div>
+            <div class="stage-body">
+                <div class="stage-two-col">
+                    <div class="stage-col parent-do">
+                        <h5>✅ 家长能做的（简单操作）</h5>
+                        <ul>
+                            <li><strong>工具升级：</strong>可视化计时器（带进度条约50元）、“时间预估卡”（打印模板）、彩色圆形磁贴（白板用）、手机时间日志记录</li>
+                            <li><strong>预估练习（5分钟）：</strong>选一件事（整理书包、写5个生字、读一页书）。孩子猜要几分钟？实际做计时记录差多少。误差小于1分钟得星</li>
+                            <li><strong>时间饼图（5分钟）：</strong>白板画大圆=1小时。用磁贴分配作业、阅读、玩、休息各占多少。实际做后对比计划和实际的差多少</li>
+                            <li><strong>时间块体验（3分钟）：</strong>试试“15分钟能做什么？”记录成果建立“15分钟产出标准”</li>
+                            <li><strong>时间流水账（2分钟）：</strong>简单画“今天时间去哪了？”找出“莫名其妙没了的10分钟”</li>
+                            <li><strong>周末时间游戏：</strong>周六预估挑战赛、周日时间侦探</li>
+                        </ul>
+                    </div>
+                    <div class="stage-col guide-need">
+                        <h5>🎓 需要我指导的（核心价值）</h5>
+                        <div class="highlight-box highlight-gold">
+                            <strong>✅ 预估能力发展分析：</strong>每月提交预估记录表，分析哪些任务预估最准、预估准确率提升曲线、孩子预估时的思考模式。提供下月重点训练任务清单。
+                        </div>
+                        <div class="highlight-box highlight-gold">
+                            <strong>✅ 个性化时间块设计：</strong>测专注时长——观察孩子自然专注能持续多久。确定“舒服的专注块”设计休息间隔。提供“5分钟休息菜单”8种快速恢复活动。
+                        </div>
+                        <div class="highlight-box highlight-gold">
+                            <strong>✅ 时间规划思维启蒙：</strong>任务分解技术（作业分解卡片）、时间缓冲策略（“多加5分钟”原则）、优先级简单判断（“任务选择转盘”）。
+                        </div>
+                    </div>
+                </div>
+                <p style="font-size:0.76rem;color:#8C7E6F;margin-top:8px;">📦 <strong>工具包：</strong>可视化计时器（约50元） · 白板+圆形磁贴 · 时间预估卡片（打印） · 时间日志笔记本</p>
+            </div>
+        </div>
+
+        <!-- 第三阶 -->
+        <div class="stage-card" id="stage3">
+            <div class="stage-header" onclick="toggleStage(this)">
+                <div class="stage-num sn3">3</div>
+                <div class="stage-header-text">
+                    <h3>时间弹性训练期 · 时间变变变</h3>
+                    <span class="stage-sub">培养时间适应与压力管理</span>
+                </div>
+                <div class="stage-meta">第6-9个月<br>每周弹性游戏</div>
+                <span class="stage-arrow">▼</span>
+            </div>
+            <div class="stage-body">
+                <div class="stage-two-col">
+                    <div class="stage-col parent-do">
+                        <h5>✅ 家长能做的（简单操作）</h5>
+                        <ul>
+                            <li><strong>弹性训练工具：</strong>可调计时器（能随时加时减时）、“时间意外卡”（打印裁剪）、简单多任务材料、考场环境音频</li>
+                            <li><strong>周一压缩日：</strong>正常做一件事记时间，同样事少给20%时间。讨论时间少了做法有什么变化</li>
+                            <li><strong>周二扩展日：</strong>简单任务多给一倍时间。观察多出来的时间怎么用？反思是好好用了还是浪费了</li>
+                            <li><strong>周三中断恢复：</strong>孩子专注时家长“打扰”。计时从打扰到重新专注要多久。练习快速找回思路的方法</li>
+                            <li><strong>周四任务切换：</strong>两件事轮流做。记录切换时卡不卡？找找切换几次效率最高</li>
+                            <li><strong>周五压力体验：</strong>播放“考场音频”在声音中做简单题。讨论有声音和没声音感觉一样吗</li>
+                        </ul>
+                    </div>
+                    <div class="stage-col guide-need">
+                        <h5>🎓 需要我指导的（核心价值）</h5>
+                        <div class="highlight-box highlight-gold">
+                            <strong>✅ 时间弹性能力测评：</strong>压缩适应度测试（找出“最佳压力区”）、中断恢复效能评估（提供“最小化打扰策略”）、多任务处理能力分析（提供“任务搭配建议”）。
+                        </div>
+                        <div class="highlight-box highlight-gold">
+                            <strong>✅ 时间压力管理训练：</strong>压力信号识别（“压力预警清单”）、考场时间策略（“考试时间分配公式”儿童版）、压力后恢复（建立“压力-恢复”节奏）。
+                        </div>
+                        <div class="highlight-box highlight-gold">
+                            <strong>✅ 时间灵活性思维培养：</strong>时间相对性体验、时间资源观建立（“时间用了就没了”）、未来时间感知训练（延迟满足游戏）。
+                        </div>
+                    </div>
+                </div>
+                <p style="font-size:0.76rem;color:#8C7E6F;margin-top:8px;">📦 <strong>工具包：</strong>可调计时器（约25元） · 时间意外卡片（打印裁剪） · 多任务练习材料 · 压力音频（我提供）</p>
+            </div>
+        </div>
+
+        <!-- 第四阶 -->
+        <div class="stage-card" id="stage4">
+            <div class="stage-header" onclick="toggleStage(this)">
+                <div class="stage-num sn4">4</div>
+                <div class="stage-header-text">
+                    <h3>时间智慧应用期 · 我是时间小主人</h3>
+                    <span class="stage-sub">从游戏到能力到智慧</span>
+                </div>
+                <div class="stage-meta">第10-12个月<br>每月一个项目</div>
+                <span class="stage-arrow">▼</span>
+            </div>
+            <div class="stage-body">
+                <div class="stage-two-col">
+                    <div class="stage-col parent-do">
+                        <h5>✅ 家长能做的（简单操作）</h5>
+                        <ul>
+                            <li><strong>智慧应用工具：</strong>家庭周计划白板（全家人一起写）、时间选择卡片、“我的时间成果册”、家庭时间庆祝小道具</li>
+                            <li><strong>项目1我的时间说明书：</strong>分析我什么时候学得最好？总结我用什么方法记时间最准？制作个人专属时间使用指南</li>
+                            <li><strong>项目2家庭时间协调员：</strong>观察全家人时间习惯，找出家庭时间冲突点，设计和谐方案，主持第一次家庭时间会议</li>
+                            <li><strong>项目3时间创意师：</strong>创作时间主题画或故事，设计时间管理小游戏，制作教别人的时间训练工具包</li>
+                            <li><strong>项目4长期规划师：</strong>制定下周详细计划，规划下个月目标，制作年度时间愿景板</li>
+                        </ul>
+                    </div>
+                    <div class="stage-col guide-need">
+                        <h5>🎓 需要我指导的（核心价值）</h5>
+                        <div class="highlight-box highlight-gold">
+                            <strong>✅ 时间智慧综合评估：</strong>通过12个月数据提供《时间智慧报告》——感知精度、规划能力、弹性指数、时间价值观。提供发展建议。
+                        </div>
+                        <div class="highlight-box highlight-gold">
+                            <strong>✅ 元时间能力培养：</strong>时间监控训练（感知“现在时间用得好不好”）、个人时间策略库（建立“我的时间工具箱”）、时间教学能力启蒙。
+                        </div>
+                        <div class="highlight-box highlight-gold">
+                            <strong>✅ 时间与人生启蒙：</strong>目标-时间连接（大目标变小步骤）、时间价值观深化（平衡学玩休息家人）、文化时间观拓展（自然节律感知）。
+                        </div>
+                    </div>
+                </div>
+                <p style="font-size:0.76rem;color:#8C7E6F;margin-top:8px;">📦 <strong>工具包：</strong>家庭计划白板贴（约15元） · 时间选择卡片 · 项目制作材料 · 庆祝小道具</p>
+            </div>
+        </div>
+
+        <!-- 进阶路径图 -->
+        <section id="path">
+            <div class="section-title">
+                <h2>📈 四阶进阶路径图</h2>
+                <p>升级标准清晰，家长可自行判断</p>
+                <div class="section-divider"></div>
+            </div>
+            <div class="path-table-wrap">
+                <table class="path-table">
+                    <thead><tr><th>阶段</th><th>核心目标</th><th>升级标准（家长可判断）</th><th>建议时间</th></tr></thead>
+                    <tbody>
+                        <tr><td><span class="stage-dot-cell" style="background:#4A7FA5;">1</span></td><td>身体感受时间</td><td>1分钟盲猜误差小于10秒；能跟随节拍器1分钟；能说出精力高低时段</td><td>1-2个月</td></tr>
+                        <tr><td><span class="stage-dot-cell" style="background:#3D8B7B;">2</span></td><td>任务预估时间</td><td>常见任务预估误差小于2分钟；能画出简单时间饼图</td><td>3-5个月</td></tr>
+                        <tr><td><span class="stage-dot-cell" style="background:#E8A840;">3</span></td><td>适应时间变化</td><td>压缩20%时间能完成任务；中断恢复时间小于2分钟</td><td>6-9个月</td></tr>
+                        <tr><td><span class="stage-dot-cell" style="background:#E07088;">4</span></td><td>自主掌控时间</td><td>能制定并执行周计划；完成时间项目；能教别人时间方法</td><td>10-12个月</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- 常见问题 -->
+        <section id="scenes">
+            <div class="section-title">
+                <h2>🧩 家庭常见问题解决方案</h2>
+                <p>三个高频困境，家长能做的 + 需要我指导的</p>
+                <div class="section-divider"></div>
+            </div>
+            <div class="scene-card">
+                <div class="scene-header" onclick="toggleScene(this)">😴 问题一：“孩子说‘时间好无聊’” <span class="scene-arrow">▼</span></div>
+                <div class="scene-body"><strong>✅ 家长能做的：</strong>从最好玩的事开始（计时玩乐高）；用身体感知（闭眼听音乐猜过了多久）；挑战游戏（打破自己的时间记录）。<br><strong>🎓 需要我指导的：</strong>学习动机诊断与激发方案；游戏化时间训练设计；个性化兴趣切入点寻找。</div>
+            </div>
+            <div class="scene-card">
+                <div class="scene-header" onclick="toggleScene(this)">🤷 问题二：“预估永远不准，孩子就乱猜” <span class="scene-arrow">▼</span></div>
+                <div class="scene-body"><strong>✅ 家长能做的：</strong>从最简单开始（预估刷牙时间）；用参照物（这个作业和昨天那个差不多长）；记录成功（只要比上次准一点就庆祝）。<br><strong>🎓 需要我指导的：</strong>预估能力专项评估；从乱猜到有依据的转化训练；成功体验的阶梯设计。</div>
+            </div>
+            <div class="scene-card">
+                <div class="scene-header" onclick="toggleScene(this)">😰 问题三：“一说时间孩子就焦虑” <span class="scene-arrow">▼</span></div>
+                <div class="scene-body"><strong>✅ 家长能做的：</strong>去掉压力词（不说“只剩5分钟了”）；用积极语言（“我们有5分钟可以……”）；从充裕时间开始训练。<br><strong>🎓 需要我指导的：</strong>时间焦虑根源分析；减压训练方案；积极时间语言库提供。</div>
+            </div>
+        </section>
+
+        <!-- 月度核对清单 -->
+        <section id="checklist">
+            <div class="section-title">
+                <h2>📋 家长月度核对清单</h2>
+                <p>每月最后一天花15分钟</p>
+                <div class="section-divider"></div>
+            </div>
+            <div class="checklist-grid">
+                <div class="checklist-card"><h5>📊 成果整理</h5><ul><li>整理沙漏盲猜记录</li><li>回看精力标记照片</li><li>对比预估准确率变化</li><li>标记掌握的时间策略</li></ul></div>
+                <div class="checklist-card"><h5>📈 数据统计</h5><ul><li>时间感知误差变化</li><li>任务预估准确率</li><li>中断恢复时间</li><li>周计划执行率</li></ul></div>
+                <div class="checklist-card"><h5>🔍 问题梳理</h5><ul><li>本月最大困难是什么？</li><li>哪种游戏最有效？</li><li>需要厉老师帮助的具体问题？</li></ul></div>
+                <div class="checklist-card"><h5>🎯 下月规划</h5><ul><li>是否进阶？</li><li>需要什么新工具？</li><li>设定一个可测量的小目标</li></ul></div>
+            </div>
+        </section>
+
+        <!-- 工具包总览 -->
+        <section id="toolkit">
+            <div class="section-title">
+                <h2>🛠️ 家庭工具包总览</h2>
+                <p>物理工具成本低于120元，数字资源全部由我提供</p>
+                <div class="section-divider"></div>
+            </div>
+            <div class="tool-grid">
+                <div class="tool-card"><h5>📦 物理工具 <span class="cost-badge">&lt;120元</span></h5><ul><li>第一阶：三沙漏套装+手环贴纸+感官瓶材料（约40元）</li><li>第二阶：可视化计时器+白板磁贴+预估卡片（约60元）</li><li>第三阶：可调计时器+意外卡片+多任务材料（约35元）</li><li>第四阶：家庭计划白板贴+选择卡片+项目材料+庆祝道具（约25元）</li></ul></div>
+                <div class="tool-card"><h5>💻 数字资源（我提供）</h5><ul><li>记录模板：时间感知记录表、预估练习模板、时间使用分析表、项目计划模板</li><li>学习材料：每阶核心要点视频微课、时间游戏带领音频指导、成功案例</li><li>评估工具：在线时间感知测试、进步自动追踪图表、能力发展报告模板</li></ul></div>
+            </div>
+        </section>
+
+        <!-- 价值承诺 -->
+        <div class="footer-cta">
+            <h3>💎 最终给家长的价值承诺</h3>
+            <p><strong>简单操作承诺：</strong>您只需要每天准备简单工具，按四步流程带孩子玩12-20分钟时间游戏。每一步都有明确指令，每个游戏都好玩易做。</p>
+            <p><strong>专业价值承诺：</strong>但想要真正培养孩子的时间智慧——从“被时间追”到“掌控时间”——您需要我们的专业诊断、个性化方案和持续深度指导。</p>
+            <p><strong>成果可视承诺：</strong>每月您都会看到可测量的进步：时间猜得更准、作业做得更快、时间冲突更少。每季度都有里程碑认证和时间项目作品。</p>
+            <p style="font-weight:600;color:#4A7FA5;margin-top:8px;">⏰ 从“被时间追着跑”到“和时间做朋友”，这是送给孩子一生的时间礼物。</p>
+        </div>
+    </main>
+
+    <a href="#" class="scroll-top" id="scrollTop" title="回到顶部">↑</a>
+
+    <script>
+        function toggleStage(header) { header.parentElement.classList.toggle('open'); }
+        function toggleScene(header) { header.parentElement.classList.toggle('open'); }
+        const scrollTopBtn = document.getElementById('scrollTop');
+        window.addEventListener('scroll', () => { if (window.scrollY > 500) { scrollTopBtn.classList.add('visible'); } else { scrollTopBtn.classList.remove('visible'); } const sections = document.querySelectorAll('section[id], .stage-card[id]'); const navLinks = document.querySelectorAll('.sticky-nav a'); let currentId = ''; sections.forEach(section => { const rect = section.getBoundingClientRect(); if (rect.top <= 140) { currentId = section.id; } }); navLinks.forEach(link => { link.classList.remove('active'); if (link.getAttribute('href') === '#' + currentId) { link.classList.add('active'); } }); });
+        document.querySelectorAll('.sticky-nav a[href^="#"]').forEach(link => { link.addEventListener('click', function(e) { e.preventDefault(); const target = document.querySelector(this.getAttribute('href')); if (target) { const navHeight = document.querySelector('.sticky-nav').offsetHeight; const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - navHeight - 8; window.scrollTo({ top: targetPosition, behavior: 'smooth' }); } }); });
+        scrollTopBtn.addEventListener('click', function(e) { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); });
+        document.addEventListener('DOMContentLoaded', () => { const firstCard = document.getElementById('stage1'); if (firstCard && !firstCard.classList.contains('open')) { firstCard.classList.add('open'); } });
+    </script>
+</body>
+</html>
